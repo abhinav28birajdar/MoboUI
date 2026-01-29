@@ -285,7 +285,6 @@ export default function PreviewRegistry({ componentId }: { componentId?: string 
 
     return (
         <div className="w-full h-full flex items-center justify-center p-4">
-            {/* @ts-expect-error - Dynamic preview mapping */}
             <Preview />
         </div>
     );

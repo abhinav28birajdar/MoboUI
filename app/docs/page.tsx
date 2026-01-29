@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Code2, Smartphone, Palette, Zap, ArrowRight, Book } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Code2, Smartphone, Palette, Zap, ArrowRight, Book } from "lucide-react";
 import Link from 'next/link';
 
 const guideCategories = [
@@ -93,7 +94,7 @@ export default function DocsPage() {
                         <div className="flex-shrink-0 w-12 h-12 rounded-full bg-secondary text-white flex items-center justify-center font-black text-xl shadow-lg shadow-secondary/20">3</div>
                         <div>
                             <h3 className="text-xl font-bold mb-3 text-foreground tracking-tight underline decoration-secondary/30 decoration-4 underline-offset-8">No Hidden Dependencies</h3>
-                            <p className="text-muted-foreground leading-relaxed text-lg italic">Most of our core components require zero external libraries. This ensures your app stays lean, avoiding the "dependency hell" common in modern mobile development.</p>
+                            <p className="text-muted-foreground leading-relaxed text-lg italic">Most of our core components require zero external libraries. This ensures your app stays lean, avoiding the &quot;dependency hell&quot; common in modern mobile development.</p>
                         </div>
                     </div>
                 </div>
