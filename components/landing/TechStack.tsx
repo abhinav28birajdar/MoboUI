@@ -1,8 +1,6 @@
 import React from 'react';
 import {
     Code2,
-    स्मार्टफोन,
-    Layers,
     Smartphone,
     Wind,
     Layers as Framer,
