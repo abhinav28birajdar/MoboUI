@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Space Grotesk';
+    src: url('/fonts/SpaceGrotesk-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-display: swap;
+}
+
+:root {
+    /* ── BASE COLORS (LIGHT MODE DEFAULT) ── */
+    --background: #ffffff;
+    --foreground: #020617;
+
+    --surface: #f8fafc;
+    --surface-elevated: #f1f5f9;
+
+    --card: #ffffff;
+    --card-hover: #f1f5f9;
+
+    --border: #e2e8f0;
+    --border-hover: #cbd5e1;
+
+    --text-primary: #020617;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+
+    /* ── ACCENT (AMBER) ── */
+    --primary: #d97706;
+    --primary-foreground: #ffffff;
+
+    --amber-50: #fffbeb;
+    --amber-100: #fef3c7;
+    --amber-200: #fde68a;
+    --amber-300: #fcd34d;
+    --amber-400: #fbbf24;
+    --amber-500: #f59e0b;
+    --amber-600: #d97706;
+    --amber-700: #b45309;
+
+    /* ── SHADOWS / GLOWS ── */
+    --glow-amber: 0 0 20px rgba(217, 119, 6, 0.4);
+
+    /* ── TYPOGRAPHY ── */
+    --font-display: 'Outfit', 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-code: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* ── SPACING ── */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --radius-2xl: 28px;
+}
+
+.dark {
+    --background: #000000;
+    --foreground: #ffffff;
+
+    --surface: #0a0a0a;
+    --surface-elevated: #141414;
+
+    --card: #0a0a0a;
+    --card-hover: #111111;
+
+    --border: #1a1a1a;
+    --border-hover: #262626;
+
+    --text-primary: #ffffff;
+    --text-secondary: #a3a3a3;
+    --text-muted: #525252;
+
+    --primary: #fbbf24;
+    --primary-foreground: #000000;
+}
+
+@layer base {
+    * {
+        border-color: var(--border);
+    }
+
+    body {
+        background-color: var(--background);
+        color: var(--text-primary);
+        font-family: var(--font-body);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-display);
+        font-style: normal !important;
+    }
+}
+
+@layer utilities {
+    .brand-text {
+        font-family: var(--font-display);
+        font-style: italic !important;
+    }
+
+    .italic-none {
+        font-style: normal !important;
+    }
+
+    .glow-amber {
+        box-shadow: var(--glow-amber);
+    }
+
+    .shadow-glow-amber {
+        box-shadow: 0 0 25px rgba(217, 119, 6, 0.4);
+    }
+
+    .bg-grid-pattern {
+        background-image: linear-gradient(rgba(217, 119, 6, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(217, 119, 6, 0.04) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+}

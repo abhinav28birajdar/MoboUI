@@ -18,6 +18,8 @@ create table public.components (
     props jsonb default '[]',
     usage text,
     preview_url text,
+    image_url text,
+    is_premium boolean default false,
     popularity integer default 0,
     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at timestamp with time zone default timezone('utc'::text, now()) not null
@@ -78,3 +80,21 @@ $$ language plpgsql;
 create trigger update_components_updated_at 
     before update on public.components 
     for each row execute function update_updated_at_column();
+
+-- 7. Sample Data
+insert into public.components (slug, name, description, framework, category, tags, code_rn, code_flutter, image_url, is_premium)
+values 
+('premium-card-01', 'Glassmorphic Credit Card', 'A stunning glassmorphic credit card with smooth animations and tilt effects.', 'both', 'Finance', '{glassmorphism, card, finance}', 
+'export default function GlassCard() { ... }', 
+'class GlassCard extends StatelessWidget { ... }', 
+'https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=800', true),
+
+('modern-auth-01', 'Modern Auth Suite', 'Elegant login and signup screens with social auth integrations and field validation.', 'both', 'Auth', '{login, signup, auth}', 
+'export default function AuthScreen() { ... }', 
+'class AuthScreen extends StatefulWidget { ... }', 
+'https://images.unsplash.com/photo-1555421689-491a97ff2040?q=80&w=800', true),
+
+('minimal-chart-01', 'Real-time Analytics Chart', 'Interactive line charts with tooltips and real-time data updates.', 'both', 'Analytics', '{chart, analytics, data}', 
+'export default function AnalyticsChart() { ... }', 
+'class AnalyticsChart extends StatelessWidget { ... }', 
+'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800', true);
