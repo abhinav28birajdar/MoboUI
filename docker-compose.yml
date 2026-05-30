@@ -21,8 +21,9 @@ services:
     volumes:
       # Persist database data
       - postgres-data:/var/lib/postgresql/data
-      # Initialize database with schema
-      - ./supabase-schema.sql:/docker-entrypoint-initdb.d/init.sql
+      # Initialize database with schema from multiple sources
+      - ./supabase-schema.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./supabase/schema.sql:/docker-entrypoint-initdb.d/02-supabase-schema.sql
     
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U moboui -d moboui"]
@@ -34,21 +35,34 @@ services:
       - moboui-network
 
   # ========================================
-  # Supabase (Optional - for local development)
-  # Uncomment to use local Supabase instead of cloud
+  # Supabase (Local Development - Optional)
+  # Uncomment to use local Supabase + Kong API gateway
   # ========================================
   # supabase:
   #   image: supabase/supabase:latest
   #   container_name: moboui-supabase
   #   restart: unless-stopped
+  #   
   #   environment:
   #     POSTGRES_PASSWORD: moboui_password
+  #     POSTGRES_INITDB_ARGS: "--locale=en_US.UTF-8"
+  #     POSTGRES_DB: moboui
+  #   
   #   ports:
-  #     - "3000:3000"
-  #     - "8000:8000"
+  #     - "3000:3000"      # Supabase Studio
+  #     - "8000:8000"      # Kong API gateway
+  #     - "8001:8001"      # Kong admin API
+  #     - "5432:5432"      # PostgreSQL
+  #     - "9000:9000"      # Realtime API
+  #   
+  #   volumes:
+  #     - ./supabase/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+  #     - supabase-data:/var/lib/postgresql/data
+  #   
   #   depends_on:
   #     postgres:
   #       condition: service_healthy
+  #   
   #   networks:
   #     - moboui-network
 
@@ -118,8 +132,25 @@ services:
   #     postgres:
   #       condition: service_healthy
   #   
-  #   volumes:
-  #     - .:/app
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/postgres
+  
+  redis-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/redis
+  
+  # Uncomment for local Supabase
+  # supabase-data:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     o: bind
+  #     device: ./data/supabase
   #     - /app/node_modules
   #   
   #   networks:

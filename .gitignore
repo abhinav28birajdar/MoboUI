@@ -156,19 +156,45 @@ temp/
 # Database & Storage
 # ========================================
 # Local Supabase instance
-supabase/
+# supabase/ - Keep this for schema files
+# But ignore local supabase data
+.supabase/
 
-# Database files
+# Database files (except schema files)
 *.db
+*.db-shm
+*.db-wal
 *.sqlite
 *.sqlite3
-.supabase/
+*.sql.bak
+*.sql.gz
+!supabase-schema.sql
+!supabase/schema.sql
+
+# ========================================
+# Docker & Containerization
+# ========================================
+# Docker build artifacts
+docker-compose.override.yml
+.dockerignore
+
+# Docker local data (development)
+/data/
+/data/postgres/
+/data/redis/
+/data/supabase/
+
+# Docker volume state files
+moboui-postgres-data/
+moboui-redis-data/
+moboui-supabase-data/
 
 # ========================================
 # Build Artifacts & Distribution
 # ========================================
 dist/
 *.tgz
+build/
 
 # ========================================
 # Development Tools
@@ -178,23 +204,77 @@ dist/
 
 # Error files
 error.log
+*.error
+
+# Crash dumps
+core
+core.*
 
 # ========================================
-# Misc & Generated Files
+# IDE Extensions & Plugins
 # ========================================
+# VS Code
+.vscode/extensions.json
+.vscode-test/
+.history/
+
+# JetBrains additional
+*.jks
+*.keystore
+
+# ========================================
+# Security & Secrets
+# ========================================
+# SSH keys
 *.pem
-.env.*.local
+*.pub
+*.key
+*.cer
+*.crt
+*.p12
+*.keystore
+*_key
+*_secret
+*_token
 
-# node modules should never be committed
-node_modules/
+# ========================================
+# Backup & Archive Files
+# ========================================
+*.backup
+*.bak
+*~
+*.orig
+*.rej
 
-# MacOS
-.AppleDouble
-.LSOverride
-
+# ========================================
+# OS Specific Files
+# ========================================
 # Windows
-.DS_Store
+*.lnk
+$RECYCLE.BIN/
+ehthumbs.db
+desktop.ini
 Thumbs.db
+
+# macOS
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+.Xauthority
+.bash_history
+.bashrc
+.profile
+.sh_history
+.zsh_history
+
+# ========================================
+# Dependency Lock Files (optional - uncomment if needed)
+# ========================================
+# package-lock.json
+# pnpm-lock.yaml
+# yarn.lock
 
 # ========================================
 # Project Specific
@@ -219,7 +299,21 @@ Thumbs.db
 .local/
 .dev/
 
+# CI/CD logs
+.github/workflows/*.log
+
+# Performance & Profiling
+*.profile
+*.prof
+*.trace
+
 # ========================================
-# Keep environment template for reference
+# IMPORTANT: Keep these files (!)
 # ========================================
-# !.env.example
+!.env.example
+!.gitkeep
+!package.json
+!tsconfig.json
+!next.config.ts
+!supabase-schema.sql
+!supabase/schema.sql
