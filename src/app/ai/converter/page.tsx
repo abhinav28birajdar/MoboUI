@@ -27,7 +27,7 @@ export default function AIConverterPage() {
 
             const mockOutput = toFramework === 'flutter'
                 ? `// Converted to Flutter\nimport 'package:flutter/material.dart';\n\nclass ConvertedComponent extends StatelessWidget {\n  @override\n  Widget build(BuildContext context) {\n    return Center(\n      child: Container(\n        padding: EdgeInsets.all(32),\n        decoration: BoxDecoration(\n          color: Color(0xFFD97706),\n          borderRadius: BorderRadius.circular(24),\n        ),\n        child: Text('Converted from React Native', style: TextStyle(color: Colors.white)),\n      ),\n    );\n  }\n}`
-                : `// Converted to React Native\nimport React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport const Converted = () => (\n  <View style={styles.container}>\n    <Text style={styles.text}>Converted from Flutter</Text>\n  </View>\n);\n\nconst styles = StyleSheet.create({\n  container: { backgroundColor: '#d97706', padding: 32, borderRadius: 24 },\n  text: { color: 'white', fontWeight: 'bold' }\n});`;
+                : `// Converted to React Native\nimport React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport const Converted = () => (\n  <View style={styles.container}>\n    <Text style={styles.text}>Converted from Flutter</Text>\n  </View>\n);\n\nconst styles = StyleSheet.create({\n  container: { backgroundColor: '#FFCA03', padding: 32, borderRadius: 24 },\n  text: { color: '#111827', fontWeight: 'bold' }\n});`;
 
             setConvertedCode(mockOutput);
             toast.success(`Translated to ${toFramework === 'flutter' ? 'Flutter' : 'React Native'}!`);

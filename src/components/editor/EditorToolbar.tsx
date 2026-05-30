@@ -26,7 +26,7 @@ export function EditorToolbar() {
     return (
         <div className="flex items-center justify-between border-b px-4 py-2 bg-muted/20">
             <div className="flex items-center space-x-2">
-                <Select value={platform} onValueChange={(val: 'react-native' | 'expo' | 'flutter') => setPlatform(val)}>
+                <Select value={platform} onValueChange={(val: string) => setPlatform(val as 'react-native' | 'expo' | 'flutter')}>
                     <SelectTrigger className="w-[140px] h-8">
                         <SelectValue placeholder="Platform" />
                     </SelectTrigger>
@@ -37,7 +37,7 @@ export function EditorToolbar() {
                     </SelectContent>
                 </Select>
 
-                <Select value={template} onValueChange={(val) => setTemplate(val)}>
+                <Select value={template} onValueChange={(val: string) => setTemplate(val as 'blank' | 'button' | 'form' | 'list')}>
                     <SelectTrigger className="w-[140px] h-8">
                         <SelectValue placeholder="Template" />
                     </SelectTrigger>

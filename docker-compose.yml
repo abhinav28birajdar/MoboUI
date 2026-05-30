@@ -1,0 +1,169 @@
+version: '3.9'
+
+services:
+  # ========================================
+  # PostgreSQL Database
+  # ========================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: moboui-postgres
+    restart: unless-stopped
+    
+    environment:
+      POSTGRES_USER: moboui
+      POSTGRES_PASSWORD: moboui_password
+      POSTGRES_DB: moboui
+      POSTGRES_INITDB_ARGS: "--locale=en_US.UTF-8"
+    
+    ports:
+      - "5432:5432"
+    
+    volumes:
+      # Persist database data
+      - postgres-data:/var/lib/postgresql/data
+      # Initialize database with schema
+      - ./supabase-schema.sql:/docker-entrypoint-initdb.d/init.sql
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moboui -d moboui"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    networks:
+      - moboui-network
+
+  # ========================================
+  # Supabase (Optional - for local development)
+  # Uncomment to use local Supabase instead of cloud
+  # ========================================
+  # supabase:
+  #   image: supabase/supabase:latest
+  #   container_name: moboui-supabase
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_PASSWORD: moboui_password
+  #   ports:
+  #     - "3000:3000"
+  #     - "8000:8000"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   networks:
+  #     - moboui-network
+
+  # ========================================
+  # Redis Cache (Optional - for session storage)
+  # ========================================
+  redis:
+    image: redis:7-alpine
+    container_name: moboui-redis
+    restart: unless-stopped
+    
+    ports:
+      - "6379:6379"
+    
+    volumes:
+      - redis-data:/data
+    
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    networks:
+      - moboui-network
+
+  # ========================================
+  # Adminer (Database UI - Optional)
+  # Access at http://localhost:8080
+  # ========================================
+  adminer:
+    image: adminer:latest
+    container_name: moboui-adminer
+    restart: unless-stopped
+    
+    ports:
+      - "8080:8080"
+    
+    depends_on:
+      postgres:
+        condition: service_healthy
+    
+    networks:
+      - moboui-network
+
+  # ========================================
+  # Next.js Application (Optional)
+  # Build and run the app in Docker
+  # ========================================
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: moboui-app
+  #   restart: unless-stopped
+  #   
+  #   environment:
+  #     NODE_ENV: development
+  #     NEXT_PUBLIC_SUPABASE_URL: http://localhost:8000
+  #     NEXT_PUBLIC_SUPABASE_ANON_KEY: your-anon-key
+  #     DATABASE_URL: postgresql://moboui:moboui_password@postgres:5432/moboui
+  #   
+  #   ports:
+  #     - "3000:3000"
+  #   
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #   
+  #   networks:
+  #     - moboui-network
+
+# ========================================
+# Volumes for Persistent Data
+# ========================================
+volumes:
+  postgres-data:
+    driver: local
+  redis-data:
+    driver: local
+
+# ========================================
+# Networks
+# ========================================
+networks:
+  moboui-network:
+    driver: bridge
+
+# ========================================
+# Usage
+# ========================================
+# 
+# Start all services:
+#   docker-compose up -d
+#
+# Stop all services:
+#   docker-compose down
+#
+# View logs:
+#   docker-compose logs -f
+#
+# Access database UI (Adminer):
+#   http://localhost:8080
+#   Server: postgres
+#   Username: moboui
+#   Password: moboui_password
+#   Database: moboui
+#
+# Access Redis:
+#   redis-cli -p 6379
+#
+# Clean up (remove volumes too):
+#   docker-compose down -v
+#

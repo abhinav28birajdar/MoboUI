@@ -39,7 +39,7 @@ export default function CodePanel({ code }: { code: { reactNative?: string, flut
                             className="h-8 rounded-full bg-surface hover:bg-muted"
                             onClick={handleCopy}
                         >
-                            {copied ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
+                            {copied ? <Check className="w-3 h-3 text-primary" /> : <Copy className="w-3 h-3" />}
                             <span className="ml-2 hidden sm:inline text-[10px] font-bold uppercase tracking-wider">Copy</span>
                         </Button>
                         <Button variant="outline" size="sm" className="h-8 w-8 rounded-full bg-surface p-0">

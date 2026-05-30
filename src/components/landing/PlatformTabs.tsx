@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import Prism from 'prismjs';
+// import Prism from 'prismjs'; // Syntax highlighting - can be enabled when needed
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-dart';
 import 'prismjs/components/prism-jsx';
@@ -82,7 +82,7 @@ class Greeting extends StatelessWidget {
                                         <div className="flex space-x-1.5">
                                             <div className="w-3 h-3 rounded-full bg-red-500" />
                                             <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                                            <div className="w-3 h-3 rounded-full bg-green-500" />
+                                            <div className="w-3 h-3 rounded-full bg-primary" />
                                         </div>
                                         <span className="ml-4 text-xs text-slate-400 font-mono">
                                             component.{platform === 'flutter' ? 'dart' : 'tsx'}

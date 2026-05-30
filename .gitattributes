@@ -1,0 +1,109 @@
+# Git Attributes Configuration for MOBOUI
+# Ensures consistent line endings and file handling across platforms
+
+# Auto detect text files and normalize line endings
+* text=auto
+
+# ========================================
+# Text Files (LF for Unix/Linux)
+# ========================================
+
+# Source code
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.json text eol=lf
+*.jsonc text eol=lf
+
+# Web files
+*.html text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.sass text eol=lf
+*.less text eol=lf
+
+# Configuration files
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.editorconfig text eol=lf
+.prettierrc text eol=lf
+.eslintrc* text eol=lf
+
+# Documentation
+*.md text eol=lf
+*.mdx text eol=lf
+*.txt text eol=lf
+*.rst text eol=lf
+*.adoc text eol=lf
+
+# Database
+*.sql text eol=lf
+*.prisma text eol=lf
+
+# Shell scripts
+*.sh text eol=lf
+*.bash text eol=lf
+*.zsh text eol=lf
+Makefile text eol=lf
+
+# Environment
+.env* text eol=lf
+
+# ========================================
+# Binary Files
+# ========================================
+
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg text
+
+# Videos
+*.mp4 binary
+*.webm binary
+*.mkv binary
+*.mov binary
+
+# Fonts
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+
+# Archives
+*.zip binary
+*.tar binary
+*.gz binary
+*.rar binary
+*.7z binary
+
+# Executables
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+
+# PDFs
+*.pdf binary
+
+# ========================================
+# Special Cases
+# ========================================
+
+# SVG files should be text (XML-based)
+*.svg text diff=xml eol=lf
+
+# Shell scripts should be executable
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Ignore unmatched files
+.git* export-ignore
+.* export-ignore

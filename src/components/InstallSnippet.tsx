@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Copy, Check } from 'lucide-react';
 import { useState } from 'react';
-import Prism from 'prismjs';
+// import Prism from 'prismjs'; // Syntax highlighting - can be enabled when needed
 
 interface InstallSnippetProps {
     packageName?: string;

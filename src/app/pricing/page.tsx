@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, Zap, Shield, Users, Crown, ChevronRight } from "lucide-react";
+import { Check, ChevronRight } from "lucide-react";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils/cn";
@@ -80,7 +80,7 @@ export default function PricingPage() {
                                 className={cn("px-6 py-2.5 rounded-xl text-sm font-bold transition-all relative", billingCycle === "yearly" ? "bg-background shadow-sm text-text-primary" : "text-text-muted hover:text-text-primary")}
                             >
                                 Yearly
-                                <span className="absolute -top-3 -right-4 bg-primary text-primary-foreground text-[10px] font-black px-2 py-0.5 rounded-full shadow-glow-amber">
+                                <span className="absolute -top-3 -right-4 bg-primary text-primary-foreground text-[10px] font-black px-2 py-0.5 rounded-full">
                                     SAVE 20%
                                 </span>
                             </button>
@@ -95,11 +95,11 @@ export default function PricingPage() {
                             key={i}
                             className={cn(
                                 "p-10 rounded-[3rem] border bg-card border-border relative flex flex-col transition-all duration-500 hover:scale-[1.02] hover:shadow-xl",
-                                plan.popular && "border-primary/20 ring-1 ring-primary/10 shadow-glow-amber"
+                                plan.popular && "border-primary/20 ring-1 ring-primary/10"
                             )}
                         >
                             {plan.popular && (
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground text-[10px] font-black rounded-full shadow-glow-amber z-20">
+                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground text-[10px] font-black rounded-full z-20">
                                     MOST POPULAR
                                 </div>
                             )}
@@ -126,7 +126,7 @@ export default function PricingPage() {
                                 size="lg"
                                 className={cn(
                                     "w-full h-16 rounded-2xl text-md font-black  uppercase tracking-widest transition-all",
-                                    plan.popular ? "bg-primary text-primary-foreground shadow-glow-amber" : "bg-surface border border-border text-text-primary hover:bg-surface-elevated"
+                                    plan.popular ? "bg-primary text-primary-foreground" : "bg-surface border border-border text-text-primary hover:bg-surface-elevated"
                                 )}
                             >
                                 {plan.cta}

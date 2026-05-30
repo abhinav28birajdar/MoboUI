@@ -21,7 +21,7 @@ export function PreviewPanel({ framework, code }: PreviewPanelProps) {
             <div className="relative z-10">
                 <div className="mb-8 flex flex-col items-center gap-4">
                     <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-xl">
-                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(119,217,112,0.8)]" />
+                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(0,0,0,0.2)]" />
                         <span className="text-[10px] font-black text-white/50 uppercase tracking-[0.2em]">
                             Rendering Output
                         </span>

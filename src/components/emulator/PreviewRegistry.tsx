@@ -89,7 +89,7 @@ const StatsCardPreview = () => (
     <div className="w-64 bg-surface border border-border rounded-3xl p-6 shadow-2xl">
         <div className="flex items-center justify-between mb-2">
             <span className="text-[10px] font-bold text-muted-foreground uppercase">Revenue</span>
-            <span className="text-green-500 font-bold text-[10px]">+12%</span>
+            <span className="text-primary font-bold text-[10px]">+12%</span>
         </div>
         <h2 className="text-3xl font-black text-white mb-4">$42,850</h2>
         <div className="flex items-end gap-1 h-12">
@@ -133,10 +133,10 @@ const SearchBarPreview = () => (
 const ShimmerPreview = () => (
     <div className="flex flex-col gap-6 w-64">
         <div className="h-40 bg-white/5 rounded-[2rem] overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+            <div className="absolute inset-0 bg-white/10 -translate-x-full animate-[shimmer_2s_infinite]" />
         </div>
         <div className="h-4 w-full bg-white/5 rounded-full overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+            <div className="absolute inset-0 bg-white/5 -translate-x-full animate-[shimmer_2s_infinite]" />
         </div>
     </div>
 );
@@ -247,7 +247,7 @@ const AvatarPreview = () => (
 const BadgePreview = () => (
     <div className="flex flex-wrap gap-3">
         <span className="px-3 py-1 bg-primary text-white text-[10px] font-bold rounded-full">NEW</span>
-        <span className="px-3 py-1 bg-green-500 text-white text-[10px] font-bold rounded-full">SUCCESS</span>
+        <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] font-bold rounded-full">SUCCESS</span>
         <span className="px-3 py-1 bg-yellow-500 text-white text-[10px] font-bold rounded-full">PENDING</span>
         <span className="px-3 py-1 bg-destructive text-white text-[10px] font-bold rounded-full">ERROR</span>
     </div>
@@ -257,8 +257,8 @@ const BadgePreview = () => (
 
 const ToastPreview = () => (
     <div className="w-64 bg-surface border border-border rounded-2xl p-4 flex items-center gap-3 shadow-2xl">
-        <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-            <CheckCircle className="w-5 h-5 text-green-500" />
+        <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+            <CheckCircle className="w-5 h-5 text-primary" />
         </div>
         <div className="flex-1">
             <p className="text-white font-bold text-sm">Success!</p>
@@ -385,12 +385,12 @@ const ChipPreview = () => (
 // --- 24. ALERT ---
 
 const AlertPreview = () => (
-    <div className="w-64 bg-green-500/10 border-l-4 border-green-500 rounded-lg p-4">
+    <div className="w-64 bg-primary/10 border-l-4 border-primary rounded-lg p-4">
         <div className="flex items-start gap-3">
-            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+            <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
             <div>
-                <p className="text-green-600 font-semibold text-sm">Success</p>
-                <p className="text-green-600/80 text-xs">Your changes have been saved.</p>
+                <p className="text-primary font-semibold text-sm">Success</p>
+                <p className="text-primary/80 text-xs">Your changes have been saved.</p>
             </div>
         </div>
     </div>
@@ -501,7 +501,7 @@ export default function PreviewRegistry({ componentId }: { componentId?: string 
     if (!Preview) {
         return (
             <div className="flex flex-col items-center justify-center gap-8 h-full text-center p-10">
-                <div className="w-32 h-32 rounded-[3.5rem] bg-gradient-to-br from-white/5 to-transparent flex items-center justify-center border border-white/10 shadow-2xl relative">
+                <div className="w-32 h-32 rounded-[3.5rem] bg-white/5 flex items-center justify-center border border-white/10 shadow-2xl relative">
                     <Smartphone size={48} className="text-white/10" />
                 </div>
                 <div className="space-y-4">

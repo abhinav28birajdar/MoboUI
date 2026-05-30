@@ -81,7 +81,7 @@ export default function ShowcasePage() {
                             transition={{ delay: 0.2 + (index * 0.1) }}
                             className="group relative"
                         >
-                            <div className="flex flex-col md:flex-row bg-card border border-border rounded-[2.5rem] overflow-hidden hover:border-primary/30 transition-all duration-500 shadow-sm hover:shadow-glow-amber">
+                            <div className="flex flex-col md:flex-row bg-card border border-border rounded-[2.5rem] overflow-hidden hover:border-primary/30 transition-all duration-500 shadow-sm">
                                 <div className="md:w-2/5 aspect-[3/4] md:aspect-auto relative overflow-hidden">
                                     <img
                                         src={app.image}
@@ -153,7 +153,7 @@ export default function ShowcasePage() {
                     <p className="text-lg text-text-secondary max-w-xl mx-auto mb-10 font-medium">
                         Submit your application to be featured in our showcase and reach thousands of developers.
                     </p>
-                    <Button size="lg" className="rounded-2xl h-16 px-12 bg-primary text-primary-foreground font-black text-md uppercase  tracking-widest hover:scale-105 transition-all shadow-glow-amber">
+                    <Button size="lg" className="rounded-2xl h-16 px-12 bg-primary text-primary-foreground font-black text-md uppercase  tracking-widest hover:scale-105 transition-all">
                         Submit Project <Sparkles size={18} className="ml-2" />
                     </Button>
                 </motion.div>

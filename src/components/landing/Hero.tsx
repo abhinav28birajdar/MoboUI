@@ -98,7 +98,7 @@ export function Hero() {
             className="hidden lg:block relative"
           >
             <div className="relative aspect-square w-full max-w-[600px] ml-auto">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#FF2D95] via-[#BC34FE] to-[#00D2FF] rounded-[40px] shadow-2xl overflow-hidden group">
+              <div className="absolute inset-0 bg-primary rounded-[40px] shadow-2xl overflow-hidden group">
                 <div className="absolute inset-0 bg-black/10 transition-opacity group-hover:opacity-0" />
                 {/* Abstract shapes/glows within the card to match inspiration */}
                 <div className="absolute top-[10%] left-[10%] w-[80%] h-[80%] bg-white/20 blur-[100px] rounded-full animate-pulse" />

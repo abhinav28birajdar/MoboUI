@@ -22,13 +22,13 @@ export const PageHeader = ({
             className={centered ? "text-center" : "text-left"}
         >
             {badge && (
-                <span className="mb-4 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-medium tracking-wider text-amber-400 uppercase">
+                <span className="mb-4 inline-block rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium tracking-wider text-primary uppercase">
                     {badge}
                 </span>
             )}
             <h1 className="mb-4 text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
                 {title.split(" ").map((word, i) => (
-                    <span key={i} className={word.toLowerCase() === "moboui" || word.toLowerCase().includes("mobile") ? "text-amber-500" : ""}>
+                    <span key={i} className={word.toLowerCase() === "moboui" || word.toLowerCase().includes("mobile") ? "text-primary" : ""}>
                         {word}{" "}
                     </span>
                 ))}

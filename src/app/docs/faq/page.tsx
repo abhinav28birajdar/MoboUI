@@ -43,12 +43,12 @@ export default function FAQPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="text-center space-y-6"
             >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-4">
-                    <HelpCircle className="w-4 h-4 text-amber-500" />
-                    <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Support Center</span>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
+                    <HelpCircle className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-bold text-primary uppercase tracking-widest">Support Center</span>
                 </div>
                 <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter text-white uppercase  leading-none">
-                    Frequent <span className="text-amber-500 neon-text-glow">Questions.</span>
+                    Frequent <span className="text-primary neon-text-glow">Questions.</span>
                 </h1>
                 <p className="text-xl text-neutral-400 max-w-2xl mx-auto font-medium">
                     Everything you need to know about MoboUI. Can't find what you're looking for?
@@ -58,21 +58,21 @@ export default function FAQPage() {
 
             {/* Support Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-8 rounded-[32px] bg-neutral-900/50 border border-white/5 hover:border-amber-500/20 transition-all group">
-                    <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <MessageCircle className="w-6 h-6 text-amber-500" />
+                <div className="p-8 rounded-[32px] bg-neutral-900/50 border border-white/5 hover:border-primary/20 transition-all group">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <MessageCircle className="w-6 h-6 text-primary" />
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2">Community Discord</h3>
                     <p className="text-neutral-500 text-sm mb-6">Join 5,000+ developers, share your work, and get help in real-time.</p>
-                    <Button variant="outline" className="w-full rounded-xl border-white/10 hover:bg-amber-500 hover:text-black hover:border-amber-500 transition-all font-bold">Join Server</Button>
+                    <Button variant="outline" className="w-full rounded-xl border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all font-bold">Join Server</Button>
                 </div>
-                <div className="p-8 rounded-[32px] bg-neutral-900/50 border border-white/5 hover:border-amber-500/20 transition-all group">
-                    <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <Mail className="w-6 h-6 text-amber-500" />
+                <div className="p-8 rounded-[32px] bg-neutral-900/50 border border-white/5 hover:border-primary/20 transition-all group">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <Mail className="w-6 h-6 text-primary" />
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2">Email Support</h3>
                     <p className="text-neutral-500 text-sm mb-6">For enterprise licensing or private inquiries, drop us a message.</p>
-                    <Button variant="outline" className="w-full rounded-xl border-white/10 hover:bg-amber-500 hover:text-black hover:border-amber-500 transition-all font-bold">Inquire Now</Button>
+                    <Button variant="outline" className="w-full rounded-xl border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all font-bold">Inquire Now</Button>
                 </div>
             </div>
 
@@ -85,7 +85,7 @@ export default function FAQPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.05 }}
                         className={`rounded-3xl border transition-all duration-300 overflow-hidden ${openIndex === i
-                            ? "bg-neutral-900 border-amber-500/30 shadow-[0_0_30px_rgba(217,119,6,0.05)]"
+                            ? "bg-neutral-900 border-primary/30 shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
                             : "bg-neutral-900/30 border-white/5 hover:border-white/10"
                             }`}
                     >
@@ -93,10 +93,10 @@ export default function FAQPage() {
                             onClick={() => setOpenIndex(openIndex === i ? null : i)}
                             className="w-full p-6 flex items-center justify-between text-left group"
                         >
-                            <span className={`text-lg font-bold transition-colors ${openIndex === i ? "text-amber-500" : "text-white group-hover:text-amber-400"}`}>
+                            <span className={`text-lg font-bold transition-colors ${openIndex === i ? "text-primary" : "text-white group-hover:text-primary"}`}>
                                 {faq.question}
                             </span>
-                            <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all ${openIndex === i ? "bg-amber-500 text-black rotate-180" : "bg-white/5 text-neutral-500"}`}>
+                            <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all ${openIndex === i ? "bg-primary text-primary-foreground rotate-180" : "bg-white/5 text-neutral-500"}`}>
                                 <ChevronDown className="w-5 h-5" />
                             </div>
                         </button>
@@ -119,7 +119,7 @@ export default function FAQPage() {
                     <input
                         type="text"
                         placeholder="Search documentation..."
-                        className="w-full h-14 bg-black border border-white/10 rounded-2xl pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-all"
+                        className="w-full h-14 bg-black border border-white/10 rounded-2xl pl-12 pr-4 text-white focus:outline-none focus:border-primary transition-all"
                     />
                 </div>
             </div>

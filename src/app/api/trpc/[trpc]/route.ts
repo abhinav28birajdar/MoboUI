@@ -1,22 +1,18 @@
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { type NextRequest } from "next/server";
-import { appRouter } from "@/server/trpc/routers/root";
-import { createTRPCContext } from "@/server/trpc/context";
+import { NextResponse } from "next/server";
 
-const handler = (req: NextRequest) =>
-    fetchRequestHandler({
-        endpoint: "/api/trpc",
-        req,
-        router: appRouter,
-        createContext: () => createTRPCContext({ req }),
-        onError:
-            process.env.NODE_ENV === "development"
-                ? ({ path, error }) => {
-                    console.error(
-                        `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`
-                    );
-                }
-                : undefined,
-    });
+function disabledResponse() {
+    return NextResponse.json(
+        {
+            error: "This endpoint is disabled in frontend-only mode.",
+        },
+        { status: 501 }
+    );
+}
 
-export { handler as GET, handler as POST };
+export async function GET() {
+    return disabledResponse();
+}
+
+export async function POST() {
+    return disabledResponse();
+}

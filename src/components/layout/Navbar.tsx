@@ -4,141 +4,137 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { Search, Menu, X, Sparkles } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/components/ui/button";
 
 export function Navbar() {
-    const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
 
+  // Smart Hide logic
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 150) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+  const routes = [
+    { href: "/components", label: "Components" },
+    { href: "/showcase", label: "Showcase" },
+    { href: "/docs", label: "Docs" },
+  ];
 
-    const routes = [
-        { href: "/components", label: "Components" },
-        { href: "/ai/generator", label: "AI Generator" },
-        { href: "/ai/converter", label: "AI Converter" },
-        { href: "/showcase", label: "Showcase" },
-        { href: "/docs", label: "Docs" },
-    ];
+  return (
+    <motion.header
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: "-100%" },
+      }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+      className="fixed top-0 z-50 w-full h-20 bg-background/70 backdrop-blur-xl border-b border-border/40"
+    >
+      <div className="container h-full flex items-center justify-between px-6 mx-auto">
+        {/* Logo */}
+        <Link href="/" className="flex flex-col group">
+          <span className="font-display font-bold text-2xl tracking-tighter uppercase text-text-primary leading-none">
+            MOBOUI<span className="text-primary">.</span>
+          </span>
+        </Link>
 
+        {/* Desktop Nav */}
+        <div className="hidden lg:flex items-center gap-8 flex-1 justify-center">
+          <div className="relative group w-56 xl:w-72">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-focus-within:text-primary transition-colors duration-300" />
+            <input
+              type="text"
+              placeholder="Search components, docs..."
+              className="w-full bg-background border-2 border-border rounded-2xl py-2.5 pl-12 pr-5 text-xs font-medium text-text-primary placeholder:text-text-muted/60 focus:ring-2 focus:ring-primary/20 focus:border-primary/60 focus:outline-none transition-all duration-300 hover:border-border-hover"
+            />
+          </div>
 
+          <nav className="flex items-center gap-6">
+            {routes.map((route) => (
+              <Link
+                key={route.href}
+                href={route.href}
+                className={cn(
+                  "relative text-[11px] font-medium uppercase tracking-[0.1em] transition-all py-1 px-2",
+                  pathname?.startsWith(route.href) ? "text-text-primary" : "text-text-muted hover:text-text-primary"
+                )}
+              >
+                {route.label}
+                {pathname?.startsWith(route.href) && (
+                  <motion.div 
+                    layoutId="nav-underline"
+                    className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-primary"
+                  />
+                )}
+              </Link>
+            ))}
+          </nav>
+        </div>
 
-    return (
-        <header
-            className={cn(
-                "fixed top-0 z-50 w-full transition-all duration-300",
-                scrolled
-                    ? "h-20 bg-background/80 backdrop-blur-md border-b border-border shadow-sm"
-                    : "h-24 bg-transparent"
-            )}
-        >
-            <div className="container h-full flex items-center justify-between px-6 mx-auto">
-                {/* Logo */}
-                <Link href="/" className="flex items-center gap-3 group">
-                    <div className="flex flex-col">
-                        <span className="font-display font-black text-2xl tracking-tighter uppercase text-text-primary leading-none ">
-                            MOBOUI<span className="text-primary">.</span>
-                        </span>
-                        <span className="text-[9px] text-text-muted font-black tracking-[0.2em] uppercase">
-                            Premium Kit
-                        </span>
-                    </div>
-                </Link>
+        {/* Actions */}
+        <div className="hidden lg:flex items-center gap-4">
+          <ThemeToggle />
+          <Button
+            asChild
+            className="h-10 px-5 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-xl transition-all uppercase tracking-widest text-[10px]"
+          >
+            <Link href="/playground" className="flex items-center gap-2">
+              Playground <Sparkles size={14} />
+            </Link>
+          </Button>
+        </div>
 
-                {/* Desktop Nav */}
-                <div className="hidden lg:flex items-center gap-8 flex-1 justify-center">
-                    {/* Search Bar - Clean appearance */}
-                    <div className="relative group w-48 xl:w-64">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-focus-within:text-primary transition-colors" />
-                        <input
-                            type="text"
-                            placeholder="Find components..."
-                            className="w-full bg-surface/50 border border-border rounded-xl py-2 pl-10 pr-4 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary/50 transition-all font-mono"
-                        />
-                    </div>
+        {/* Mobile Toggle */}
+        <div className="lg:hidden flex items-center gap-4">
+          <ThemeToggle />
+          <button onClick={() => setIsOpen(!isOpen)} className="text-text-primary">
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
 
-                    <nav className="flex items-center gap-8">
-                        {routes.map((route) => (
-                            <Link
-                                key={route.href}
-                                href={route.href}
-                                className={cn(
-                                    "text-[11px] font-black uppercase tracking-[0.1em] transition-all py-1",
-                                    pathname?.startsWith(route.href)
-                                        ? "text-text-primary border-b-2 border-primary"
-                                        : "text-text-muted hover:text-text-primary"
-                                )}
-                            >
-                                {route.label}
-                            </Link>
-                        ))}
-                    </nav>
-                </div>
-
-                {/* Actions */}
-                <div className="hidden lg:flex items-center gap-4">
-                    <ThemeToggle />
-
-                    <Button
-                        asChild
-                        className="h-11 px-6 bg-primary text-primary-foreground font-black rounded-xl hover:scale-105 transition-all shadow-glow-amber uppercase tracking-widest text-[10px] "
-                    >
-                        <Link href="/playground">Playground <Sparkles size={14} className="ml-2" /></Link>
-                    </Button>
-                </div>
-
-                {/* Mobile Toggle */}
-                <div className="lg:hidden flex items-center gap-4">
-                    <ThemeToggle />
-                    <button
-                        className="p-2 text-text-primary"
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        {isOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
-                </div>
-            </div>
-
-            {/* Mobile Menu */}
-            {isOpen && (
-                <div className="lg:hidden fixed inset-0 top-[80px] z-50 animate-in fade-in slide-in-from-right duration-300">
-                    <div className="absolute inset-0 bg-background/98 backdrop-blur-xl p-8 flex flex-col gap-8">
-                        <div className="flex flex-col gap-6">
-                            {routes.map((route) => (
-                                <Link
-                                    key={route.href}
-                                    href={route.href}
-                                    className={cn(
-                                        "text-4xl font-display font-black uppercase tracking-tighter  transition-all",
-                                        pathname?.startsWith(route.href) ? "text-primary" : "text-text-muted hover:text-text-primary"
-                                    )}
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    {route.label}
-                                </Link>
-                            ))}
-                        </div>
-
-                        <div className="mt-auto flex flex-col gap-4">
-                            <Button
-                                asChild
-                                className="w-full h-16 text-md bg-primary text-primary-foreground font-black rounded-2xl shadow-glow-amber uppercase  tracking-widest"
-                            >
-                                <Link href="/playground" onClick={() => setIsOpen(false)}>Open Playground</Link>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </header>
-    );
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="lg:hidden absolute top-20 left-0 w-full bg-background border-b border-border p-8 flex flex-col gap-6"
+          >
+            {routes.map((route) => (
+              <Link
+                key={route.href}
+                href={route.href}
+                className={cn(
+                  "text-2xl font-bold uppercase tracking-tighter",
+                  pathname?.startsWith(route.href) ? "text-primary" : "text-text-muted"
+                )}
+                onClick={() => setIsOpen(false)}
+              >
+                {route.label}
+              </Link>
+            ))}
+            <Button
+              asChild
+              className="w-full h-12 bg-primary text-primary-foreground font-medium rounded-xl uppercase tracking-widest text-xs hover:bg-primary/90 transition-all"
+            >
+              <Link href="/playground" onClick={() => setIsOpen(false)}>Open Playground</Link>
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
+  );
 }

@@ -98,10 +98,10 @@ export function CommandMenu() {
                                         <span className="flex-1 font-bold">Browse Library</span>
                                         <span className="text-[10px] font-black text-gray-600 group-hover:text-primary/40">G C</span>
                                     </Command.Item>
-                                    <Command.Item onSelect={() => runCommand(() => router.push('/playground'))} className="flex cursor-pointer select-none items-center rounded-xl px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-green-500 transition-all group my-1">
+                                    <Command.Item onSelect={() => runCommand(() => router.push('/playground'))} className="flex cursor-pointer select-none items-center rounded-xl px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-primary transition-all group my-1">
                                         <Smartphone className="mr-4 h-5 w-5 opacity-40 group-hover:opacity-100 transition-opacity" />
                                         <span className="flex-1 font-bold">Open Playground</span>
-                                        <span className="text-[10px] font-black text-gray-600 group-hover:text-green-500/40">G P</span>
+                                        <span className="text-[10px] font-black text-gray-600 group-hover:text-primary/40">G P</span>
                                     </Command.Item>
                                     <Command.Item onSelect={() => runCommand(() => router.push('/docs'))} className="flex cursor-pointer select-none items-center rounded-xl px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-purple-500 transition-all group my-1">
                                         <BookOpen className="mr-4 h-5 w-5 opacity-40 group-hover:opacity-100 transition-opacity" />

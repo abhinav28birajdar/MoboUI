@@ -51,7 +51,7 @@ export default function CLIDocPage() {
                                 <div className="bg-black rounded-2xl border border-white/10 p-6 flex items-center justify-between group">
                                     <code className="text-primary font-mono text-lg">npx moboui@latest init</code>
                                     <Button variant="ghost" size="icon" onClick={() => copyToClipboard('npx moboui@latest init', 'init')} className="text-neutral-500 hover:text-white">
-                                        {copied === 'init' ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
+                                        {copied === 'init' ? <Check size={18} className="text-primary" /> : <Copy size={18} />}
                                     </Button>
                                 </div>
                             </div>

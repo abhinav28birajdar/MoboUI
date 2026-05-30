@@ -24,7 +24,7 @@ export const GlowEffect = ({
     };
 
     const colorClasses = {
-        amber: "bg-amber-500",
+        amber: "bg-primary",
         white: "bg-white",
     };
 

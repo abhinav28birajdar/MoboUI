@@ -70,7 +70,7 @@ export function ShareDialog() {
                             </div>
                         </div>
                         <Button size="icon" onClick={handleCopy} className="h-10 w-10 bg-[#333] hover:bg-[#444] text-white border-0">
-                            {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+                            {copied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
                         </Button>
                     </div>
 

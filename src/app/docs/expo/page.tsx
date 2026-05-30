@@ -126,7 +126,7 @@ export default function ExpoDocs() {
 
                 <div className="relative z-10 flex flex-col items-center text-center space-y-8">
                     <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-2">
-                        <Terminal className="w-8 h-8 text-primary shadow-glow" />
+                        <Terminal className="w-8 h-8 text-primary\" />
                     </div>
 
                     <div className="space-y-4 max-w-xl">
@@ -143,7 +143,7 @@ export default function ExpoDocs() {
                         <div className="absolute -inset-0.5 bg-white/10 rounded-2xl blur opacity-20 group-hover/code:opacity-30 transition"></div>
                         <div className="relative flex items-center justify-between p-6 bg-[#0D0D0D] rounded-2xl border border-white/10 font-mono text-sm">
                             <span className="text-neutral-300">
-                                <span className="text-white/40">npx</span> <span className="text-amber-500">expo install</span> @moboui/expo
+                                <span className="text-white/40">npx</span> <span className="text-primary">expo install</span> @moboui/expo
                             </span>
                             <button onClick={copyCode} className="text-neutral-500 hover:text-white transition-colors">
                                 {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
@@ -153,7 +153,7 @@ export default function ExpoDocs() {
 
                     <div className="flex flex-wrap gap-8 justify-center pt-4">
                         <div className="flex items-center gap-3">
-                            <Zap className="w-5 h-5 text-amber-500" />
+                            <Zap className="w-5 h-5 text-primary" />
                             <span className="text-xs font-bold text-neutral-300 uppercase tracking-widest">Instant Reloads</span>
                         </div>
                         <div className="flex items-center gap-3">

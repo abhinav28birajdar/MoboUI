@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Palette, Sun, Moon, Droplets, Layout, Copy, Check, Terminal } from 'lucide-react';
 import { useState } from 'react';
@@ -103,13 +104,13 @@ const MyComponent = () => {
                     </p>
 
                     <div className="relative group">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-transparent rounded-3xl blur opacity-25" />
+                        <div className="absolute -inset-1 bg-primary/20 rounded-3xl blur opacity-25" />
                         <div className="relative bg-[#0D0D0D] p-6 rounded-3xl border border-white/10 font-mono text-[13px] leading-relaxed overflow-hidden">
                             <div className="flex justify-between items-center mb-4 pb-4 border-b border-white/5">
                                 <div className="flex gap-1.5">
                                     <div className="w-2.5 h-2.5 rounded-full bg-red-500/20" />
                                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20" />
-                                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/20" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-primary/20" />
                                 </div>
                                 <button onClick={copyCode} className="text-neutral-500 hover:text-white transition-colors">
                                     {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
@@ -117,7 +118,7 @@ const MyComponent = () => {
                             </div>
                             <pre className="text-neutral-300">
                                 <code className="block">
-                                    <span className="text-purple-400">import</span> {'{'} useTheme {'}'} <span className="text-purple-400">from</span> <span className="text-amber-500">'@/hooks'</span>;{'\n\n'}
+                                    <span className="text-purple-400">import</span> {'{'} useTheme {'}'} <span className="text-purple-400">from</span> <span className="text-primary">'@/hooks'</span>;{'\n\n'}
                                     <span className="text-blue-400 font-bold ">const</span> {'{'} theme, toggle {'}'} = <span className="text-yellow-400">useTheme</span>();
                                 </code>
                             </pre>
@@ -131,7 +132,7 @@ const MyComponent = () => {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                className="p-10 rounded-[40px] bg-gradient-to-br from-neutral-900 to-black border border-white/5"
+                className="p-10 rounded-[40px] bg-surface border border-white/5"
             >
                 <div className="flex flex-col md:flex-row gap-12 items-center">
                     <div className="space-y-6 flex-1">

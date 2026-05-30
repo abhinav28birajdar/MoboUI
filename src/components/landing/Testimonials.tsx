@@ -47,7 +47,7 @@ export function Testimonials() {
         <section className="py-24 bg-background overflow-hidden">
             <div className="container px-4 mx-auto mb-16 text-center">
                 <h2 className="text-3xl md:text-5xl font-black mb-6">
-                    Loved by <span className="gradient-text">Developers</span>
+                    Loved by <span className="text-primary">Developers</span>
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
                     Join thousands of developers building beautiful mobile apps faster.

@@ -16,14 +16,14 @@ export const NeonDivider = ({
             className={cn(
                 "relative",
                 vertical ? "h-full w-px" : "h-px w-full",
-                "bg-gradient-to-r from-transparent via-neutral-800 to-transparent",
+                "bg-border",
                 className
             )}
         >
             {glow && (
                 <div
                     className={cn(
-                        "absolute inset-0 bg-amber-500/50 blur-[2px]",
+                        "absolute inset-0 bg-primary/30 blur-[2px]",
                         vertical ? "w-[2px]" : "h-[2px]"
                     )}
                 />

@@ -64,7 +64,7 @@ export default async function ComponentDetailPage({ params }: { params: { framew
                             <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Component Implementation</h3>
                             <Badge variant="outline" className="text-[10px] uppercase">React Native / Expo</Badge>
                         </div>
-                        <CodePanel code={component.code} name={component.name} />
+                        <CodePanel component={component} language="typescript" />
                     </div>
 
                     {/* Props Table */}

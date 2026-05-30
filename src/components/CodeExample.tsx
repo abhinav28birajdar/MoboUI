@@ -1,17 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import Prism from 'prismjs';
+// import Prism from 'prismjs'; // Syntax highlighting library - can be enabled when needed
 import { Button } from '@/components/ui/button';
 import { Copy, Check } from 'lucide-react';
 
-export function CodeExample({ code, language = 'tsx' }: { code: string, language?: string }) {
+export function CodeExample({ code }: { code: string }) {
     const [copied, setCopied] = useState(false);
 
-    const highlight = (code: string) => {
-        // In a real app we would use Prism or similar here
-        return code;
-    };
+    // Note: highlight function can be enhanced with Prism or Shiki in the future
+    // const highlight = (code: string) => {
+    //     // In a real app we would use Prism or similar here
+    //     return code;
+    // };
 
     return (
         <div className="relative rounded-lg border bg-slate-950 p-4 overflow-x-auto text-white font-mono text-sm">

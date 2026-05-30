@@ -5,8 +5,11 @@ export interface Component {
     category: string;
     description: string;
     tags: string[];
-    framework: 'react-native' | 'expo' | 'flutter';
+    framework: 'react-native' | 'flutter' | 'both';
     previewImage?: string;
+    image_url?: string;
+    is_premium?: boolean;
+    popularity?: number;
     complexity: 'beginner' | 'intermediate' | 'advanced';
     code: {
         typescript?: string;

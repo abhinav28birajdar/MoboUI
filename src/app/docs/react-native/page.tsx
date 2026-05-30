@@ -24,8 +24,8 @@ const features = [
         title: 'Theming Engine',
         description: 'Dynamic and flexible theming that supports neon, glass, and minimal aesthetics.',
         icon: Palette,
-        color: 'text-amber-500',
-        bg: 'bg-amber-500/10'
+        color: 'text-primary',
+        bg: 'bg-primary/10'
     },
     {
         title: 'Cross-Platform',
@@ -52,13 +52,13 @@ export default function ReactNativeDocs() {
                     </div>
                     <div>
                         <span className="text-xs font-black text-neutral-500 uppercase tracking-widest block">Framework Guide</span>
-                        <span className="text-amber-500 text-[10px] font-bold uppercase tracking-widest">v2.0 Stable</span>
+                        <span className="text-primary text-[10px] font-bold uppercase tracking-widest">v2.0 Stable</span>
                     </div>
                 </div>
 
                 <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter text-white leading-none uppercase ">
                     React Native <br />
-                    <span className="text-amber-500 neon-text-glow">Engine.</span>
+                    <span className="text-primary neon-text-glow">Engine.</span>
                 </h1>
 
                 <p className="text-xl text-neutral-400 leading-relaxed max-w-2xl font-medium">
@@ -86,15 +86,15 @@ export default function ReactNativeDocs() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
-                        className="p-8 rounded-[32px] bg-neutral-900/50 border border-white/5 hover:border-amber-500/30 transition-all group relative overflow-hidden"
+                        className="p-8 rounded-[32px] bg-neutral-900/50 border border-white/5 hover:border-primary/30 transition-all group relative overflow-hidden"
                     >
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 blur-3xl -z-10 group-hover:bg-amber-500/10 transition-all" />
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl -z-10 group-hover:bg-primary/10 transition-all" />
 
                         <div className={`w-14 h-14 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 border border-white/5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                             <feature.icon className={`w-7 h-7 ${feature.color}`} />
                         </div>
 
-                        <h3 className="text-2xl font-heading font-black text-white mb-4 group-hover:text-amber-500 transition-colors  uppercase tracking-tight">
+                        <h3 className="text-2xl font-heading font-black text-white mb-4 group-hover:text-primary transition-colors  uppercase tracking-tight">
                             {feature.title}
                         </h3>
                         <p className="text-neutral-400 leading-relaxed font-medium">
@@ -112,7 +112,7 @@ export default function ReactNativeDocs() {
                 className="p-10 md:p-14 rounded-[40px] bg-neutral-900 border border-white/5 relative overflow-hidden"
             >
                 <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/10 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2" />
 
                 <div className="relative z-10 space-y-8">
                     <div>
@@ -124,7 +124,7 @@ export default function ReactNativeDocs() {
 
                     <div className="space-y-4">
                         <div className="group relative">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-amber-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                            <div className="absolute -inset-1 bg-primary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
                             <div className="relative flex items-center justify-between p-6 bg-black rounded-2xl border border-white/10 font-mono text-sm overflow-x-auto">
                                 <span className="text-neutral-300">
                                     <span className="text-cyan-500">npx</span> moboui-cli init
@@ -136,7 +136,7 @@ export default function ReactNativeDocs() {
 
                     <div className="flex flex-col sm:flex-row gap-8 pt-4">
                         <div className="flex items-center gap-3">
-                            <Shield className="w-5 h-5 text-amber-500" />
+                            <Shield className="w-5 h-5 text-primary" />
                             <span className="text-xs font-bold text-neutral-300 uppercase tracking-widest">Enterprise Ready</span>
                         </div>
                         <div className="flex items-center gap-3">

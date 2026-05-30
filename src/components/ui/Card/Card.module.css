@@ -9,7 +9,7 @@
 }
 
 .card-gradient {
-    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--card) / 0.8) 100%);
+    background-color: var(--card);
 }
 
 .card-glass {

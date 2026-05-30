@@ -1,6 +1,6 @@
 'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 
 export function ComponentPreview({ children }: { children: React.ReactNode }) {
     return (

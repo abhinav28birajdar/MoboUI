@@ -52,7 +52,7 @@ export function HeroEmulator() {
                     <div className="flex items-center gap-3">
                         <div className="w-3 h-3 rounded-full bg-red-500" />
                         <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                        <div className="w-3 h-3 rounded-full bg-green-500" />
+                        <div className="w-3 h-3 rounded-full bg-primary" />
                     </div>
                     <div className="mt-3 space-y-2">
                         <div className="h-2 w-24 bg-white/10 rounded" />

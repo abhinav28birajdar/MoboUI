@@ -61,7 +61,7 @@ export default function TemplatesPage() {
                                         alt={template.name}
                                         className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                                    <div className="absolute inset-0 bg-black/70" />
 
                                     {template.isPro && (
                                         <div className="absolute top-6 right-6">

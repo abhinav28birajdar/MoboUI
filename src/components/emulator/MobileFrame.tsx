@@ -15,7 +15,7 @@ interface MobileFrameProps {
     theme?: 'light' | 'dark';
 }
 
-const deviceConfig = {
+export const deviceConfig = {
     'iphone-14-pro': { width: 393, height: 852, radius: 48, notch: 'dynamic-island', bezel: 12, name: 'iPhone 14 Pro' },
     'iphone-se': { width: 375, height: 667, radius: 5, notch: 'classic', bezel: 14, name: 'iPhone SE' }, // radius 5 to imply older look? SE is rounded rect. 3rd gen is 8/iPhone 8 body.
     'pixel-7': { width: 412, height: 915, radius: 24, notch: 'punch-hole', bezel: 10, name: 'Pixel 7' },

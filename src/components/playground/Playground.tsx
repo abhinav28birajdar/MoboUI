@@ -288,7 +288,7 @@ export function Playground() {
               </div>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(119,217,112,0.8)]" />
+                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(0,0,0,0.2)]" />
                   <span className="text-[10px] font-black uppercase tracking-widest text-neutral-500">Syncing</span>
                 </div>
               </div>

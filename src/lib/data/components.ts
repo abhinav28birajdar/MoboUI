@@ -9,6 +9,7 @@ export const components: Component[] = [
     description: 'Solid filled button',
     tags: ['buttons', 'beginner'],
     framework: 'react-native',
+    image_url: '/assets/compont1.png',
     complexity: 'beginner',
     code: {
       typescript: `import React from 'react';
@@ -36,15 +37,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#0A0A0A',
   },
   button: {
-    backgroundColor: '#77D970',
+    backgroundColor: '#FFCA03',
     paddingVertical: 16,
     paddingHorizontal: 32,
     borderRadius: 16,
-    shadowColor: '#77D970',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 8,
   },
   text: {
     fontSize: 16,
@@ -67,7 +63,7 @@ class PrimaryButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Color(0xFF77D970).withOpacity(0.3),
+                color: Color(0xFFFFCA03).withOpacity(0.3),
                 blurRadius: 20,
                 offset: Offset(0, 8),
               ),
@@ -76,7 +72,7 @@ class PrimaryButton extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF77D970),
+              backgroundColor: Color(0xFFFFCA03),
               foregroundColor: Colors.black,
               padding: EdgeInsets.symmetric(horizontal: 32, vertical: 18),
               shape: RoundedRectangleBorder(
@@ -108,6 +104,7 @@ class PrimaryButton extends StatelessWidget {
     description: 'Outlined button',
     tags: ['buttons', 'beginner'],
     framework: 'react-native',
+    image_url: '/assets/compont2.png',
     complexity: 'beginner',
     code: {
       typescript: `import React from 'react';
@@ -139,12 +136,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 16,
     borderWidth: 2,
-    borderColor: '#77D970',
+    borderColor: '#FFCA03',
   },
   text: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#77D970',
+    color: '#FFCA03',
     textTransform: 'uppercase',
   },
 });`,
@@ -159,7 +156,7 @@ class SecondaryButton extends StatelessWidget {
         child: OutlinedButton(
           onPressed: () {},
           style: OutlinedButton.styleFrom(
-            side: BorderSide(color: Color(0xFF77D970), width: 2),
+            side: BorderSide(color: Color(0xFFFFCA03), width: 2),
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 18),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
@@ -168,7 +165,7 @@ class SecondaryButton extends StatelessWidget {
           child: Text(
             'SECONDARY ACTION',
             style: TextStyle(
-              color: Color(0xFF77D970),
+              color: Color(0xFFFFCA03),
               fontSize: 16,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.1,
@@ -189,6 +186,7 @@ class SecondaryButton extends StatelessWidget {
     description: 'Text-only button',
     tags: ['buttons', 'beginner'],
     framework: 'react-native',
+    image_url: '/assets/compont3.png',
     complexity: 'beginner',
     code: {
       typescript: `import React from 'react';
@@ -220,7 +218,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#77D970',
+    color: '#FFCA03',
     textDecorationLine: 'underline',
   },
 });`,
@@ -237,7 +235,7 @@ class TextButtonDemo extends StatelessWidget {
           child: Text(
             'TAP HERE',
             style: TextStyle(
-              color: Color(0xFF77D970),
+              color: Color(0xFFFFCA03),
               fontSize: 16,
               fontWeight: FontWeight.bold,
               decoration: TextDecoration.underline,
@@ -258,6 +256,7 @@ class TextButtonDemo extends StatelessWidget {
     description: 'Icon-only circular button',
     tags: ['buttons', 'beginner'],
     framework: 'react-native',
+    image_url: '/assets/compont4.png',
     complexity: 'beginner',
     code: {
       typescript: `import React from 'react';
@@ -271,7 +270,7 @@ export default function IconButton() {
         style={styles.button}
         activeOpacity={0.7}
       >
-        <Heart color="#77D970" size={28} fill="#77D970" />
+        <Heart color="#FFCA03" size={28} fill="#FFCA03" />
       </TouchableOpacity>
     </View>
   );
@@ -307,12 +306,12 @@ class IconButtonDemo extends StatelessWidget {
           width: 64,
           height: 64,
           decoration: BoxDecoration(
-            color: Color(0xFF77D970).withOpacity(0.1),
+            color: Color(0xFFFFCA03).withOpacity(0.1),
             shape: BoxShape.circle,
-            border: Border.all(color: Color(0xFF77D970).withOpacity(0.2)),
+            border: Border.all(color: Color(0xFFFFCA03).withOpacity(0.2)),
           ),
           child: IconButton(
-            icon: Icon(Icons.favorite, color: Color(0xFF77D970), size: 30),
+            icon: Icon(Icons.favorite, color: Color(0xFFFFCA03), size: 30),
             onPressed: () {},
           ),
         ),
@@ -363,10 +362,10 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: '#77D970',
+    backgroundColor: '#FFCA03',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#77D970',
+    shadowColor: '#FFCA03',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.4,
     shadowRadius: 15,
@@ -382,7 +381,7 @@ class FloatingActionButtonDemo extends StatelessWidget {
       backgroundColor: Color(0xFF0A0A0A),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: Color(0xFF77D970),
+        backgroundColor: Color(0xFFFFCA03),
         child: Icon(Icons.add, color: Colors.black, size: 28),
         elevation: 8,
       ),
@@ -499,7 +498,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0A0A0A',
   },
   button: {
-    backgroundColor: '#77D970',
+    backgroundColor: '#FFCA03',
     paddingVertical: 16,
     paddingHorizontal: 36,
     borderRadius: 20,
@@ -549,7 +548,7 @@ class _AnimatedButtonState extends State<AnimatedButton> with SingleTickerProvid
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
               decoration: BoxDecoration(
-                color: Color(0xFF77D970),
+                color: Color(0xFFFFCA03),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -601,7 +600,7 @@ export default function GradientButton() {
     <View style={styles.container}>
       <TouchableOpacity activeOpacity={0.8}>
         <LinearGradient
-          colors={['#77D970', '#5EB258']}
+          colors={['#FFCA03', '#E6B800']}
           style={styles.button}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
@@ -624,7 +623,7 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     paddingHorizontal: 40,
     borderRadius: 20,
-    shadowColor: '#77D970',
+    shadowColor: '#FFCA03',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.4,
     shadowRadius: 15,
@@ -648,14 +647,14 @@ class GradientButtonDemo extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFF77D970), Color(0xFF5EB258)],
+              colors: [Color(0xFFFFCA03), Color(0xFFE6B800)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Color(0xFF77D970).withOpacity(0.3),
+                color: Color(0xFFFFCA03).withOpacity(0.3),
                 blurRadius: 20,
                 offset: Offset(0, 10),
               ),
@@ -1502,13 +1501,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   inputActive: {
-    borderColor: '#77D970',
+    borderColor: '#FFCA03',
     backgroundColor: 'rgba(119, 217, 112, 0.05)',
   },
   button: {
     width: '100%',
     height: 56,
-    backgroundColor: '#77D970',
+    backgroundColor: '#FFCA03',
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
@@ -1551,7 +1550,7 @@ class _OTPInputDemoState extends State<OTPInputDemo> {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF77D970),
+                  backgroundColor: Color(0xFFFFCA03),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -1581,7 +1580,7 @@ class _OTPInputDemoState extends State<OTPInputDemo> {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: code[index].isNotEmpty 
-              ? Color(0xFF77D970) 
+              ? Color(0xFFFFCA03) 
               : Colors.white.withOpacity(0.05),
         ),
       ),
@@ -1648,11 +1647,11 @@ const styles = StyleSheet.create({
   fab: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#77D970',
+    backgroundColor: '#FFCA03',
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 32,
-    shadowColor: '#77D970',
+    shadowColor: '#FFCA03',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -1678,7 +1677,7 @@ class ExtendedFABDemo extends StatelessWidget {
       backgroundColor: Color(0xFF0A0A0A),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
-        backgroundColor: Color(0xFF77D970),
+        backgroundColor: Color(0xFFFFCA03),
         icon: Icon(Icons.add, color: Colors.black),
         label: Text(
           'COMPOSE',
@@ -1822,7 +1821,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#77D970',
+    color: '#FFCA03',
     textTransform: 'uppercase',
   },
 });`,
@@ -1841,14 +1840,14 @@ class InkwellButtonDemo extends StatelessWidget {
               side: BorderSide(color: Color(0xFF333333))),
           child: InkWell(
             onTap: () {},
-            splashColor: Color(0xFF77D970).withOpacity(0.3),
+            splashColor: Color(0xFFFFCA03).withOpacity(0.3),
             borderRadius: BorderRadius.circular(8),
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               child: Text(
                 'TOUCH RIPPLE',
                 style: TextStyle(
-                  color: Color(0xFF77D970),
+                  color: Color(0xFFFFCA03),
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -1913,8 +1912,8 @@ const styles = StyleSheet.create({
     borderColor: '#333',
   },
   chipSelected: {
-    backgroundColor: '#77D970',
-    borderColor: '#77D970',
+    backgroundColor: '#FFCA03',
+    borderColor: '#FFCA03',
   },
   icon: {
     marginRight: 6,
@@ -1951,7 +1950,7 @@ class _ChipButtonDemoState extends State<ChipButtonDemo> {
               _selected = value;
             });
           },
-          selectedColor: Color(0xFF77D970), // Primary Green
+          selectedColor: Color(0xFFFFCA03), // Primary Green
           backgroundColor: Color(0xFF1A1A1A),
           checkmarkColor: Colors.black,
           labelStyle: TextStyle(
@@ -2009,7 +2008,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0A0A0A',
   },
   label: {
-    color: '#77D970',
+    color: '#FFCA03',
     fontSize: 14,
     fontWeight: '700',
     marginBottom: 8,
@@ -2042,7 +2041,7 @@ class CustomTextInput extends StatelessWidget {
             Text(
               'FULL NAME',
               style: TextStyle(
-                color: Color(0xFF77D970),
+                color: Color(0xFFFFCA03),
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.2,
@@ -2102,7 +2101,7 @@ export default function PasswordInput() {
           secureTextEntry={secure}
         />
         <TouchableOpacity onPress={() => setSecure(!secure)}>
-          {secure ? <Eye color="#77D970" size={20} /> : <EyeOff color="#77D970" size={20} />}
+          {secure ? <Eye color="#FFCA03" size={20} /> : <EyeOff color="#FFCA03" size={20} />}
         </TouchableOpacity>
       </View>
     </View>
@@ -2117,7 +2116,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0A0A0A',
   },
   label: {
-    color: '#77D970',
+    color: '#FFCA03',
     fontSize: 14,
     fontWeight: '700',
     marginBottom: 10,
@@ -2158,7 +2157,7 @@ class _PasswordInputState extends State<PasswordInput> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('PASSWORD', style: TextStyle(color: Color(0xFF77D970), fontWeight: FontWeight.bold)),
+            Text('PASSWORD', style: TextStyle(color: Color(0xFFFFCA03), fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             TextField(
               obscureText: _obscure,
@@ -2169,7 +2168,7 @@ class _PasswordInputState extends State<PasswordInput> {
                 filled: true,
                 fillColor: Color(0xFF1A1A1A),
                 suffixIcon: IconButton(
-                  icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off, color: Color(0xFF77D970)),
+                  icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off, color: Color(0xFFFFCA03)),
                   onPressed: () => setState(() => _obscure = !_obscure),
                 ),
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -2309,7 +2308,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0A0A0A',
   },
   label: {
-    color: '#77D970',
+    color: '#FFCA03',
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 8,
@@ -2338,7 +2337,7 @@ class TextAreaDemo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('YOUR MESSAGE', style: TextStyle(color: Color(0xFF77D970), fontWeight: FontWeight.bold)),
+            Text('YOUR MESSAGE', style: TextStyle(color: Color(0xFFFFCA03), fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
             TextField(
               maxLines: 4,
@@ -2351,7 +2350,7 @@ class TextAreaDemo extends StatelessWidget {
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Color(0xFF77D970)),
+                  borderSide: BorderSide(color: Color(0xFFFFCA03)),
                 ),
               ),
             ),
@@ -2398,7 +2397,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0A0A0A',
   },
   label: {
-    color: '#77D970',
+    color: '#FFCA03',
     marginBottom: 8,
     fontWeight: 'bold',
   },
@@ -2425,7 +2424,7 @@ class NumberInputDemo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('QUANTITY', style: TextStyle(color: Color(0xFF77D970), fontWeight: FontWeight.bold)),
+            Text('QUANTITY', style: TextStyle(color: Color(0xFFFFCA03), fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
             TextField(
               keyboardType: TextInputType.number,
@@ -2486,7 +2485,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0A0A0A',
   },
   label: {
-    color: '#77D970',
+    color: '#FFCA03',
     marginBottom: 8,
     fontWeight: 'bold',
   },
@@ -2520,7 +2519,7 @@ class EmailInputDemo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('EMAIL ADDRESS', style: TextStyle(color: Color(0xFF77D970), fontWeight: FontWeight.bold)),
+            Text('EMAIL ADDRESS', style: TextStyle(color: Color(0xFFFFCA03), fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
             TextField(
               keyboardType: TextInputType.emailAddress,
@@ -2583,7 +2582,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0A0A0A',
   },
   label: {
-    color: '#77D970',
+    color: '#FFCA03',
     marginBottom: 8,
     fontWeight: 'bold',
   },
@@ -2625,7 +2624,7 @@ class PhoneInputDemo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('PHONE NUMBER', style: TextStyle(color: Color(0xFF77D970), fontWeight: FontWeight.bold)),
+            Text('PHONE NUMBER', style: TextStyle(color: Color(0xFFFFCA03), fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
             Row(
               children: [
@@ -2710,7 +2709,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0A0A0A',
   },
   label: {
-    color: '#77D970',
+    color: '#FFCA03',
     marginBottom: 20,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -2746,7 +2745,7 @@ class OTPInputDemo extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('ENTER CODE', style: TextStyle(color: Color(0xFF77D970), fontWeight: FontWeight.bold, fontSize: 18)),
+            Text('ENTER CODE', style: TextStyle(color: Color(0xFFFFCA03), fontWeight: FontWeight.bold, fontSize: 18)),
             SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -2770,7 +2769,7 @@ class OTPInputDemo extends StatelessWidget {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Color(0xFF77D970), width: 2),
+                        borderSide: BorderSide(color: Color(0xFFFFCA03), width: 2),
                       ),
                     ),
                   ),
@@ -17613,7 +17612,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
   addButton: {
-    backgroundColor: '#77D970',
+    backgroundColor: '#FFCA03',
     padding: 10,
     borderRadius: 12,
   },
@@ -17708,7 +17707,7 @@ class ProductCard extends StatelessWidget {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Color(0xFF77D970),
+                            color: Color(0xFFFFCA03),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: IconButton(
@@ -17805,7 +17804,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 80,
-    backgroundColor: '#77D970',
+    backgroundColor: '#FFCA03',
   },
   avatarContainer: {
     marginTop: -40,
@@ -17862,11 +17861,11 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#77D970',
+    borderColor: '#FFCA03',
     alignItems: 'center',
   },
   buttonText: {
-    color: '#77D970',
+    color: '#FFCA03',
     fontWeight: 'bold',
   },
 });`,
@@ -17889,7 +17888,7 @@ class ProfileCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(height: 80, color: Color(0xFF77D970)),
+              Container(height: 80, color: Color(0xFFFFCA03)),
               Transform.translate(
                 offset: Offset(0, -40),
                 child: Column(
@@ -17932,12 +17931,12 @@ class ProfileCard extends StatelessWidget {
                       child: OutlinedButton(
                         onPressed: () {},
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Color(0xFF77D970)),
+                          side: BorderSide(color: Color(0xFFFFCA03)),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           padding: EdgeInsets.symmetric(vertical: 12),
                           minimumSize: Size(double.infinity, 0),
                         ),
-                        child: Text('Edit Profile', style: TextStyle(color: Color(0xFF77D970), fontWeight: FontWeight.bold)),
+                        child: Text('Edit Profile', style: TextStyle(color: Color(0xFFFFCA03), fontWeight: FontWeight.bold)),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -17981,7 +17980,7 @@ export default function GlassCard() {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['#77D970', '#50C878']}
+        colors={['#FFCA03', '#50C878']}
         style={styles.cardWrapper}
       >
         <BlurView intensity={40} tint="dark" style={styles.glass}>
@@ -18029,7 +18028,7 @@ const styles = StyleSheet.create({
   },
   badge: {
     alignSelf: 'flex-start',
-    backgroundColor: '#77D970',
+    backgroundColor: '#FFCA03',
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: 8,
@@ -18052,7 +18051,7 @@ class PremiumGlassCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFF77D970), Color(0xFF50C878)],
+              colors: [Color(0xFFFFCA03), Color(0xFF50C878)],
             ),
             borderRadius: BorderRadius.circular(24),
           ),
@@ -18089,7 +18088,7 @@ class PremiumGlassCard extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                       decoration: BoxDecoration(
-                        color: Color(0xFF77D970),
+                        color: Color(0xFFFFCA03),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
@@ -18145,7 +18144,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#000', padding: 30, justifyContent: 'center' },
   header: { color: '#fff', fontSize: 42, fontWeight: '900', marginBottom: 50 },
   input: { borderBottomWidth: 1, borderBottomColor: '#333', paddingVertical: 15, color: '#fff', marginBottom: 20 },
-  button: { backgroundColor: '#77D970', height: 60, borderRadius: 20, justifyContent: 'center', alignItems: 'center', marginTop: 30 },
+  button: { backgroundColor: '#FFCA03', height: 60, borderRadius: 20, justifyContent: 'center', alignItems: 'center', marginTop: 30 },
   buttonText: { fontWeight: '900', fontSize: 16 }
 });`,
       dart: `// Flutter Modern Login...`
@@ -18180,8 +18179,8 @@ const styles = StyleSheet.create({
   card: { backgroundColor: '#111', padding: 25, borderRadius: 30, borderWidth: 1, borderColor: '#222' },
   label: { color: '#888', fontSize: 14, fontWeight: '600' },
   balance: { color: '#fff', fontSize: 32, fontWeight: '900', marginVertical: 10 },
-  pill: { backgroundColor: '#77D97022', padding: 8, borderRadius: 10, alignSelf: 'flex-start' },
-  pillText: { color: '#77D970', fontWeight: 'bold', fontSize: 12 }
+  pill: { backgroundColor: '#FFCA0322', padding: 8, borderRadius: 10, alignSelf: 'flex-start' },
+  pillText: { color: '#FFCA03', fontWeight: 'bold', fontSize: 12 }
 });`,
       dart: `// Flutter Crypto Wallet...`
     }
@@ -18249,7 +18248,7 @@ export default function PricingCard() {
 }
 
 const styles = StyleSheet.create({
-  card: { backgroundColor: '#77D970', padding: 30, borderRadius: 32 },
+  card: { backgroundColor: '#FFCA03', padding: 30, borderRadius: 32 },
   tier: { color: '#000', fontWeight: '900', letterSpacing: 2, fontSize: 12 },
   price: { color: '#000', fontSize: 48, fontWeight: '900', marginVertical: 10 },
   period: { fontSize: 18, fontWeight: '600' },
@@ -18315,7 +18314,7 @@ export default function ChipGroup() {
 const styles = StyleSheet.create({
   container: { flexDirection: 'row', gap: 10 },
   chip: { paddingHorizontal: 20, paddingVertical: 10, borderRadius: 100, borderWidth: 1, borderColor: '#333' },
-  chipActive: { paddingHorizontal: 20, paddingVertical: 10, borderRadius: 100, backgroundColor: '#77D970' },
+  chipActive: { paddingHorizontal: 20, paddingVertical: 10, borderRadius: 100, backgroundColor: '#FFCA03' },
   txt: { color: '#666', fontWeight: '700' },
   activeTxt: { color: '#000', fontWeight: '900' }
 });`,
@@ -18339,7 +18338,7 @@ export default function Carousel() {
   return (
     <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false}>
       {[1, 2, 3].map(i => (
-        <View key={i} style={[styles.card, {backgroundColor: i % 2 === 0 ? '#77D970' : '#111'}]}>
+        <View key={i} style={[styles.card, {backgroundColor: i % 2 === 0 ? '#FFCA03' : '#111'}]}>
           <Text style={[styles.txt, {color: i % 2 === 0 ? '#000' : '#fff'}]}>Feature {i}</Text>
         </View>
       ))}
@@ -18371,7 +18370,7 @@ import { BlurView } from 'expo-blur';
 export default function GlassNav() {
   return (
     <BlurView intensity={30} tint="dark" style={styles.nav}>
-       <Home color="#77D970" size={24} />
+       <Home color="#FFCA03" size={24} />
        <Search color="#666" size={24} />
        <Bell color="#666" size={24} />
        <User color="#666" size={24} />

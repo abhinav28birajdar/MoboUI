@@ -1,5 +1,7 @@
 // src/server/db/index.ts
-import { PrismaClient } from "@prisma/client";
+const { PrismaClient } = require("@prisma/client");
+
+type PrismaClient = any;
 
 const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined;

@@ -1,145 +1,177 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ChevronRight, Play, Star, Sparkles, Layers } from "lucide-react";
-import Link from "next/link";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ChevronRight, Play, Sparkles, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { staggerContainer, fadeUpItem } from "@/lib/utils/motionConfig";
+
+// --- Advanced Animation Variants ---
+const staggerContainer = {
+  initial: { opacity: 0 },
+  animate: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+  },
+};
+
+const textBlurReveal: any = {
+  initial: { opacity: 0, y: 20, filter: "blur(8px)" },
+  animate: { 
+    opacity: 1, 
+    y: 0, 
+    filter: "blur(0px)", 
+    transition: { duration: 0.8, ease: "easeInOut" } 
+  },
+};
+
+const floatingElement: any = {
+  animate: {
+    y: [0, -15, 0],
+    transition: {
+      duration: 5,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  },
+};
 
 export const HeroSection = () => {
-    return (
-        <section className="relative min-h-screen flex items-center pt-32 overflow-hidden bg-background">
-            {/* Background Grid - Adaptive to theme */}
-            <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05]" />
+  const { scrollY } = useScroll();
+  // Smooth parallax for scroll
+  const y1 = useTransform(scrollY, [0, 500], [0, -120]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -60]);
 
-            <div className="container mx-auto px-6 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-20 items-center">
-                    {/* Left Column: Copy & CTAs */}
-                    <motion.div
-                        variants={staggerContainer}
-                        initial="initial"
-                        animate="animate"
-                        className="text-left"
-                    >
-                        <motion.div
-                            variants={fadeUpItem}
-                            className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-xs font-medium text-text-secondary mb-10 border shadow-sm transition-all hover:border-primary/30"
-                        >
-                            <Sparkles size={14} className="text-text-muted" />
-                            <span className="tracking-widest font-medium uppercase text-[10px]">New v3.0 Components live</span>
-                        </motion.div>
+  return (
+    <section className="relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden bg-background">
+      {/* --- Dynamic Background Elements --- */}
+      <div className="absolute inset-0 overflow-hidden -z-10">
+        <motion.div 
+          animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-amber-primary/15 blur-[140px] rounded-full" 
+        />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-40 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+      </div>
 
-                        <motion.h1
-                            variants={fadeUpItem}
-                            className="text-7xl md:text-8xl lg:text-[10rem] font-medium tracking-tighter text-text-primary mb-8 leading-[0.8] font-display"
-                        >
-                            Mobile UIs <br />
-                            <span className="text-text-primary">that feel</span> <br />
-                            <span className="text-primary italic">effortless.</span>
-                        </motion.h1>
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          
+          {/* --- Left Column: Content --- */}
+          <motion.div
+            variants={staggerContainer}
+            initial="initial"
+            animate="animate"
+            className="flex flex-col"
+          >
+            {/* Animated Badge */}
+            <motion.div variants={textBlurReveal} className="mb-8">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-bold uppercase tracking-[0.2em] shadow-[0_4px_12px_rgba(0,0,0,0.1)] backdrop-blur-md">
+                <Sparkles size={14} className="animate-pulse" />
+                New v3.0 Components live
+              </span>
+            </motion.div>
 
-                        <motion.p
-                            variants={fadeUpItem}
-                            className="text-xl text-text-secondary max-w-xl mb-12 leading-relaxed font-medium"
-                        >
-                            Production-ready Flutter, React Native & Expo components. Optimized for performance, designed for conversion, and ready to ship today.
-                        </motion.p>
+            {/* Staggered Text Reveal Headline */}
+            <motion.h1 className="text-6xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tighter text-text-primary mb-6 leading-[1.05] font-display">
+              <motion.span variants={textBlurReveal} className="block">Build mobile</motion.span>
+              <motion.span variants={textBlurReveal} className="block">
+              <span className="text-transparent bg-clip-text bg-primary italic pr-4">
+                  interfaces
+                </span>
+              </motion.span>
+              <motion.span variants={textBlurReveal} className="block">in minutes.</motion.span>
+            </motion.h1>
 
-                        <motion.div
-                            variants={fadeUpItem}
-                            className="flex flex-wrap gap-6"
-                        >
-                            <Link href="/components">
-                                <Button size="lg" className="group rounded-2xl h-20 px-10 text-xl font-medium bg-primary text-primary-foreground hover:scale-105 transition-all shadow-glow-amber hover:bg-primary/90">
-                                    Start Building
-                                    <ChevronRight size={22} className="ml-2 transition-transform group-hover:translate-x-1" />
-                                </Button>
-                            </Link>
-                            <Link href="/playground">
-                                <Button variant="outline" size="lg" className="group rounded-2xl h-20 px-10 text-xl font-medium border-border hover:bg-surface text-text-primary transition-all">
-                                    <Play size={20} className="mr-3" />
-                                    Playground
-                                </Button>
-                            </Link>
-                        </motion.div>
+            <motion.p 
+              variants={textBlurReveal}
+              className="text-lg md:text-xl text-text-secondary max-w-lg mb-10 leading-relaxed font-medium"
+            >
+              The ultimate design system for Flutter and React Native. Ship high-performance apps with pre-built, conversion-optimized components.
+            </motion.p>
 
-                        {/* Stats Section */}
-                        <motion.div
-                            variants={fadeUpItem}
-                            className="mt-20 flex items-center gap-16"
-                        >
-                            {[
-                                { value: "300+", label: "Assets" },
-                                { value: "3", label: "Frameworks" },
-                                { value: "10k+", label: "Developers" }
-                            ].map((stat, idx) => (
-                                <div key={idx} className="flex flex-col">
-                                    <span className="text-text-primary font-medium text-5xl tracking-tighter font-display">{stat.value}</span>
-                                    <span className="text-[10px] uppercase tracking-widest text-text-muted font-medium mt-1">{stat.label}</span>
-                                </div>
-                            ))}
-                        </motion.div>
-                    </motion.div>
+            <motion.div variants={textBlurReveal} className="flex flex-wrap gap-5">
+              <Button size="lg" className="h-14 px-8 rounded-2xl bg-primary hover:bg-primary-hover text-primary-foreground font-medium text-base transition-all shadow-[0_4px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.25)] hover:-translate-y-1 group">
+                Get Started
+                <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+              </Button>
+              
+              <Button variant="ghost" size="lg" className="h-14 px-8 rounded-2xl border border-border/50 bg-surface/30 backdrop-blur-md font-medium text-base hover:bg-surface hover:-translate-y-1 transition-all">
+                <Play size={16} className="mr-2 fill-current" />
+                Watch Demo
+              </Button>
+            </motion.div>
 
-                    {/* Right Column: Phone Mockup */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                        className="hidden lg:block relative"
-                    >
-                        <div className="relative z-10 mx-auto w-full max-w-[420px]">
-                            {/* Phone Frame Mockup */}
-                            <div className="relative rounded-[4rem] border-[14px] border-text-primary/5 bg-text-primary p-4 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] aspect-[9/19] overflow-hidden">
-                                {/* Inner Screen */}
-                                <div className="w-full h-full rounded-[3rem] overflow-hidden bg-background relative border border-border/10">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1616469829581-73993eb86b02?q=80&w=1000&auto=format&fit=crop"
-                                        alt="Mobile App Preview"
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+            {/* Social Proof / Stats */}
+            <motion.div variants={textBlurReveal} className="mt-16 pt-8 border-t border-border/40 flex gap-12">
+              <div className="group cursor-pointer">
+                <p className="text-3xl font-bold font-display group-hover:text-amber-primary transition-colors">12k+</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-bold mt-1">Developers</p>
+              </div>
+              <div className="group cursor-pointer">
+                <p className="text-3xl font-bold font-display group-hover:text-amber-primary transition-colors">4.9/5</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-bold mt-1">Rating</p>
+              </div>
+            </motion.div>
+          </motion.div>
 
-                                    {/* Mock Status Bar */}
-                                    <div className="absolute top-0 left-0 right-0 h-10 bg-gradient-to-b from-black/40 to-transparent flex items-center justify-between px-10">
-                                        <div className="w-8 h-2 bg-white/20 rounded-full" />
-                                        <div className="w-12 h-2 bg-white/20 rounded-full" />
-                                    </div>
+          {/* --- Right Column: Visual Stack --- */}
+          <div className="relative lg:h-[700px] flex items-center justify-center mt-12 lg:mt-0">
+            
+            {/* Frameless, Larger Main Image with Levitation & Parallax */}
+            <motion.div 
+              style={{ y: y2 }}
+              className="relative z-20 w-full flex justify-center"
+            >
+              <motion.img 
+                variants={floatingElement}
+                animate="animate"
+                src="/assets/mobileimage1.png" 
+                alt="Main UI Preview" 
+                // Removed all border/rounded clipping. Added massive drop-shadow & larger max-width
+                className="w-full max-w-[480px] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
+              />
+            </motion.div>
 
-                                    {/* Floating Action Badge */}
-                                    <div className="absolute bottom-10 left-10 right-10 p-5 bg-primary text-primary-foreground font-medium rounded-2xl shadow-glow-amber text-center text-sm tracking-tight">
-                                        Ship Faster.
-                                    </div>
-                                </div>
-                            </div>
+            {/* Floating Card 1: Features (Parallax + Float) */}
+            <motion.div
+              style={{ y: y1 }}
+              initial={{ opacity: 0, scale: 0.8, x: 50 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ delay: 0.8, duration: 0.8, type: "spring" }}
+              className="absolute -right-4 md:right-4 top-1/4 z-30 bg-background/70 backdrop-blur-2xl p-4 rounded-3xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.1)] hidden md:flex items-center gap-4"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground shadow-inner">
+                <Zap size={22} className="fill-white/20" />
+              </div>
+              <div className="pr-2">
+                <p className="text-sm font-bold text-text-primary">Fast Refresh</p>
+                <p className="text-[11px] text-text-muted font-medium mt-0.5">Optimized 60fps</p>
+              </div>
+            </motion.div>
 
-                            {/* Floating Decorative Elements */}
-                            <motion.div
-                                animate={{ y: [0, -25, 0] }}
-                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute -top-12 -right-12 p-8 bg-surface border border-border rounded-[2.5rem] shadow-2xl z-20"
-                            >
-                                <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center">
-                                    <Layers size={28} className="text-primary" />
-                                </div>
-                            </motion.div>
+            {/* Floating Card 2: Security (Parallax + Float) */}
+            <motion.div
+              style={{ y: y1 }}
+              initial={{ opacity: 0, scale: 0.8, x: -50 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ delay: 1.1, duration: 0.8, type: "spring" }}
+              className="absolute -left-4 md:left-4 bottom-1/4 z-30 bg-background/70 backdrop-blur-2xl p-4 rounded-3xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.1)] hidden md:flex items-center gap-4"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-inner">
+                <ShieldCheck size={22} className="fill-white/20" />
+              </div>
+              <div className="pr-2">
+                <p className="text-sm font-bold text-text-primary">Enterprise</p>
+                <p className="text-[11px] text-text-muted font-medium mt-0.5">Bank-grade security</p>
+              </div>
+            </motion.div>
 
-                            <motion.div
-                                animate={{ y: [0, 25, 0] }}
-                                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                                className="absolute -bottom-12 -left-12 p-8 bg-surface border border-border rounded-[2.5rem] shadow-2xl z-20"
-                            >
-                                <div className="w-14 h-14 rounded-2xl bg-text-primary/5 flex items-center justify-center">
-                                    <Star size={28} className="text-text-primary" />
-                                </div>
-                            </motion.div>
-                        </div>
+            {/* Central Decorative Glow behind frameless image */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[70%] bg-amber-primary/20 blur-[120px] rounded-full -z-10" />
+          </div>
 
-                        {/* Background Glow */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 blur-[130px] rounded-full -z-10 opacity-60" />
-                    </motion.div>
-                </div>
-            </div>
-        </section>
-    );
+        </div>
+      </div>
+    </section>
+  );
 };

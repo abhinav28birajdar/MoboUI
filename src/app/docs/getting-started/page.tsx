@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRight, Rocket, Terminal, Layers, Palette, Cpu } from 'lucide-react';
+import { ChevronRight, Rocket, Terminal, Layers, Cpu } from 'lucide-react';
 import Link from 'next/link';
 
 export default function GettingStartedPage() {
@@ -89,7 +89,7 @@ export default function GettingStartedPage() {
             <section className="space-y-8">
                 <h2 className="text-2xl font-bold tracking-tight">Choose your Framework</h2>
                 <div className="grid md:grid-cols-2 gap-6">
-                    <div className="p-6 rounded-3xl border border-border/50 hover:border-cyan-500/50 transition-all bg-gradient-to-br from-cyan-500/5 to-transparent">
+                    <div className="p-6 rounded-3xl border border-border/50 hover:border-cyan-500/50 transition-all bg-cyan-500/10">
                         <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-6">
                             <Layers className="text-cyan-500" />
                         </div>
@@ -102,7 +102,7 @@ export default function GettingStartedPage() {
                         </Link>
                     </div>
 
-                    <div className="p-6 rounded-3xl border border-border/50 hover:border-blue-500/50 transition-all bg-gradient-to-br from-blue-500/5 to-transparent">
+                    <div className="p-6 rounded-3xl border border-border/50 hover:border-blue-500/50 transition-all bg-blue-500/10">
                         <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6">
                             <Cpu className="text-blue-500" />
                         </div>

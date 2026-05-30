@@ -1,7 +1,7 @@
 "use client";
 
 import { PageHeader } from "@/components/shared/PageHeader";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion"; // Not used yet, but reserved for future animations
 import { Users, Heart, Zap, Globe } from "lucide-react";
 
 export default function AboutPage() {

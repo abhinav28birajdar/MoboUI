@@ -1,7 +1,7 @@
 "use client";
 
 import { PageHeader } from "@/components/shared/PageHeader";
-import { CheckCircle2, AlertCircle, Clock } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 export default function StatusPage() {
     return (

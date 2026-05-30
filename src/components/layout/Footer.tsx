@@ -12,7 +12,7 @@ const FOOTER_LINKS = [
         links: [
             { label: "Components", href: "/components" },
             { label: "Playground", href: "/playground" },
-            { label: "Showcase", href: "/showcase" },
+            { label: "Upload", href: "/admin/upload" },
             { label: "Docs", href: "/docs" },
         ],
     },

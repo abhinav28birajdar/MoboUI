@@ -12,7 +12,7 @@ export default function TokensPage() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-16 gap-6">
                 <div>
                     <Badge className="mb-4 bg-accent/10 text-accent border-accent/20">Design System</Badge>
-                    <h1 className="text-4xl md:text-6xl font-extrabold mb-4 tracking-tighter">Design <span className="gradient-text">Tokens</span></h1>
+                    <h1 className="text-4xl md:text-6xl font-extrabold mb-4 tracking-tighter">Design <span className="text-primary">Tokens</span></h1>
                     <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
                         Maintain consistency across your mobile applications with a unified design token system.
                     </p>

@@ -24,8 +24,8 @@ const features = [
         title: 'Material 3 & Cupertino',
         description: 'Dual-adaptive components that automatically switch design systems based on OS.',
         icon: Palette,
-        color: 'text-amber-500',
-        bg: 'bg-amber-500/10'
+        color: 'text-primary',
+        bg: 'bg-primary/10'
     },
     {
         title: 'Skia Rendered',
@@ -129,7 +129,7 @@ export default function FlutterDocs() {
                                 <span className="text-[10px] font-bold text-neutral-300 uppercase tracking-widest">Modular API</span>
                             </div>
                             <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-                                <Zap className="w-3 h-3 text-amber-500" />
+                                <Zap className="w-3 h-3 text-primary" />
                                 <span className="text-[10px] font-bold text-neutral-300 uppercase tracking-widest">Optimized Paint</span>
                             </div>
                         </div>

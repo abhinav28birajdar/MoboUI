@@ -86,7 +86,7 @@ export function AIFeatures() {
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    className="mt-20 p-1 bg-gradient-to-r from-transparent via-white/5 to-transparent h-px"
+                    className="mt-20 p-1 bg-white/5 h-px"
                 />
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 text-center">

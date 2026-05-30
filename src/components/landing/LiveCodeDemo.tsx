@@ -81,7 +81,7 @@ export function LiveCodeDemo() {
         <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-8">
           <div className="max-w-xl">
             <h2 className="text-3xl md:text-5xl font-black mb-6">
-              See It In <span className="gradient-text">Action</span>
+              See It In <span className="text-primary">Action</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-8">
               Fully interactive playground with Monaco editor and real-time preview.

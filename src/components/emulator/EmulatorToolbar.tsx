@@ -1,8 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Toggle } from '@/components/ui/toggle';
-import { Smartphone, Tablet, RefreshCcw, ZoomIn, ZoomOut } from 'lucide-react';
+import { RefreshCcw, ZoomIn, ZoomOut } from 'lucide-react';
 
 interface EmulatorToolbarProps {
     platform: 'ios' | 'android';

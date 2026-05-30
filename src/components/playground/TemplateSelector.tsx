@@ -13,7 +13,7 @@ export function TemplateSelector() {
     const { template, setTemplate } = usePlaygroundStore();
 
     return (
-        <Select value={template} onValueChange={setTemplate}>
+        <Select value={template} onValueChange={(val: string) => setTemplate(val as 'blank' | 'button' | 'form' | 'list')}>
             <SelectTrigger className="w-[140px] h-8">
                 <SelectValue placeholder="Template" />
             </SelectTrigger>

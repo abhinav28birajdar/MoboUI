@@ -47,7 +47,7 @@ export function Features() {
   return (
     <section className="py-32 bg-black relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="absolute top-0 inset-x-0 h-px bg-white/10" />
 
       <div className="container px-6 mx-auto relative z-10">
         <motion.div

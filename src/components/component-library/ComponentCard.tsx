@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Smartphone, Zap } from 'lucide-react';
+import { ArrowRight, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
 export interface ComponentCardProps {
@@ -29,7 +29,7 @@ export function ComponentCard({ id, name, description, category, frameworks = ['
                 {/* Abstract Design Elements */}
                 <div className="absolute inset-0 opacity-20 pointer-events-none">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-primary/20 blur-[60px] rounded-full group-hover:scale-150 transition-transform duration-700" />
-                    <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.02)_50%,transparent_75%)] bg-[length:250%_250%] animate-gradient-shift" />
+                    <div className="absolute top-0 right-0 w-full h-full bg-transparent" />
                 </div>
 
                 {/* Device Mockup Light */}

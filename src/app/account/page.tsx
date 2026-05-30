@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { User, Settings, FolderHeart, History, Shield, LogOut } from "lucide-react";
+import { User, Settings, FolderHeart, History, Shield, LogOut, Heart, Eye, LayoutGrid } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { components } from "@/lib/data/components";
 
 export const metadata: Metadata = {
     title: "Account | MoboUI",
@@ -9,89 +10,114 @@ export const metadata: Metadata = {
 };
 
 export default function AccountPage() {
+    const portfolio = components.slice(0, 6);
+
     return (
-        <div className="container max-w-5xl mx-auto py-16 px-6 relative">
-            <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-amber-500/5 blur-[150px] -z-10 rounded-full pointer-events-none" />
+        <div className="container max-w-7xl mx-auto py-12 md:py-16 px-6 relative">
+            <div className="absolute top-1/4 right-0 w-[420px] h-[420px] bg-primary/10 blur-[140px] -z-10 rounded-full pointer-events-none" />
 
-            <h1 className="text-4xl font-heading font-black tracking-tighter text-white uppercase  mb-10">
-                My Account
-            </h1>
+            <div className="rounded-2xl border border-border bg-white overflow-hidden shadow-sm mb-8">
+                <div className="h-36 md:h-44 bg-primary" />
+                <div className="px-6 md:px-8 pb-8 -mt-14 md:-mt-16">
+                    <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-white border-4 border-white shadow-sm flex items-center justify-center">
+                        <span className="text-2xl md:text-3xl font-black text-primary">DEV</span>
+                    </div>
 
-            <div className="flex flex-col md:flex-row gap-8">
-                {/* Sidebar */}
-                <div className="w-full md:w-64 shrink-0 space-y-2">
-                    <Link href="/account" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-amber-500/10 text-amber-500 font-bold border border-amber-500/20 transition-all">
-                        <User className="w-5 h-5" /> Profile
-                    </Link>
-                    <Link href="/favorites" className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-400 hover:text-white hover:bg-white/5 transition-all font-semibold">
-                        <FolderHeart className="w-5 h-5" /> Favorites
-                    </Link>
-                    <Link href="/account/history" className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-400 hover:text-white hover:bg-white/5 transition-all font-semibold">
-                        <History className="w-5 h-5" /> Submissions
-                    </Link>
-                    <Link href="/account/settings" className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-400 hover:text-white hover:bg-white/5 transition-all font-semibold">
-                        <Settings className="w-5 h-5" /> Preferences
-                    </Link>
-                    <Link href="/account/security" className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-400 hover:text-white hover:bg-white/5 transition-all font-semibold">
-                        <Shield className="w-5 h-5" /> Security
-                    </Link>
+                    <div className="mt-4 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                        <div>
+                            <h1 className="text-3xl md:text-4xl font-black tracking-tight text-text-primary">Developer One</h1>
+                            <p className="text-text-secondary mt-1">dev_one@example.com</p>
+                            <div className="mt-4 flex flex-wrap gap-2">
+                                <span className="px-3 py-1 text-xs rounded-lg border border-amber-200 bg-amber-50 text-amber-700 font-semibold uppercase tracking-wider">Pro Member</span>
+                                <span className="px-3 py-1 text-xs rounded-lg border border-border bg-surface text-text-secondary font-semibold uppercase tracking-wider">Member since 2026</span>
+                            </div>
+                        </div>
 
-                    <div className="pt-8 border-t border-white/5 mt-8 border-dashed">
-                        <button className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all font-bold w-full text-left">
+                        <div className="grid grid-cols-3 gap-3 md:min-w-[380px]">
+                            <div className="card-premium p-4 text-center">
+                                <p className="text-2xl font-black text-text-primary">24</p>
+                                <p className="text-xs text-text-muted uppercase tracking-wider">Projects</p>
+                            </div>
+                            <div className="card-premium p-4 text-center">
+                                <p className="text-2xl font-black text-text-primary">1.2k</p>
+                                <p className="text-xs text-text-muted uppercase tracking-wider">Followers</p>
+                            </div>
+                            <div className="card-premium p-4 text-center">
+                                <p className="text-2xl font-black text-text-primary">8.9k</p>
+                                <p className="text-xs text-text-muted uppercase tracking-wider">Likes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8">
+                <aside className="card-premium p-4 h-fit">
+                    <nav className="space-y-2">
+                        <Link href="/account" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-amber-50 text-amber-700 font-semibold border border-amber-100 transition-all">
+                            <User className="w-5 h-5" /> Profile
+                        </Link>
+                        <Link href="/favorites" className="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary hover:text-amber-700 hover:bg-amber-50 transition-all font-semibold">
+                            <FolderHeart className="w-5 h-5" /> Favorites
+                        </Link>
+                        <Link href="/account/history" className="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary hover:text-amber-700 hover:bg-amber-50 transition-all font-semibold">
+                            <History className="w-5 h-5" /> Submissions
+                        </Link>
+                        <Link href="/account/settings" className="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary hover:text-amber-700 hover:bg-amber-50 transition-all font-semibold">
+                            <Settings className="w-5 h-5" /> Preferences
+                        </Link>
+                        <Link href="/account/security" className="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary hover:text-amber-700 hover:bg-amber-50 transition-all font-semibold">
+                            <Shield className="w-5 h-5" /> Security
+                        </Link>
+                    </nav>
+
+                    <div className="pt-6 border-t border-border mt-6">
+                        <button className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-all font-semibold w-full text-left">
                             <LogOut className="w-5 h-5" /> Sign Out
                         </button>
                     </div>
-                </div>
+                </aside>
 
-                {/* Content */}
-                <div className="flex-1 space-y-8">
-                    <div className="card-neon flex flex-col sm:flex-row items-start sm:items-center gap-6 p-8 relative overflow-hidden group">
-                        <div className="absolute top-0 left-0 w-2 h-full bg-amber-500 group-hover:w-3 transition-all" />
-                        <div className="w-24 h-24 rounded-full bg-neutral-800 border-2 border-amber-500/50 flex flex-col justify-center items-center overflow-hidden relative shadow-[0_0_15px_rgba(132,204,22,0.3)]">
-                            <span className="text-3xl font-heading font-black text-amber-500">DEV</span>
-                        </div>
-                        <div className="flex-1">
-                            <h2 className="text-2xl font-bold text-white mb-1">Developer One</h2>
-                            <p className="text-neutral-500 font-mono text-sm mb-4">dev_one@example.com</p>
-                            <div className="flex items-center gap-3">
-                                <div className="bg-white/5 px-3 py-1 rounded-lg border border-white/10 text-xs font-bold text-neutral-300 uppercase tracking-widest">
-                                    Member since 2026
-                                </div>
-                                <div className="bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/30 text-xs font-bold text-amber-500 uppercase tracking-widest flex items-center gap-1">
-                                    <User className="w-3 h-3" /> Pro
-                                </div>
-                            </div>
-                        </div>
-                        <Button variant="outline" className="text-neutral-400 border-white/10 hover:text-white hover:bg-white/5 hidden sm:flex">
-                            Edit Profile
-                        </Button>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="card-neon p-6 hover:border-amber-500/30 transition-colors">
-                            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                <FolderHeart className="w-5 h-5 text-amber-500" /> My Collections
-                            </h3>
-                            <p className="text-neutral-500 text-sm mb-6 h-10">
-                                You have 12 saved components across 3 collections.
-                            </p>
-                            <Button asChild className="w-full bg-white/5 text-white hover:bg-white/10 border border-white/10">
-                                <Link href="/favorites">View Favorites</Link>
+                <div className="space-y-8">
+                    <section className="card-premium p-6">
+                        <div className="flex items-center justify-between mb-5">
+                            <h2 className="text-xl font-bold text-text-primary">Portfolio Grid</h2>
+                            <Button variant="ghost" className="text-primary">
+                                <LayoutGrid className="w-4 h-4 mr-2" /> Manage
                             </Button>
                         </div>
 
-                        <div className="card-neon p-6 hover:border-amber-500/30 transition-colors">
-                            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                <History className="w-5 h-5 text-amber-500" /> Recent Activity
-                            </h3>
-                            <p className="text-neutral-500 text-sm mb-6 h-10">
-                                2 components pending review. 1 approved this month.
-                            </p>
-                            <Button asChild className="w-full bg-white/5 text-white hover:bg-white/10 border border-white/10">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                            {portfolio.map((item) => (
+                                <Link key={item.slug} href={`/components/${item.slug}`} className="card-premium p-4">
+                                    <p className="text-sm font-bold text-text-primary line-clamp-1">{item.name}</p>
+                                    <p className="text-xs text-text-secondary mt-1 line-clamp-2">{item.description}</p>
+                                    <div className="mt-3 flex items-center gap-3 text-xs text-text-muted">
+                                        <span className="inline-flex items-center gap-1"><Eye className="w-3 h-3" /> 1.8k</span>
+                                        <span className="inline-flex items-center gap-1"><Heart className="w-3 h-3" /> 264</span>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="card-premium p-6">
+                            <h3 className="text-lg font-bold text-text-primary mb-3">Saved Collections</h3>
+                            <p className="text-text-secondary text-sm mb-6">Curate components into reusable sets for projects and clients.</p>
+                            <Button asChild className="w-full">
+                                <Link href="/favorites">Open Favorites</Link>
+                            </Button>
+                        </div>
+
+                        <div className="card-premium p-6">
+                            <h3 className="text-lg font-bold text-text-primary mb-3">Submission History</h3>
+                            <p className="text-text-secondary text-sm mb-6">Track pending and approved community uploads in one place.</p>
+                            <Button asChild variant="outline" className="w-full">
                                 <Link href="/account/history">View Submissions</Link>
                             </Button>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </div>
         </div>

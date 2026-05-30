@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Check, Copy } from 'lucide-react';
 import { useState } from 'react';
 
-export function CodeBlock({ code, language = 'bash' }: { code: string, language?: string }) {
+export function CodeBlock({ code }: { code: string }) {
     const [copied, setCopied] = useState(false);
 
     const copy = () => {

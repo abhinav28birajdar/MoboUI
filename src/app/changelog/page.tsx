@@ -50,7 +50,7 @@ export default function ChangelogPage() {
     return (
         <div className="container max-w-4xl mx-auto py-16 px-6 relative">
             {/* Background Glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 bg-amber-500/10 blur-[100px] -z-10 rounded-full pointer-events-none" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 bg-primary/10 blur-[100px] -z-10 rounded-full pointer-events-none" />
 
             <div className="flex flex-col gap-6 mb-16">
                 <h1 className="text-5xl font-heading font-black tracking-tighter text-white uppercase ">
@@ -68,17 +68,17 @@ export default function ChangelogPage() {
                 {changelog.map((log) => (
                     <div key={log.version} className="relative flex flex-col md:flex-row gap-8 items-start group">
                         {/* Timeline Dot */}
-                        <div className="absolute left-[11px] md:left-[115px] top-6 w-3 h-3 bg-amber-500 rounded-full shadow-[0_0_10px_rgba(132,204,22,0.8)] z-10 hidden md:block group-hover:scale-150 transition-all" />
+                        <div className="absolute left-[11px] md:left-[115px] top-6 w-3 h-3 bg-primary rounded-full shadow-[0_0_10px_rgba(0,0,0,0.2)] z-10 hidden md:block group-hover:scale-150 transition-all" />
 
                         {/* Date Section */}
                         <div className="md:w-[100px] shrink-0 pt-4 flex items-center md:items-start md:flex-col gap-2">
-                            <span className="text-amber-500 font-mono text-sm shadow-sm">{log.date}</span>
+                            <span className="text-primary font-mono text-sm shadow-sm">{log.date}</span>
                         </div>
 
                         {/* Content Card */}
                         <div className="flex-1 card-neon ml-8 md:ml-0 relative">
                             <div className="flex flex-wrap items-center gap-3 mb-6">
-                                <div className="flex items-center gap-2 bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full text-xs font-bold font-mono border border-amber-500/20">
+                                <div className="flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold font-mono border border-primary/20">
                                     <Tag className="w-3 h-3" />
                                     {log.version}
                                 </div>
@@ -96,7 +96,7 @@ export default function ChangelogPage() {
                             <ul className="space-y-4">
                                 {log.changes.map((change, i) => (
                                     <li key={i} className="flex items-start gap-3 text-neutral-300">
-                                        <CheckCircle2 className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                                        <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                                         <span>{change}</span>
                                     </li>
                                 ))}

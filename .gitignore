@@ -1,6 +1,10 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ========================================
+# MOBOUI Production-Grade .gitignore
+# ========================================
 
-# dependencies
+# ========================================
+# Dependencies & Package Managers
+# ========================================
 /node_modules
 /.pnp
 .pnp.*
@@ -9,34 +13,213 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-.next/
-.node_modules
-# testing
-/coverage
+.yarn/install-state.gz
 
-# next.js
+# pnpm (alternative package manager)
+pnpm-lock.yaml
+.pnpm-store/
+
+# npm (alternative package manager)
+npm-debug.log*
+npm-error.log*
+package-lock.json
+
+# yarn
+yarn-error.log*
+yarn-debug.log*
+.yarn.lock
+
+# ========================================
+# Build Output & Distribution
+# ========================================
 /.next/
 /out/
+/dist/
+/build/
+.next
 
-# production
-/build
+# Next.js specific
+.next/
+out/
 
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
+# TypeScript
 *.tsbuildinfo
 next-env.d.ts
+**/*.d.ts
+
+# ========================================
+# Testing & Coverage
+# ========================================
+/coverage/
+.nyc_output/
+/test-results/
+jest.results.json
+coverage.txt
+
+# Vitest
+.vitest/
+
+# ========================================
+# Environment & Secrets
+# ========================================
+# IMPORTANT: Never commit environment files with secrets!
+.env
+.env.local
+.env.*.local
+.env.production
+.env.production.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+
+# .env.example is OK to commit - it shows required variables WITHOUT values
+
+# ========================================
+# IDE & Editor Configuration
+# ========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.AppleDouble
+.LSOverride
+.env.swp
+.vimrc
+.editorconfig
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+*.code-workspace
+
+# WebStorm / IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[p-z]
+Session.vim
+.netrwhist
+
+# ========================================
+# Runtime & Execution
+# ========================================
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Process files
+*.pid
+*.pid.lock
+
+# Logs
+logs/
+*.log
+lerna-debug.log*
+
+# ========================================
+# Temporary & Cache Files
+# ========================================
+# Node cache
+.cache/
+.eslintcache
+.stylelintcache
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Bundle analyzer
+.webpack-stats.json
+
+# ========================================
+# Database & Storage
+# ========================================
+# Local Supabase instance
+supabase/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+.supabase/
+
+# ========================================
+# Build Artifacts & Distribution
+# ========================================
+dist/
+*.tgz
+
+# ========================================
+# Development Tools
+# ========================================
+# Vercel
+.vercel
+
+# Error files
+error.log
+
+# ========================================
+# Misc & Generated Files
+# ========================================
+*.pem
+.env.*.local
+
+# node modules should never be committed
+node_modules/
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Windows
+.DS_Store
+Thumbs.db
+
+# ========================================
+# Project Specific
+# ========================================
+# Don't commit local configuration overrides
+.env.local
+.env.local.example
+
+# Don't commit uploaded files (use CDN instead)
+/uploads/
+/public/uploads/
+
+# Don't commit media files (use cloud storage)
+/media/
+/videos/
+/images/
+
+# Custom theme files (if generating locally)
+/generated-themes/
+
+# Local development files
+.local/
+.dev/
+
+# ========================================
+# Keep environment template for reference
+# ========================================
+# !.env.example
