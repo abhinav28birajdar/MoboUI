@@ -5,9 +5,6 @@ const nextConfig: NextConfig = {
     // Performance & Optimization
     // ========================================
     
-    // Enable SWCMinify for production builds
-    swcMinify: true,
-
     // Experimental features for better performance
     experimental: {
         // Turbopack for faster builds (opt-in)
@@ -171,11 +168,6 @@ const nextConfig: NextConfig = {
     output: "standalone",
 
     // ========================================
-    // Root Directory
-    // ========================================
-    
-    // Next.js app directory
-    appDir: true,
 };
 
 export default nextConfig;
