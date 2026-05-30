@@ -175,7 +175,7 @@ export async function updatePassword(newPassword: string) {
 export function onAuthStateChange(
   callback: (user: User | null, session: Session | null) => void
 ) {
-  const { data } = supabase.auth.onAuthStateChange((event, session) => {
+  const { data } = supabase.auth.onAuthStateChange((event: any, session: Session | null) => {
     callback(session?.user || null, session || null);
   });
 

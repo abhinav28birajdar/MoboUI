@@ -43,13 +43,15 @@ export default function LoginPage() {
         setOauthLoading(provider);
 
         try {
-            const { data, error } = await signInWithOAuth({
+            const { data, error: oauthError } = await signInWithOAuth({
                 provider,
                 redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`,
             });
 
-            if (error) {
-                setError(error.message || "OAuth sign in failed");
+            if (oauthError) {
+                // oauthError may be a generic object; guard access to `message`
+                const msg = (oauthError as any)?.message || "OAuth sign in failed";
+                setError(msg);
             } else if (data?.url) {
                 window.location.href = data.url;
             }

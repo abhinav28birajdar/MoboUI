@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import type { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { ImageUpload } from "@/components/shared/ImageUpload";
@@ -15,7 +16,7 @@ import { supabase } from "@/lib/supabase/client";
 
 export default function SubmitPage() {
     const router = useRouter();
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [imagePath, setImagePath] = useState<string | null>(null);
     const [isSubmitted, setIsSubmitted] = useState(false);

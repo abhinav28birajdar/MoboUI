@@ -27,8 +27,12 @@ export function ImageUpload({ onUploadSuccess, className }: ImageUploadProps) {
 
         try {
             setIsUploading(true);
-            const url = await uploadImage(file);
-            onUploadSuccess?.(url);
+            const res = await uploadImage(file);
+            // Pass back the public URL (or empty string if not available)
+            onUploadSuccess?.(res.url ?? '');
+            if (res.error) {
+                throw new Error(res.error);
+            }
             toast.success('Image uploaded successfully');
         } catch (error: any) {
             console.error('Upload failed:', error);

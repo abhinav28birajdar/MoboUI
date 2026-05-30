@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
 
         // Increment view count
         if (components && components.length > 0) {
-            components.forEach(component => {
+            components.forEach((component: any) => {
                 supabase
                     .from('components')
                     .update({ view_count: (component.view_count || 0) + 1 })
