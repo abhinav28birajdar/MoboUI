@@ -47,10 +47,10 @@ export const HeroSection = () => {
         <motion.div 
           animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-amber-primary/15 blur-[140px] rounded-full" 
+          className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/15 blur-[140px] rounded-full" 
         />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full" />
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-40 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-40 mask-[linear-gradient(180deg,white,rgba(255,255,255,0))]" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -75,7 +75,7 @@ export const HeroSection = () => {
             <motion.h1 className="text-6xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tighter text-text-primary mb-6 leading-[1.05] font-display">
               <motion.span variants={textBlurReveal} className="block">Build mobile</motion.span>
               <motion.span variants={textBlurReveal} className="block">
-              <span className="text-transparent bg-clip-text bg-primary italic pr-4">
+                <span className="pr-4 text-primary font-semibold italic">
                   interfaces
                 </span>
               </motion.span>
@@ -104,18 +104,18 @@ export const HeroSection = () => {
             {/* Social Proof / Stats */}
             <motion.div variants={textBlurReveal} className="mt-16 pt-8 border-t border-border/40 flex gap-12">
               <div className="group cursor-pointer">
-                <p className="text-3xl font-bold font-display group-hover:text-amber-primary transition-colors">12k+</p>
+                <p className="text-3xl font-bold font-display group-hover:text-primary transition-colors">12k+</p>
                 <p className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-bold mt-1">Developers</p>
               </div>
               <div className="group cursor-pointer">
-                <p className="text-3xl font-bold font-display group-hover:text-amber-primary transition-colors">4.9/5</p>
+                <p className="text-3xl font-bold font-display group-hover:text-primary transition-colors">4.9/5</p>
                 <p className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-bold mt-1">Rating</p>
               </div>
             </motion.div>
           </motion.div>
 
           {/* --- Right Column: Visual Stack --- */}
-          <div className="relative lg:h-[700px] flex items-center justify-center mt-12 lg:mt-0">
+          <div className="relative lg:h-175 flex items-center justify-center mt-12 lg:mt-0">
             
             {/* Frameless, Larger Main Image with Levitation & Parallax */}
             <motion.div 
@@ -128,7 +128,7 @@ export const HeroSection = () => {
                 src="/assets/mobileimage1.png" 
                 alt="Main UI Preview" 
                 // Removed all border/rounded clipping. Added massive drop-shadow & larger max-width
-                className="w-full max-w-[480px] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
+                className="w-full max-w-120 object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
               />
             </motion.div>
 
@@ -167,7 +167,7 @@ export const HeroSection = () => {
             </motion.div>
 
             {/* Central Decorative Glow behind frameless image */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[70%] bg-amber-primary/20 blur-[120px] rounded-full -z-10" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[70%] bg-primary/20 blur-[120px] rounded-full -z-10" />
           </div>
 
         </div>
