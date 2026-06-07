@@ -5,7 +5,7 @@ import { FlutterPreview } from "./FlutterPreview";
 import { motion } from "framer-motion";
 
 interface PreviewPanelProps {
-    framework: "react-native" | "flutter";
+    framework: "react-native" | "flutter" | "expo";
     code: string;
 }
 
@@ -35,7 +35,7 @@ export function PreviewPanel({ framework, code }: PreviewPanelProps) {
                     {/* Shadow/Glow effect */}
                     <div className="absolute -inset-4 bg-primary/20 rounded-[4rem] blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-1000" />
 
-                    {framework === "react-native" ? (
+                    {framework === "react-native" || framework === "expo" ? (
                         <ReactNativePreview code={code} isVisible={true} />
                     ) : (
                         <FlutterPreview code={code} isVisible={true} />

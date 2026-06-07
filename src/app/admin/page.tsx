@@ -19,6 +19,7 @@ import {
 import { useFrontendAppStore } from "@/lib/store/frontend-app-store";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils/cn";
+import { AuthGuard } from "@/components/shared/AuthGuard";
 
 export default function AdminDashboardPage() {
   const components = useFrontendAppStore((state) => state.components);
@@ -59,7 +60,8 @@ export default function AdminDashboardPage() {
   const latestSubmissions = submissions.slice(0, 4);
 
   return (
-    <div className="container mx-auto px-4 py-24 max-w-[1400px]">
+    <AuthGuard requireAdmin>
+      <div className="container mx-auto px-4 py-24 max-w-[1400px]">
       <div className="grid grid-cols-1 xl:grid-cols-[260px_1fr] gap-8">
         <aside className="card-premium p-4 h-fit sticky top-24">
           <p className="px-3 py-2 text-[11px] uppercase tracking-[0.2em] font-bold text-text-muted">Dashboard</p>
@@ -171,6 +173,7 @@ export default function AdminDashboardPage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </AuthGuard>
   );
 }

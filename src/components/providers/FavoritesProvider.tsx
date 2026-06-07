@@ -7,7 +7,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        useFavoritesStore.persist.rehydrate();
+        useFavoritesStore.getState().loadFavorites();
         setMounted(true);
     }, []);
 

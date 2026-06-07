@@ -1,20 +1,15 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/providers/ThemeProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
 
-const inter = Inter({
+const dmSans = DM_Sans({
     subsets: ["latin"],
-    variable: "--font-inter",
-});
-
-const outfit = Outfit({
-    subsets: ["latin"],
-    variable: "--font-outfit",
+    variable: "--font-dm-sans",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -36,12 +31,13 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body
-                className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} antialiased font-body selection:bg-primary selection:text-primary-foreground transition-colors duration-300`}
+                className={`${dmSans.variable} ${jetbrainsMono.variable} antialiased font-body selection:bg-primary selection:text-primary-foreground`}
             >
                 <ThemeProvider
                     attribute="class"
-                    defaultTheme="light"
-                    enableSystem
+                    defaultTheme="dark"
+                    forcedTheme="dark"
+                    enableSystem={false}
                     disableTransitionOnChange
                 >
                     <div className="flex flex-col min-h-screen">
@@ -55,9 +51,9 @@ export default function RootLayout({
                         position="bottom-right"
                         toastOptions={{
                             style: {
-                                background: '#0a0a0a',
-                                color: '#fff',
-                                border: '1px solid #262626',
+                                background: '#111113',
+                                color: '#fafafa',
+                                border: '1px solid rgba(39,39,42,0.5)',
                                 borderRadius: '12px',
                             },
                         }}

@@ -3,17 +3,42 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
-import { Search, Menu, X, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { Search, Menu, X, Sparkles, User as UserIcon } from "lucide-react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase/client";
 
 export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
+  const [user, setUser] = useState<any>(null);
+
+  // Read active session on mount & subscribe to changes
+  useEffect(() => {
+    const checkUser = async () => {
+      if (supabase && typeof supabase.auth !== 'undefined') {
+        const { data: { session } } = await supabase.auth.getSession();
+        setUser(session?.user ?? null);
+      }
+    };
+    checkUser();
+
+    let subscription: any = null;
+    if (supabase && typeof supabase.auth !== 'undefined') {
+      const { data } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
+        setUser(session?.user ?? null);
+      });
+      subscription = data.subscription;
+    }
+
+    return () => {
+      if (subscription) subscription.unsubscribe();
+    };
+  }, []);
 
   // Smart Hide logic
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -28,6 +53,8 @@ export function Navbar() {
   const routes = [
     { href: "/components", label: "Components" },
     { href: "/showcase", label: "Showcase" },
+    { href: "/marketplace", label: "Marketplace" },
+    { href: "/blog", label: "Blog" },
     { href: "/docs", label: "Docs" },
   ];
 
@@ -87,12 +114,47 @@ export function Navbar() {
           <ThemeToggle />
           <Button
             asChild
-            className="h-10 px-5 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-xl transition-all uppercase tracking-widest text-[10px]"
+            variant="ghost"
+            className="h-10 px-4 text-xs font-semibold rounded-xl text-text-secondary hover:text-text-primary"
           >
             <Link href="/playground" className="flex items-center gap-2">
               Playground <Sparkles size={14} />
             </Link>
           </Button>
+
+          {user ? (
+            <div className="flex items-center gap-3">
+              <Button
+                asChild
+                variant="outline"
+                className="h-10 px-4 text-xs font-semibold rounded-xl border-border hover:bg-surface text-text-primary flex items-center gap-2"
+              >
+                <Link href="/account">
+                  <UserIcon size={14} />
+                  Account
+                </Link>
+              </Button>
+              <Button
+                onClick={async () => {
+                  if (supabase && typeof supabase.auth !== 'undefined') {
+                    await supabase.auth.signOut();
+                    window.location.assign('/');
+                  }
+                }}
+                variant="ghost"
+                className="h-10 px-4 text-xs font-semibold text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl"
+              >
+                Sign Out
+              </Button>
+            </div>
+          ) : (
+            <Button
+              asChild
+              className="h-10 px-5 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-xl transition-all uppercase tracking-widest text-[10px]"
+            >
+              <Link href="/login">Sign In</Link>
+            </Button>
+          )}
         </div>
 
         {/* Mobile Toggle */}
@@ -126,12 +188,52 @@ export function Navbar() {
                 {route.label}
               </Link>
             ))}
-            <Button
-              asChild
-              className="w-full h-12 bg-primary text-primary-foreground font-medium rounded-xl uppercase tracking-widest text-xs hover:bg-primary/90 transition-all"
+            
+            <Link
+              href="/playground"
+              className={cn(
+                "text-2xl font-bold uppercase tracking-tighter",
+                pathname === "/playground" ? "text-primary" : "text-text-muted"
+              )}
+              onClick={() => setIsOpen(false)}
             >
-              <Link href="/playground" onClick={() => setIsOpen(false)}>Open Playground</Link>
-            </Button>
+              Playground
+            </Link>
+
+            {user ? (
+              <>
+                <Link
+                  href="/account"
+                  className={cn(
+                    "text-2xl font-bold uppercase tracking-tighter",
+                    pathname?.startsWith("/account") ? "text-primary" : "text-text-muted"
+                  )}
+                  onClick={() => setIsOpen(false)}
+                >
+                  My Account
+                </Link>
+                <Button
+                  onClick={async () => {
+                    setIsOpen(false);
+                    if (supabase && typeof supabase.auth !== 'undefined') {
+                      await supabase.auth.signOut();
+                      window.location.assign('/');
+                    }
+                  }}
+                  variant="ghost"
+                  className="w-full h-12 text-red-500 font-medium rounded-xl uppercase tracking-widest text-xs border border-red-200 hover:bg-red-50"
+                >
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <Button
+                asChild
+                className="w-full h-12 bg-primary text-primary-foreground font-medium rounded-xl uppercase tracking-widest text-xs hover:bg-primary/90 transition-all"
+              >
+                <Link href="/login" onClick={() => setIsOpen(false)}>Sign In</Link>
+              </Button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

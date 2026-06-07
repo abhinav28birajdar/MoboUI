@@ -42,10 +42,12 @@ const DialogTrigger = ({ children, asChild, ...props }: any) => {
         ...props
     });
 };
+DialogTrigger.displayName = 'DialogTrigger';
 
 const DialogPortal = ({ children }: { children: React.ReactNode }) => {
     return <>{children}</>; // Simplified, for real apps you'd use a real Portal
 };
+DialogPortal.displayName = 'DialogPortal';
 
 const DialogOverlay = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
     ({ className, ...props }, ref) => {
@@ -101,10 +103,12 @@ DialogContent.displayName = 'DialogContent';
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
     <div className={cn("flex flex-col space-y-1.5 text-center sm:text-left", className)} {...props} />
 );
+DialogHeader.displayName = 'DialogHeader';
 
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
     <div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)} {...props} />
 );
+DialogFooter.displayName = 'DialogFooter';
 
 const DialogTitle = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
     ({ className, ...props }, ref) => (

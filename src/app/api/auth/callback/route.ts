@@ -1,32 +1,19 @@
-import { supabase } from '@/lib/supabase/client';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 
-/**
- * Handle OAuth callback
- * This route processes the callback from OAuth providers
- */
-export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const code = searchParams.get('code');
-    const next = searchParams.get('next') || '/account';
+export async function GET(request: Request) {
+  const { searchParams, origin } = new URL(request.url);
+  const code = searchParams.get('code');
+  const next = searchParams.get('next') ?? '/dashboard';
 
-    if (code) {
-      // Exchange code for session
-      const { error } = await supabase.auth.exchangeCodeForSession(code);
-
-      if (error) {
-        console.error('Auth error:', error);
-        return NextResponse.redirect(
-          new URL(`/login?error=${encodeURIComponent(error.message)}`, request.url)
-        );
-      }
+  if (code) {
+    const supabase = await createClient();
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (!error) {
+      return NextResponse.redirect(`${origin}${next}`);
     }
-
-    // Redirect to dashboard or next URL
-    return NextResponse.redirect(new URL(next, request.url));
-  } catch (error) {
-    console.error('Callback error:', error);
-    return NextResponse.redirect(new URL('/login?error=callback_failed', request.url));
   }
+
+  // Redirect to login page with error query param if code exchange failed
+  return NextResponse.redirect(`${origin}/login?error=auth_failed`);
 }

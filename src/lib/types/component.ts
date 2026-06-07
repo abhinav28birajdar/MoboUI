@@ -5,10 +5,14 @@ export interface Component {
     category: string;
     description: string;
     tags: string[];
-    framework: 'react-native' | 'flutter' | 'both';
+    framework: 'react-native' | 'flutter' | 'both' | 'expo';
     previewImage?: string;
     image_url?: string;
     is_premium?: boolean;
+    is_new?: boolean;
+    favorite_count?: number;
+    preview_image_url?: string;
+    wcag_level?: string;
     popularity?: number;
     complexity: 'beginner' | 'intermediate' | 'advanced';
     code: {

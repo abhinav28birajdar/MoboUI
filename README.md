@@ -1,56 +1,119 @@
-# MOBOUI - Enterprise Mobile UI Component Library
+# MOBOUI — Enterprise Mobile UI Component Library
 
-<div align="center">
+MOBOUI is an enterprise-grade, production-ready, database-backed UI catalog for mobile developers building beautiful and high-performance applications in **Flutter**, **React Native**, and **Expo**.
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.1+-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19+-61DAFB?style=flat-square&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4+-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-
-A **production-grade**, fully-featured mobile UI component library for **Flutter**, **React Native**, and **Expo**. Build beautiful, responsive, and accessible mobile applications with professionally designed components and a comprehensive design system.
-
-**Enterprise Features**: Full Supabase integration, user authentication, data persistence, file storage, real-time device emulation, and a powerful live playground.
-
-[Live Demo](https://moboui.com) • [Documentation](https://moboui.com/docs) • [Component Library](https://moboui.com/components) • [Playground](https://moboui.com/playground)
-
-</div>
+This repository is built using **Next.js 15.1**, **React 19**, **Tailwind CSS 4.0**, and integrates natively with **Supabase** for user authentication, profile synchronization, favorites, and community project submissions.
 
 ---
 
-## ✨ Key Features
+## 🚀 Key Features
 
-### 📱 Component Library
-- **50+ Professional Components** - Buttons, Cards, Forms, Navigation, Modals, and more
-- **Framework Support** - Flutter, React Native, Expo, and Web components
-- **Responsive Design** - Mobile-first approach with full responsiveness
-- **Accessibility** - WCAG 2.1 AA compliant components
-- **Dark/Light Mode** - Built-in theme switching with persistence
+* **30+ Premium Components**: Solid, outlined, animated, and glassmorphic designs for buttons, inputs, navigation drawers, card sheets, modals, and lists.
+* **Dual-Framework Code Support**: Provides copy-paste ready code blocks in both **TypeScript (React Native/Expo)** and **Dart (Flutter)**.
+* **Interactive Live Emulator**: Embedded DartPad and Expo Snack simulators let users edit component code blocks directly in the browser and preview changes in real-time.
+* **Supabase Authentication**: Integrated Email/Password, GitHub, and Google OAuth sessions with role-based access controls (user, moderator, admin).
+* **Community Project Submissions**: Secure submissions system allowing members to upload and showcase mobile apps built with MoboUI.
+* **Favorites System**: Instantly save and sync bookmarked components directly to the user's account dashboard.
+* **Centralized API Client**: Custom fetch handler featuring automated request retries, typed responses, error boundaries, and offline fallback mode.
 
-### 🎨 Design System
-- **Golden Design Language** - Premium golden accent color (#FFCA03) with sophisticated color palette
-- **Consistent Styling** - Unified design patterns across all components
-- **TypeScript Support** - Fully typed components and utilities
-- **Theme Customization** - Easy-to-use theming system with CSS variables
+---
 
-### 🛠 Developer Experience
-- **Live Playground** - Real-time code editor with Monaco Editor integration
-- **Device Emulator** - Preview components on iPhone and Android simulators
-- **Component Preview** - Interactive component demonstrations
-- **Code Examples** - Copy-paste ready code snippets for each component
-- **Hot Reload** - Instant feedback during development
+## 💻 Tech Stack
 
-### 🔐 Backend & Authentication
-- **User Authentication** - Email/password, GitHub, and Google OAuth via Supabase
-- **Data Persistence** - PostgreSQL database with real-time capabilities
-- **File Storage** - Cloud storage for uploads and media management
-- **User Profiles** - Customizable user accounts and preferences
-- **Session Management** - Secure token-based authentication
+* **Frontend**: [Next.js 15](https://nextjs.org/) (App Router), [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
+* **Styles & Animations**: [Tailwind CSS 4](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/)
+* **Database & Auth**: [Supabase](https://supabase.com/) (PostgreSQL, Supabase Auth, Storage)
+* **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+* **Code Editor**: [Monaco Editor](https://microsoft.github.io/monaco-editor/) via `@monaco-editor/react`
 
-### ⭐ Additional Features
-- **Favorites System** - Save and manage favorite components
-- **Project Submissions** - Submit and showcase your projects
-- **Community** - Connect with other developers
-- **Marketplace** - Browse and discover community components
-- **Blog** - Latest updates and best practices
-- **Analytics** - Track component usage and performance
+---
+
+## 📁 Folder Structure
+
+The project follows a clean, modular architecture:
+
+```text
+src/
+├── app/                  # Next.js App Router pages, APIs, and route configurations
+│   ├── (auth)/           # Authentication views (login, register, reset password)
+│   ├── admin/            # Secure administrator dashboard and upload catalog
+│   ├── api/              # Standardized API routes (components, favorites, submissions)
+│   └── components/       # Component library and details pages
+├── components/           # Reusable React components grouped by module
+│   ├── component-detail/ # Emulator view and code panels
+│   ├── component-library/# Catalog grid cards and sidebars
+│   ├── layout/           # Shared site structures (Navbar, Footer, Sidebar)
+│   ├── shared/           # Cross-cutting UI utilities (AuthGuard, GlowEffect)
+│   └── ui/               # Core design system inputs and buttons (shadcn-compatible)
+├── hooks/                # Custom React hooks (useComponents, useDebounce)
+├── lib/                  # Shared utilities and configurations
+│   ├── api/              # Centralized apiClient wrapper with retry logic
+│   ├── auth/             # Supabase auth-service
+│   ├── data/             # Static mock components and documentation files
+│   └── supabase/         # Supabase connection clients (client, server, storage)
+```
+
+---
+
+## 🛠 Installation & Local Setup
+
+### 1. Clone & Install Dependencies
+```bash
+git clone https://github.com/abhinav28birajdar/MoboUI.git
+cd MoboUI
+npm install
+```
+
+### 2. Configure Environment Variables
+Copy `.env.example` into a new local configuration file:
+```bash
+cp .env.example .env.local
+```
+Edit `.env.local` and populate your Supabase connection parameters:
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+```
+
+### 3. Database Setup (Supabase)
+MoboUI contains a single consolidated master SQL script representing the complete database schema.
+1. Open the [Supabase Dashboard](https://supabase.com/dashboard).
+2. Go to the **SQL Editor** tab.
+3. Paste the contents of [database/master.sql](file:///e:/programming/Next%20js%20App/moboui/database/master.sql).
+4. Run the script to initialize tables, indexes, RLS constraints, auth triggers, and default categories.
+
+### 4. Running the Dev Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to view the application locally.
+
+---
+
+## 📦 Build Process
+
+Validate types and compile the optimized production bundle before deploying:
+```bash
+# Run TypeScript compilation check
+npm run type-check
+
+# Build the Next.js distribution
+npm run build
+```
+
+---
+
+## 🔒 Security & Protection
+
+* **Client Guarding**: Sensitive paths like the administrative overview (`/admin`) and the publishing console (`/admin/upload`) are wrapped with [AuthGuard](file:///e:/programming/Next%20js%20App/moboui/src/components/shared/AuthGuard.tsx) to ensure only authenticated users with role `admin` or `moderator` can access them.
+* **Database Row Level Security (RLS)**: Users are restricted by standard PostgreSQL RLS rules. They can read all published components, but can only edit, favorite, or delete rows linked explicitly to their private user ID.
+* **Supabase triggers**: A dedicated DB trigger automatically replicates user registrations from `auth.users` into the public `profiles` table to maintain data integrity.
+
+---
+
+## 💡 Troubleshooting & Fallback behavior
+
+> [!TIP]
+> **Graceful Fallback Mode (No-Database Mode)**
+> If the Supabase keys are missing or invalid, MoboUI will print a warn sign to the console and transition automatically to **Offline Fallback Mode**. The catalog will read and filter mock components from [components.ts](file:///e:/programming/Next%20js%20App/moboui/src/lib/data/components.ts) completely client-side. This ensures that frontend design iterations never block on backend connectivity.

@@ -298,6 +298,8 @@ Thumbs.db
 # Local development files
 .local/
 .dev/
+/replace-theme.js
+/.eslintrc.cjs
 
 # CI/CD logs
 .github/workflows/*.log
@@ -315,5 +317,4 @@ Thumbs.db
 !package.json
 !tsconfig.json
 !next.config.ts
-!supabase-schema.sql
-!supabase/schema.sql
+!database/master.sql

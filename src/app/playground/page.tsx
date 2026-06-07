@@ -1,769 +1,363 @@
-"use client";
+'use client';
 
-import React, { useState, useCallback, useEffect } from "react";
-import { motion } from "framer-motion";
-import {
-    Play,
-    Code2,
-    Copy,
-    RotateCcw,
-    Share2,
-    Download,
-    Moon,
-    Sun,
-    Check,
-    Smartphone,
-    Terminal,
-    Zap,
-    RefreshCw,
-    Volume2,
-    Eye,
-    Palette,
-    Settings,
-    ArrowRight,
-    X,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils/cn";
-import { GlowEffect } from "@/components/shared/GlowEffect";
-import { EmulatorScreen } from "@/components/playground/EmulatorScreen";
-import { toast } from "react-hot-toast";
-import Editor from "@monaco-editor/react";
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Smartphone, Play, Share2, Save, ArrowLeft, RefreshCw, X, ShieldAlert, Check, Loader2, Code2, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
+import Editor from '@monaco-editor/react';
+import { useAuthStore } from '@/lib/store/auth-store';
+import { usePlaygroundStore } from '@/lib/store/playground-store';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { toast } from 'sonner';
+import { supabase } from '@/lib/supabase/client';
+import { cn } from '@/lib/utils/cn';
 
-const FRAMEWORKS = ["Flutter", "React Native", "Expo"];
-const DEVICES = {
-    "iPhone 15 Pro": { width: 393, height: 852, brand: "Apple" },
-    "iPhone SE": { width: 375, height: 667, brand: "Apple" },
-    "Pixel 8 Pro": { width: 412, height: 915, brand: "Google" },
-    "Pixel 7": { width: 412, height: 867, brand: "Google" },
-};
-
-const DEMO_TEMPLATES = {
-    Flutter: {
-        button: `import 'package:flutter/material.dart';
-
-class MOButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onPressed;
-
-  const MOButton({
-    required this.label,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 32,
-          vertical: 16,
-        ),
-        decoration: BoxDecoration(
-          color: Color(0xFFFFCA03),
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xFFFFCA03).withOpacity(0.3),
-              spreadRadius: 4,
-              blurRadius: 12,
-            )
-          ],
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: Color(0xFF0A0A0A),
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
-      ),
-    );
+// Sample snippets matching seeded database components
+const SNIPPETS = [
+  {
+    name: 'Primary Button',
+    frameworks: {
+      'react-native': `import React from 'react';\nimport { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';\n\nexport default function PrimaryButton({ label = 'Click Me', loading = false, onPress }) {\n  return (\n    <TouchableOpacity \n      style={[styles.button, loading && styles.disabled]}\n      onPress={onPress}\n      disabled={loading}\n      activeOpacity={0.8}\n    >\n      {loading ? (\n        <ActivityIndicator color="#0A0A0B" />\n      ) : (\n        <Text style={styles.text}>{label}</Text>\n      )}\n    </TouchableOpacity>\n  );\n}\n\nconst styles = StyleSheet.create({\n  button: {\n    backgroundColor: '#FFCA03',\n    height: 48,\n    borderRadius: 8,\n    justifyContent: 'center',\n    alignItems: 'center',\n    paddingHorizontal: 24,\n    width: '100%',\n  },\n  disabled: {\n    opacity: 0.6,\n  },\n  text: {\n    color: '#0A0A0B',\n    fontSize: 16,\n    fontWeight: 'bold',\n  },\n});`,
+      'expo': `import React from 'react';\nimport { Pressable, Text, StyleSheet, ActivityIndicator } from 'react-native';\n\nexport default function PrimaryButton({ label = 'Get Started', loading = false, onPress }) {\n  return (\n    <Pressable \n      style={({ pressed }) => [\n        styles.button,\n        pressed && styles.pressed,\n        loading && styles.disabled\n      ]}\n      onPress={onPress}\n      disabled={loading}\n    >\n      {loading ? (\n        <ActivityIndicator color="#0A0A0B" />\n      ) : (\n        <Text style={styles.text}>{label}</Text>\n      )}\n    </Pressable>\n  );\n}\n\nconst styles = StyleSheet.create({\n  button: {\n    backgroundColor: '#FFCA03',\n    height: 48,\n    borderRadius: 8,\n    justifyContent: 'center',\n    alignItems: 'center',\n    paddingHorizontal: 24,\n    width: '100%',\n  },\n  pressed: {\n    opacity: 0.8,\n  },\n  disabled: {\n    opacity: 0.6,\n  },\n  text: {\n    color: '#0A0A0B',\n    fontSize: 16,\n    fontWeight: 'bold',\n  },\n});`,
+      'flutter': `import 'package:flutter/material.dart';\n\nclass PrimaryButton extends StatelessWidget {\n  final String label;\n  final bool loading;\n  final VoidCallback onPressed;\n\n  const PrimaryButton({\n    Key? key,\n    this.label = 'Click Me',\n    this.loading = false,\n    required this.onPressed,\n  }) : super(key: key);\n\n  @override\n  Widget build(BuildContext context) {\n    return SizedBox(\n      width: double.infinity,\n      height: 48,\n      child: ElevatedButton(\n        onPressed: loading ? null : onPressed,\n        style: ElevatedButton.styleFrom(\n          backgroundColor: const Color(0xFFFFCA03),\n          foregroundColor: const Color(0xFF0A0A0B),\n          shape: RoundedRectangleBorder(\n            borderRadius: BorderRadius.circular(8),\n          ),\n          elevation: 0,\n        ),\n        child: loading\n            ? const SizedBox(\n                width: 20,\n                height: 20,\n                child: CircularProgressIndicator(\n                  strokeWidth: 2,\n                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF0A0A0B)),\n                ),\n              )\n            : Text(\n                label,\n                style: const TextStyle(\n                  fontWeight: FontWeight.bold,\n                  fontSize: 16,\n                ),\n              ),\n      ),\n    );\n  }\n}`
+    }
+  },
+  {
+    name: 'Profile Card',
+    frameworks: {
+      'react-native': `import React from 'react';\nimport { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';\n\nexport default function ProfileCard() {\n  return (\n    <View style={styles.card}>\n      <Image \n        source={{ uri: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=150&h=150&fit=crop' }}\n        style={styles.avatar}\n      />\n      <Text style={styles.name}>Julian Howard</Text>\n      <Text style={styles.handle}>@julian_dev</Text>\n      <Text style={styles.bio}>Full-stack mobile engineer building visual systems.</Text>\n      <TouchableOpacity style={styles.button}>\n        <Text style={styles.buttonText}>Follow</Text>\n      </TouchableOpacity>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  card: {\n    backgroundColor: '#18181B',\n    borderRadius: 12,\n    borderWidth: 1,\n    borderColor: '#27272A',\n    padding: 24,\n    alignItems: 'center',\n    width: '100%',\n  },\n  avatar: {\n    width: 64,\n    height: 64,\n    borderRadius: 32,\n    marginBottom: 12,\n    borderWidth: 2,\n    borderColor: '#FFCA03',\n  },\n  name: {\n    color: '#FAFAFA',\n    fontSize: 18,\n    fontWeight: 'bold',\n  },\n  handle: {\n    color: '#52525B',\n    fontSize: 12,\n    marginBottom: 12,\n  },\n  bio: {\n    color: '#A1A1AA',\n    fontSize: 13,\n    textAlign: 'center',\n    lineHeight: 18,\n    marginBottom: 16,\n  },\n  button: {\n    backgroundColor: '#FFCA03',\n    paddingHorizontal: 24,\n    paddingVertical: 8,\n    borderRadius: 8,\n  },\n  buttonText: {\n    color: '#0A0A0B',\n    fontWeight: 'bold',\n    fontSize: 13,\n  },\n});`,
+      'expo': `import React from 'react';\nimport { View, Text, Image, StyleSheet, Pressable } from 'react-native';\n\nexport default function ProfileCard() {\n  return (\n    <View style={styles.card}>\n      <Image \n        source={{ uri: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=150&h=150&fit=crop' }}\n        style={styles.avatar}\n      />\n      <Text style={styles.name}>Julian Howard</Text>\n      <Text style={styles.handle}>@julian_dev</Text>\n      <Text style={styles.bio}>Full-stack mobile engineer building visual systems.</Text>\n      <Pressable style={styles.button}>\n        <Text style={styles.buttonText}>Follow</Text>\n      </Pressable>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  card: {\n    backgroundColor: '#18181B',\n    borderRadius: 12,\n    borderWidth: 1,\n    borderColor: '#27272A',\n    padding: 24,\n    alignItems: 'center',\n    width: '100%',\n  },\n  avatar: {\n    width: 64,\n    height: 64,\n    borderRadius: 32,\n    marginBottom: 12,\n    borderWidth: 2,\n    borderColor: '#FFCA03',\n  },\n  name: {\n    color: '#FAFAFA',\n    fontSize: 18,\n    fontWeight: 'bold',\n  },\n  handle: {\n    color: '#52525B',\n    fontSize: 12,\n    marginBottom: 12,\n  },\n  bio: {\n    color: '#A1A1AA',\n    fontSize: 13,\n    textAlign: 'center',\n    lineHeight: 18,\n    marginBottom: 16,\n  },\n  button: {\n    backgroundColor: '#FFCA03',\n    paddingHorizontal: 24,\n    paddingVertical: 8,\n    borderRadius: 8,\n  },\n  buttonText: {\n    color: '#0A0A0B',\n    fontWeight: 'bold',\n    fontSize: 13,\n  },\n});`,
+      'flutter': `import 'package:flutter/material.dart';\n\nclass ProfileCard extends StatelessWidget {\n  const ProfileCard({Key? key}) : super(key: key);\n\n  @override\n  Widget build(BuildContext context) {\n    return Container(\n      padding: const EdgeInsets.all(24),\n      decoration: BoxDecoration(\n        color: const Color(0xFF18181B),\n        borderRadius: BorderRadius.circular(12),\n        border: Border.all(color: const Color(0xFF27272A)),\n      ),\n      child: Column(\n        mainAxisSize: MainAxisSize.min,\n        children: [\n          const CircleAvatar(\n            radius: 32,\n            backgroundImage: NetworkImage('https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=150&h=150&fit=crop'),\n          ),\n          const SizedBox(height: 12),\n          const Text(\n            'Julian Howard',\n            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),\n          ),\n          const Text(\n            '@julian_dev',\n            style: TextStyle(color: Color(0xFF52525B), fontSize: 12),\n          ),\n          const SizedBox(height: 12),\n          const Text(\n            'Full-stack mobile engineer building visual systems.',\n            textAlign: TextAlign.center,\n            style: TextStyle(color: Color(0xFFA1A1AA), fontSize: 13, height: 1.4),\n          ),\n          const SizedBox(height: 16),\n          ElevatedButton(\n            onPressed: () {},\n            style: ElevatedButton.styleFrom(\n              backgroundColor: const Color(0xFFFFCA03),\n              foregroundColor: const Color(0xFF0A0A0B),\n              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),\n            ),\n            child: const Text('Follow'),\n          ),\n        ],\n      ),\n    );\n  }\n}`
+    }
   }
-}`,
-        input: `import 'package:flutter/material.dart';
-
-class MOInput extends StatefulWidget {
-  final String placeholder;
-
-  const MOInput({required this.placeholder});
-
-  @override
-  State<MOInput> createState() => _MOInputState();
-}
-
-class _MOInputState extends State<MOInput> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: _controller,
-      decoration: InputDecoration(
-        hintText: widget.placeholder,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Colors.grey[100],
-        contentPadding: EdgeInsets.all(16),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-}`,
-    },
-    "React Native": {
-        button: `import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-
-export const MOButton = ({ label, onPress }) => {
-  return (
-    <TouchableOpacity
-      style={styles.button}
-      onPress={onPress}
-      activeOpacity={0.8}
-    >
-      <Text style={styles.text}>{label}</Text>
-    </TouchableOpacity>
-  );
-};
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#FFCA03',
-    paddingVertical: 16,
-    paddingHorizontal: 32,
-    borderRadius: 24,
-    shadowColor: '#FFCA03',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 8,
-  },
-  text: {
-    color: '#0A0A0A',
-    fontWeight: 'bold',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-});`,
-        input: `import React, { useState } from 'react';
-import { TextInput, View, StyleSheet } from 'react-native';
-
-export const MOInput = ({ placeholder }) => {
-  const [value, setValue] = useState('');
-
-  return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder={placeholder}
-        placeholderTextColor="#999"
-        value={value}
-        onChangeText={setValue}
-      />
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-  input: {
-    borderRadius: 16,
-    backgroundColor: '#f5f5f5',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 14,
-    color: '#0A0A0A',
-  },
-});`,
-    },
-    Expo: {
-        button: `import { Pressable, Text, StyleSheet } from 'react-native';
-
-export default function MOButton({ label, onPress }) {
-  return (
-    <Pressable
-      style={({ pressed }) => [
-        styles.button,
-        pressed && styles.buttonPressed,
-      ]}
-      onPress={onPress}
-    >
-      <Text style={styles.text}>{label}</Text>
-    </Pressable>
-  );
-}
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#FFCA03',
-    paddingVertical: 16,
-    paddingHorizontal: 32,
-    borderRadius: 24,
-  },
-  buttonPressed: {
-    opacity: 0.8,
-  },
-  text: {
-    color: '#0A0A0A',
-    fontWeight: 'bold',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-});`,
-        input: `import { TextInput, StyleSheet } from 'react-native';
-import { useState } from 'react';
-
-export default function MOInput({ placeholder }) {
-  const [value, setValue] = useState('');
-
-  return (
-    <TextInput
-      style={styles.input}
-      placeholder={placeholder}
-      value={value}
-      onChangeText={setValue}
-      placeholderTextColor="#999"
-    />
-  );
-}
-
-const styles = StyleSheet.create({
-  input: {
-    borderRadius: 16,
-    backgroundColor: '#f5f5f5',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 14,
-    color: '#0A0A0A',
-  },
-});`,
-    },
-};
+];
 
 export default function PlaygroundPage() {
-    const [activeFramework, setActiveFramework] = useState("Flutter");
-    const [activeDevice, setActiveDevice] = useState("iPhone 15 Pro");
-    const [deviceTheme, setDeviceTheme] = useState<"dark" | "light">("dark");
-    const [showCode, setShowCode] = useState(true);
-    const [isCopied, setIsCopied] = useState(false);
-    const [isRunning, setIsRunning] = useState(false);
-    const [showConsole, setShowConsole] = useState(false);
-    const [consoleOutput, setConsoleOutput] = useState<string[]>(["Console ready...", "Waiting for code execution..."]);
-    const [activeTemplate, setActiveTemplate] = useState("button");
-    const [showWatchDemo, setShowWatchDemo] = useState(false);
-    const [buttonText, setButtonText] = useState("Get Started");
-    const [selectedVariant, setSelectedVariant] = useState("solid");
+  const router = useRouter();
+  const { user, profile } = useAuthStore();
+  const { code, framework, device, setCode, setFramework, setDevice, resetCode } = usePlaygroundStore();
 
-    const [code, setCode] = useState(DEMO_TEMPLATES.Flutter.button);
+  const [saving, setSaving] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-    const handleFrameworkChange = (fw: string) => {
-        setActiveFramework(fw);
-        setCode(DEMO_TEMPLATES[fw as keyof typeof DEMO_TEMPLATES].button);
-        setActiveTemplate("button");
-    };
+  // Formatter function (simple tab indent replacement)
+  const handleFormat = () => {
+    try {
+      // Basic formatting helper
+      const formatted = code
+        .split('\n')
+        .map((line) => line.trimRight())
+        .join('\n');
+      setCode(formatted);
+      toast.success('Code formatted');
+    } catch (err) {
+      toast.error('Format failed');
+    }
+  };
 
-    const handleTemplateChange = (template: string) => {
-        setActiveTemplate(template);
-        setCode(DEMO_TEMPLATES[activeFramework as keyof typeof DEMO_TEMPLATES][template as keyof typeof DEMO_TEMPLATES.Flutter]);
-    };
+  const handleSnippetSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value;
+    if (!val) return;
+    
+    const selected = SNIPPETS.find((s) => s.name === val);
+    if (selected) {
+      const codeKey = framework === 'flutter' ? 'flutter' : framework === 'expo' ? 'expo' : 'react-native';
+      const snippetCode = selected.frameworks[codeKey as keyof typeof selected.frameworks];
+      setCode(snippetCode);
+      toast.success(`${selected.name} snippet loaded!`);
+    }
+    // reset selection
+    e.target.value = '';
+  };
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(code);
-        setIsCopied(true);
-        toast.success("Code copied!");
-        setTimeout(() => setIsCopied(false), 2000);
-    };
+  const handleSavePlayground = async () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
 
-    const handleRun = useCallback(() => {
-        setIsRunning(true);
-        setShowConsole(true);
-        setConsoleOutput([]);
-        
-        const messages = [
-            `[${new Date().toLocaleTimeString()}] ⚙️ Initializing ${activeFramework} compiler...`,
-            `[${new Date().toLocaleTimeString()}] 📦 Loading dependencies...`,
-            `[${new Date().toLocaleTimeString()}] 🔍 Parsing code structure...`,
-            `[${new Date().toLocaleTimeString()}] ✓ Syntax validation passed`,
-            `[${new Date().toLocaleTimeString()}] 🎨 Rendering component preview...`,
-            `[${new Date().toLocaleTimeString()}] 🚀 Hot reload enabled on ${activeDevice}`,
-            `[${new Date().toLocaleTimeString()}] ✓ ${activeFramework} emulator running successfully!`,
-            `[${new Date().toLocaleTimeString()}] 📱 Device: ${DEVICES[activeDevice as keyof typeof DEVICES].brand} ${activeDevice}`,
-            `[${new Date().toLocaleTimeString()}] 🎯 Ready for testing...`,
-        ];
+    try {
+      setSaving(true);
+      // Call Supabase insertion logic to store playground project configurations
+      const { data, error } = await supabase
+        .from('submissions')
+        .insert({
+          title: `Playground ${framework.toUpperCase()} Project`,
+          code,
+          framework: framework === 'expo' ? 'expo' : framework === 'flutter' ? 'flutter' : 'react-native',
+          user_id: user.id,
+          status: 'pending'
+        })
+        .select()
+        .single();
 
-        let index = 0;
-        const interval = setInterval(() => {
-            if (index < messages.length) {
-                setConsoleOutput((prev) => [...prev, messages[index]]);
-                index++;
-            } else {
-                clearInterval(interval);
-            }
-        }, 300);
+      if (error) throw error;
+      toast.success('Playground project saved to your account!');
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.message || 'Failed to save playground.');
+    } finally {
+      setSaving(false);
+    }
+  };
 
-        setTimeout(() => {
-            toast.success(`${activeFramework} running on ${activeDevice}!`);
-        }, 1000);
-    }, [activeFramework, activeDevice]);
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    toast.success('Shareable playground link copied!');
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-    const handleDownload = () => {
-        const element = document.createElement("a");
-        const file = new Blob([code], { type: 'text/plain' });
-        element.href = URL.createObjectURL(file);
-        element.download = `playground_${activeFramework.toLowerCase().replace(' ', '_')}.${activeFramework === "Flutter" ? 'dart' : 'tsx'}`;
-        document.body.appendChild(element);
-        element.click();
-        toast.success("Download started");
-    };
+  const snackUrl = `https://snack.expo.dev/embedded?code=${encodeURIComponent(code)}&preview=true&platform=ios&theme=dark`;
+  const dartPadUrl = `https://dartpad.dev/embed-flutter.html?theme=dark&run=true&split=0&code=${encodeURIComponent(code)}`;
 
-    const handleShare = () => {
-        if (navigator.share) {
-            navigator.share({
-                title: 'MOBOUI Playground',
-                text: 'Check out my custom component configuration!',
-                url: window.location.href,
-            }).catch(console.error);
-        } else {
-            navigator.clipboard.writeText(window.location.href);
-            toast.success("Link copied!");
-        }
-    };
-
-    return (
-        <div className="min-h-screen flex flex-col bg-background text-text-primary">
-            {/* Header */}
-            <div className="h-24 border-b border-border flex items-center justify-between px-6 md:px-10 bg-surface/40 backdrop-blur-xl sticky top-0 z-40">
-                <div className="flex items-center gap-4 md:gap-10">
-                    <div className="flex items-center gap-3 md:gap-4">
-                        <div className="w-10 md:w-12 h-10 md:h-12 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground">
-                            <Play size={18} fill="currentColor" />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="font-display font-medium tracking-tighter text-text-primary text-lg md:text-2xl leading-none">Playground</span>
-                            <span className="text-[9px] md:text-[10px] font-bold text-text-muted tracking-[0.1em] mt-1 uppercase hidden sm:inline">Real-time Engine v3.0</span>
-                        </div>
-                    </div>
-                    <div className="h-10 w-px bg-border hidden md:block" />
-                    <div className="flex gap-2 bg-background p-1.5 rounded-2xl border border-border shadow-sm">
-                        {FRAMEWORKS.map(fw => (
-                            <button
-                                key={fw}
-                                onClick={() => handleFrameworkChange(fw)}
-                                className={cn(
-                                    "px-3 md:px-6 py-2 rounded-xl text-[10px] md:text-xs font-bold transition-all",
-                                    activeFramework === fw ? "bg-primary text-primary-foreground" : "text-text-muted hover:text-text-primary"
-                                )}
-                            >
-                                {fw}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                <div className="flex items-center gap-2 md:gap-4">
-                    <Button
-                        onClick={() => setShowWatchDemo(true)}
-                        className="hidden sm:flex rounded-xl h-12 md:h-14 px-4 md:px-8 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-bold text-xs md:text-sm hover:shadow-lg transition-all gap-2"
-                    >
-                        <Eye size={16} />
-                        Watch Demo
-                    </Button>
-                    <Button
-                        onClick={handleCopy}
-                        className="rounded-xl h-12 md:h-14 px-3 md:px-6 bg-primary text-primary-foreground font-bold text-xs md:text-sm hover:bg-primary/90 transition-all"
-                        title="Copy code"
-                    >
-                        {isCopied ? <Check size={18} /> : <Copy size={18} />}
-                        <span className="hidden md:inline ml-2">{isCopied ? "Copied" : "Copy"}</span>
-                    </Button>
-                </div>
+  return (
+    <div className="h-screen w-screen flex flex-col bg-[#0A0A0B] text-[#FAFAFA] overflow-hidden">
+      
+      {/* HEADER BAR */}
+      <header className="h-16 shrink-0 border-b border-[#27272A]/50 bg-[#111113] px-6 flex items-center justify-between z-20">
+        <div className="flex items-center gap-4">
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FFCA03] text-black">
+              <Code2 size={20} strokeWidth={2.5} />
             </div>
-
-            {/* Main Content */}
-            <div className="flex-grow flex flex-col lg:flex-row overflow-hidden gap-0">
-                {/* Left Sidebar - Controls (340px on desktop) */}
-                <div className="w-full lg:w-[320px] border-b lg:border-b-0 lg:border-r border-border overflow-y-auto p-6 md:p-10 space-y-8 bg-surface/30">
-                    {/* Device Settings */}
-                    <div>
-                        <h3 className="text-[11px] font-bold text-text-muted uppercase tracking-[0.2em] mb-8">Device Settings</h3>
-                        <div className="space-y-6">
-                            <div className="space-y-3">
-                                <label className="text-[10px] font-bold uppercase text-text-muted tracking-widest ml-1">Preview Device</label>
-                                <div className="relative group">
-                                    <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted w-4 h-4 z-10" />
-                                    <select
-                                        value={activeDevice}
-                                        onChange={(e) => setActiveDevice(e.target.value)}
-                                        className="w-full h-12 md:h-14 bg-background border border-border rounded-2xl pl-12 pr-4 text-sm font-bold text-text-primary appearance-none focus:border-primary/50 transition-all outline-none shadow-sm cursor-pointer"
-                                    >
-                                        {Object.keys(DEVICES).map(device => (
-                                            <option key={device}>{device}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="flex items-center justify-between p-4 md:p-6 bg-background rounded-2xl border border-border shadow-sm">
-                                <span className="text-[10px] font-bold uppercase text-text-muted tracking-widest">Theme Mode</span>
-                                <button
-                                    onClick={() => setDeviceTheme(deviceTheme === "dark" ? "light" : "dark")}
-                                    className="h-10 md:h-12 w-10 md:w-12 flex items-center justify-center rounded-xl bg-surface border border-border text-primary hover:bg-surface-elevated transition-all"
-                                    title={`Switch to ${deviceTheme === "dark" ? "light" : "dark"} mode`}
-                                >
-                                    {deviceTheme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Component Templates */}
-                    <div>
-                        <h3 className="text-[11px] font-bold text-text-muted uppercase tracking-[0.2em] mb-8">Component Template</h3>
-                        <div className="grid grid-cols-2 md:grid-cols-1 gap-3">
-                            {["button", "input"].map(template => (
-                                <button
-                                    key={template}
-                                    onClick={() => handleTemplateChange(template)}
-                                    className={cn(
-                                        "py-3 md:py-4 px-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest border transition-all capitalize",
-                                        activeTemplate === template ? "bg-primary text-primary-foreground border-primary shadow-glow-amber" : "bg-background border-border text-text-muted hover:border-primary/30"
-                                    )}
-                                >
-                                    {template}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Component Settings */}
-                    <div className="space-y-6">
-                        <div className="space-y-3">
-                            <label className="text-[10px] font-bold uppercase text-text-muted tracking-widest ml-1">Button Label</label>
-                            <input
-                                type="text"
-                                value={buttonText}
-                                onChange={(e) => setButtonText(e.target.value)}
-                                className="w-full h-12 md:h-14 bg-background border border-border rounded-2xl px-5 text-sm font-bold text-text-primary focus:border-primary/50 outline-none transition-all shadow-sm"
-                                placeholder="Enter button text"
-                            />
-                        </div>
-
-                        <div className="space-y-3">
-                            <label className="text-[10px] font-bold uppercase text-text-muted tracking-widest ml-1">Variant Style</label>
-                            <div className="grid grid-cols-2 md:grid-cols-1 gap-3">
-                                {["solid", "outline", "ghost"].map(v => (
-                                    <button
-                                        key={v}
-                                        onClick={() => setSelectedVariant(v)}
-                                        className={cn(
-                                            "py-3 md:py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest border transition-all capitalize",
-                                            selectedVariant === v ? "bg-primary text-primary-foreground border-primary" : "bg-background border-border text-text-muted hover:border-primary/30"
-                                        )}
-                                    >
-                                        {v}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    <Button
-                        onClick={() => {
-                            setButtonText("Get Started");
-                            setSelectedVariant("solid");
-                            setActiveTemplate("button");
-                            setConsoleOutput(["Console cleared"]);
-                        }}
-                        className="w-full h-12 md:h-14 rounded-2xl text-text-muted font-bold text-[11px] uppercase tracking-widest hover:bg-destructive/10 hover:text-destructive transition-all border border-border bg-background"
-                    >
-                        <RotateCcw size={16} className="mr-2" />
-                        Reset All
-                    </Button>
-                </div>
-
-                {/* Middle Section - Preview */}
-                <div className="flex-grow flex flex-col items-center justify-center relative bg-background overflow-hidden p-4 md:p-10 min-h-[500px] lg:min-h-auto">
-                    <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-                    <GlowEffect className="opacity-10" color="amber" size="xl" />
-
-                    {/* Device Status Badge */}
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="absolute top-4 md:top-8 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-surface/80 backdrop-blur-md px-4 md:px-6 py-2 md:py-3 rounded-2xl border border-border shadow-lg z-30 text-center"
-                    >
-                        <div className={cn(
-                            "w-2 h-2 md:w-3 md:h-3 rounded-full",
-                            isRunning ? "bg-green-500 animate-pulse" : "bg-text-muted"
-                        )} />
-                        <span className="text-[9px] md:text-xs font-bold text-text-muted tracking-widest uppercase">
-                            {DEVICES[activeDevice as keyof typeof DEVICES].brand} • {activeDevice}
-                        </span>
-                        {isRunning && (
-                            <span className="text-[9px] font-bold text-green-500 tracking-widest uppercase ml-2">RUNNING</span>
-                        )}
-                    </motion.div>
-
-                    {/* Phone Mockup */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="relative"
-                    >
-                        <div className="relative w-[280px] md:w-[360px] h-[560px] md:h-[720px] rounded-[3.5rem] md:rounded-[4.5rem] border-[10px] md:border-[14px] border-text-primary/10 bg-text-primary/5 p-3 md:p-4 shadow-lg">
-                            {/* Notch */}
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-8 md:h-10 bg-text-primary/20 rounded-b-[1.5rem] md:rounded-b-[2.5rem] z-20 flex items-center justify-between px-4 md:px-6">
-                                <span className="text-[7px] md:text-[8px] font-bold text-text-muted">9:41</span>
-                                <div className="flex items-center gap-1">
-                                    <Zap size={9} className="text-text-muted md:w-[10px]" />
-                                    <Volume2 size={9} className="text-text-muted md:w-[10px]" />
-                                </div>
-                            </div>
-
-                            {/* Emulator Screen Content */}
-                            <EmulatorScreen
-                                code={code}
-                                framework={activeFramework as "Flutter" | "React Native" | "Expo"}
-                                theme={deviceTheme}
-                                isRunning={isRunning}
-                                buttonText={buttonText}
-                            />
-                        </div>
-                    </motion.div>
-
-                    {/* Bottom Toolbar */}
-                    <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-2 md:gap-4 bg-surface/80 backdrop-blur-xl p-2 md:p-3 rounded-2xl border border-border shadow-lg z-30 flex-wrap justify-center">
-                        <Button
-                            onClick={handleRun}
-                            className={cn(
-                                "h-10 md:h-12 px-4 md:px-6 rounded-xl font-bold text-[10px] md:text-xs uppercase tracking-widest transition-all",
-                                isRunning
-                                    ? "bg-green-500 text-white hover:bg-green-600"
-                                    : "bg-primary text-primary-foreground hover:bg-primary/90"
-                            )}
-                        >
-                            {isRunning ? (
-                                <>
-                                    <RefreshCw size={12} className="mr-2 animate-spin md:w-[14px] md:h-[14px]" />
-                                    Running
-                                </>
-                            ) : (
-                                <>
-                                    <Play size={12} className="mr-2 fill-current md:w-[14px] md:h-[14px]" />
-                                    Run
-                                </>
-                            )}
-                        </Button>
-                        <div className="px-3 md:px-6 py-2 text-[9px] md:text-xs font-bold text-text-primary bg-background rounded-xl border border-border hidden sm:block">
-                            100% Fidelity
-                        </div>
-                        <Button
-                            onClick={() => setShowConsole(!showConsole)}
-                            className="h-10 md:h-12 w-10 md:w-12 rounded-xl hover:bg-surface-elevated text-primary flex items-center justify-center"
-                            title="Toggle console"
-                        >
-                            <Terminal size={16} className="md:w-[18px] md:h-[18px]" />
-                        </Button>
-                    </div>
-                </div>
-
-                {/* Right Sidebar - Editor + Console */}
-                {showCode && (
-                    <div className="w-full lg:w-[480px] border-t lg:border-t-0 lg:border-l border-border flex flex-col bg-surface/50 overflow-hidden">
-                        <div className="h-16 md:h-24 border-b border-border flex items-center justify-between px-4 md:px-10 bg-surface-elevated/40">
-                            <div className="flex items-center gap-3 md:gap-4">
-                                <Terminal size={16} className="text-primary md:w-[18px] md:h-[18px]" />
-                                <div className="flex flex-col">
-                                    <span className="text-[10px] md:text-xs font-bold text-text-primary tracking-widest uppercase">Live Editor</span>
-                                    <span className="text-[8px] md:text-[9px] text-text-muted mt-1">{activeFramework === "Flutter" ? "Dart" : "TypeScript"}</span>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Button
-                                    onClick={handleDownload}
-                                    className="h-10 md:h-12 w-10 md:w-12 text-text-muted hover:text-primary transition-all rounded-xl hover:bg-surface flex items-center justify-center"
-                                    title="Download code"
-                                >
-                                    <Download size={16} className="md:w-[20px] md:h-[20px]" />
-                                </Button>
-                            </div>
-                        </div>
-
-                        {/* Editor Section */}
-                        <div className={cn(
-                            "overflow-hidden relative transition-all duration-300",
-                            showConsole ? "h-[400px] md:h-[500px]" : "flex-grow"
-                        )}>
-                            <Editor
-                                height="100%"
-                                defaultLanguage={activeFramework === "Flutter" ? "dart" : "typescript"}
-                                language={activeFramework === "Flutter" ? "dart" : "typescript"}
-                                theme={deviceTheme === "dark" ? "vs-dark" : "light"}
-                                value={code}
-                                onChange={(value) => setCode(value || "")}
-                                options={{
-                                    fontSize: 12,
-                                    fontFamily: "'JetBrains Mono', monospace",
-                                    minimap: { enabled: false },
-                                    scrollBeyondLastLine: false,
-                                    lineNumbers: "on",
-                                    padding: { top: 12, bottom: 12 },
-                                    roundedSelection: true,
-                                    automaticLayout: true,
-                                    wordWrap: "on",
-                                }}
-                            />
-                        </div>
-
-                        {/* Console Section */}
-                        {showConsole && (
-                            <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", minHeight: 200, opacity: 1 }}
-                                className="border-t border-border bg-background/50 overflow-hidden flex flex-col"
-                            >
-                                <div className="h-12 md:h-14 border-b border-border flex items-center justify-between px-4 md:px-10 bg-surface-elevated/20">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                        <span className="text-[10px] md:text-xs font-bold text-text-primary tracking-widest uppercase">Console Output</span>
-                                    </div>
-                                    <Button
-                                        onClick={() => setConsoleOutput(["Console cleared"])}
-                                        className="text-[8px] md:text-[9px] text-text-muted hover:text-text-primary bg-transparent border-0 p-2"
-                                    >
-                                        Clear
-                                    </Button>
-                                </div>
-                                <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-2 font-mono text-[11px] md:text-xs bg-black/40 bg-[url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><defs><pattern id=%22grid%22 width=%22100%22 height=%22100%22 patternUnits=%22userSpaceOnUse%22><path d=%22M 100 0 L 0 0 0 100%22 fill=%22none%22 stroke=%22rgba(255,255,255,0.05)%22 stroke-width=%220.5%22/></pattern></defs><rect width=%22100%22 height=%22100%22 fill=%22%23000%22/><rect width=%22100%22 height=%22100%22 fill=%22url(%23grid)%22/></svg>')]">
-                                    {consoleOutput.map((log, idx) => (
-                                        <div key={idx} className="text-green-400/80 break-words">
-                                            <span className="text-text-muted">›</span> {log}
-                                        </div>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        )}
-                    </div>
-                )}
-            </div>
-
-            {/* Toggle Editor Button - Mobile */}
-            <button
-                onClick={() => setShowCode(!showCode)}
-                className="fixed bottom-6 right-6 h-16 w-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-all z-40 lg:hidden font-bold text-center text-xs shadow-lg"
-                title={showCode ? "Hide code editor" : "Show code editor"}
+            <span className="font-display font-black text-base uppercase tracking-tight hidden sm:inline">Playground</span>
+          </Link>
+          <div className="h-5 w-px bg-[#27272A]/85" />
+          
+          {/* Framework dropdown selector */}
+          <div className="relative">
+            <select
+              value={framework}
+              onChange={(e) => setFramework(e.target.value as any)}
+              className="h-9 px-3 pr-8 bg-[#18181B] border border-[#27272A]/50 rounded-lg text-xs font-black uppercase tracking-wider text-[#FFCA03] focus:outline-none cursor-pointer appearance-none min-w-[120px]"
             >
-                {showCode ? "Hide Code" : "Show Code"}
-            </button>
-
-            {/* Watch Demo Modal */}
-            {showWatchDemo && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
-                    onClick={() => setShowWatchDemo(false)}
-                >
-                    <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        onClick={(e) => e.stopPropagation()}
-                        className="bg-surface-elevated border border-border rounded-3xl overflow-hidden max-w-2xl w-full shadow-2xl"
-                    >
-                        {/* Modal Header */}
-                        <div className="h-16 md:h-20 border-b border-border flex items-center justify-between px-6 md:px-10 bg-surface/50">
-                            <h2 className="text-xl md:text-2xl font-bold text-text-primary">Watch Demo</h2>
-                            <button
-                                onClick={() => setShowWatchDemo(false)}
-                                className="text-text-muted hover:text-text-primary transition-colors"
-                            >
-                                <X size={24} />
-                            </button>
-                        </div>
-
-                        {/* Modal Content */}
-                        <div className="p-6 md:p-10 space-y-6">
-                            <div className="space-y-4">
-                                <h3 className="text-lg md:text-xl font-bold text-text-primary flex items-center gap-3">
-                                    <Play size={20} className="text-primary" fill="currentColor" />
-                                    How to Use the Playground
-                                </h3>
-                                <ul className="space-y-3 text-text-muted text-sm md:text-base">
-                                    <li className="flex gap-3">
-                                        <span className="text-primary font-bold">1.</span>
-                                        <span>Select your framework (Flutter, React Native, or Expo)</span>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="text-primary font-bold">2.</span>
-                                        <span>Choose a component template (Button or Input)</span>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="text-primary font-bold">3.</span>
-                                        <span>Customize the device, theme, and styling options</span>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="text-primary font-bold">4.</span>
-                                        <span>Edit the code in the live editor with real-time syntax highlighting</span>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="text-primary font-bold">5.</span>
-                                        <span>Click "Run Code" to execute and see the preview on the device mockup</span>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="text-primary font-bold">6.</span>
-                                        <span>Use the console to debug and track execution logs in real-time</span>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="text-primary font-bold">7.</span>
-                                        <span>Copy your code or download it as a file for your project</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div className="p-4 md:p-6 bg-primary/10 border border-primary/30 rounded-2xl space-y-2">
-                                <h4 className="font-bold text-text-primary flex items-center gap-2">
-                                    <Zap size={18} className="text-primary" />
-                                    Pro Tips
-                                </h4>
-                                <ul className="text-xs md:text-sm text-text-muted space-y-2 ml-6">
-                                    <li>• Toggle between Dark and Light mode to test different themes</li>
-                                    <li>• The console shows real-time compilation and execution logs</li>
-                                    <li>• Your changes in the editor are reflected immediately</li>
-                                    <li>• Use the Reset button to restore default settings</li>
-                                </ul>
-                            </div>
-
-                            <Button
-                                onClick={() => setShowWatchDemo(false)}
-                                className="w-full h-12 md:h-14 bg-primary text-primary-foreground font-bold text-sm md:text-base rounded-2xl hover:bg-primary/90 transition-all"
-                            >
-                                <ArrowRight size={18} className="mr-2" />
-                                Start Coding Now
-                            </Button>
-                        </div>
-                    </motion.div>
-                </motion.div>
-            )}
+              <option value="react-native">React Native</option>
+              <option value="expo">Expo</option>
+              <option value="flutter">Flutter</option>
+            </select>
+          </div>
         </div>
-    );
-}
 
-// The X icon is already imported from lucide-react above
+        {/* Toolbar & options center/right */}
+        <div className="flex items-center gap-3">
+          {/* Device toggle selection */}
+          <div className="flex bg-[#18181B] p-1 rounded-lg border border-[#27272A]/50 shrink-0">
+            <button
+              onClick={() => setDevice('iphone')}
+              className={cn(
+                "px-2.5 py-1 rounded text-[10px] font-black uppercase tracking-wider transition-all",
+                device === 'iphone' ? "bg-[#FFCA03] text-black" : "text-[#52525B] hover:text-white"
+              )}
+            >
+              iPhone
+            </button>
+            <button
+              onClick={() => setDevice('android')}
+              className={cn(
+                "px-2.5 py-1 rounded text-[10px] font-black uppercase tracking-wider transition-all",
+                device === 'android' ? "bg-[#FFCA03] text-black" : "text-[#52525B] hover:text-white"
+              )}
+            >
+              Android
+            </button>
+          </div>
+
+          <Button
+            onClick={handleShare}
+            variant="outline"
+            className="h-9 rounded-lg border-[#27272A] text-white hover:bg-white/5 text-xs font-bold uppercase tracking-wider"
+          >
+            <Share2 size={14} className="mr-1.5" /> Share
+          </Button>
+
+          <Button
+            onClick={handleSavePlayground}
+            disabled={saving}
+            className="h-9 rounded-lg btn-primary border-0 text-xs font-black uppercase tracking-wider"
+          >
+            {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} className="mr-1.5" />}
+            Save
+          </Button>
+
+          <div className="h-5 w-px bg-[#27272A]/85" />
+          
+          {/* User profile avatar or log-in trigger */}
+          {user ? (
+            <Link href="/dashboard" className="h-8 w-8 rounded-full bg-[#FFCA03] flex items-center justify-center text-black font-black text-xs uppercase cursor-pointer">
+              {profile?.full_name?.charAt(0) || user.email?.charAt(0) || 'U'}
+            </Link>
+          ) : (
+            <Link href="/login" className="text-xs font-black text-[#A1A1AA] hover:text-[#FFCA03] uppercase tracking-widest pl-1">
+              Sign In
+            </Link>
+          )}
+        </div>
+      </header>
+
+      {/* SPLIT PANEL SECTION */}
+      <div className="flex-1 min-h-0 bg-[#0A0A0B] relative">
+        <PanelGroup direction="horizontal">
+          
+          {/* LEFT PANEL: CODE EDITOR & SNIPPET OPTIONS */}
+          <Panel defaultSize={50} minSize={30} className="flex flex-col h-full bg-[#050506]">
+            
+            {/* Editor toolbar */}
+            <div className="h-12 shrink-0 border-b border-[#27272A]/50 bg-[#111113]/80 px-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] font-black uppercase text-[#52525B] tracking-widest">Editor Canvas</span>
+              </div>
+              <div className="flex items-center gap-3">
+                
+                {/* Snippets selection dropdown */}
+                <select
+                  onChange={handleSnippetSelect}
+                  defaultValue=""
+                  className="h-8 px-2 bg-black border border-[#27272A]/60 rounded text-[10px] font-black uppercase tracking-wider text-[#A1A1AA] focus:outline-none cursor-pointer"
+                >
+                  <option value="">-- Load Snippet --</option>
+                  {SNIPPETS.map((snip) => (
+                    <option key={snip.name} value={snip.name}>{snip.name}</option>
+                  ))}
+                </select>
+
+                <button
+                  onClick={handleFormat}
+                  className="text-[10px] font-black uppercase text-[#A1A1AA] hover:text-[#FFCA03] transition-colors"
+                >
+                  Format
+                </button>
+                <button
+                  onClick={resetCode}
+                  className="text-[10px] font-black uppercase text-red-500/80 hover:text-red-500 transition-colors"
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+
+            {/* Monaco Editor Container */}
+            <div className="flex-grow min-h-0 overflow-hidden bg-black">
+              <Editor
+                height="100%"
+                language={framework === 'flutter' ? 'dart' : 'typescript'}
+                theme="vs-dark"
+                value={code}
+                onChange={(val) => setCode(val || '')}
+                options={{
+                  fontSize: 14,
+                  fontFamily: "'JetBrains Mono', monospace",
+                  minimap: { enabled: false },
+                  wordWrap: 'off',
+                  lineNumbers: 'on',
+                  scrollBeyondLastLine: false,
+                  automaticLayout: true,
+                  padding: { top: 16, bottom: 16 },
+                }}
+              />
+            </div>
+          </Panel>
+
+          {/* DRAGGABLE DIVIDER RESIZE HANDLE */}
+          <PanelResizeHandle className="w-[3px] bg-[#27272A]/30 hover:bg-[#FFCA03]/40 cursor-col-resize transition-colors z-10" />
+
+          {/* RIGHT PANEL: LIVE EMULATOR PREVIEW VIEW */}
+          <Panel defaultSize={50} minSize={30} className="flex flex-col h-full bg-[#0A0A0B]">
+            <div className="h-12 shrink-0 border-b border-[#27272A]/50 bg-[#111113]/80 px-4 flex items-center justify-between">
+              <span className="text-[10px] font-black uppercase text-[#52525B] tracking-widest">Active Device Emulator</span>
+              <button
+                onClick={() => toast.success('Preview refreshed')}
+                className="text-[10px] font-black uppercase text-[#A1A1AA] hover:text-[#FFCA03] transition-colors flex items-center gap-1"
+              >
+                <RefreshCw size={11} /> Refresh
+              </button>
+            </div>
+
+            {/* Device Rendering Canvas Area */}
+            <div className="flex-1 flex flex-col items-center justify-center p-6 bg-black relative">
+              <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
+              
+              {/* Device Physical Mockup */}
+              <div className="relative w-[280px] h-[550px] bg-[#0A0A0B] rounded-[3rem] border-[10px] border-[#1C1C1E] shadow-2xl p-3 flex flex-col overflow-hidden">
+                
+                {/* Notch dynamics */}
+                {device === 'iphone' ? (
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-full z-20 flex items-center justify-center" />
+                ) : (
+                  <div className="absolute top-3 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full z-20" />
+                )}
+
+                {/* Device Screen Frame Viewport */}
+                <div className="flex-grow rounded-[2rem] bg-[#111113] overflow-hidden relative border border-[#27272A]/50">
+                  {framework === 'flutter' ? (
+                    // Flutter DartPad rendering button
+                    <div className="w-full h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
+                      <Code2 className="text-[#3B82F6]/60" size={36} />
+                      <p className="text-[10px] font-black uppercase tracking-wider text-[#52525B]">Flutter DartPad preview</p>
+                      <Button
+                        asChild
+                        className="h-10 rounded-lg btn-primary border-0 text-[10px] font-black uppercase tracking-wider px-4"
+                      >
+                        <a href={dartPadUrl} target="_blank" rel="noopener noreferrer">
+                          Preview in DartPad →
+                        </a>
+                      </Button>
+                    </div>
+                  ) : (
+                    // React Native/Expo Snack Embedded iframe
+                    <iframe
+                      src={snackUrl}
+                      className="w-full h-full border-none bg-black"
+                      title="React Native Preview"
+                      key={`${framework}-${device}`}
+                    />
+                  )}
+                </div>
+
+                {device === 'iphone' && (
+                  <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-24 h-1 bg-white/30 rounded-full" />
+                )}
+              </div>
+            </div>
+          </Panel>
+        </PanelGroup>
+      </div>
+
+      {/* LOGIN ERROR NOTIFICATION DIALOG MODAL */}
+      <Dialog open={showAuthModal} onOpenChange={setShowAuthModal}>
+        <DialogContent className="sm:max-w-md bg-[#111113] border border-[#27272A]/85 text-[#FAFAFA] rounded-2xl p-6">
+          <DialogHeader className="space-y-3">
+            <div className="h-12 w-12 rounded-full bg-[#FFCA03]/10 border border-[#FFCA03]/20 flex items-center justify-center mx-auto text-[#FFCA03] mb-2">
+              <ShieldAlert size={24} />
+            </div>
+            <DialogTitle className="text-center font-display font-black text-xl uppercase tracking-tight">Login Required</DialogTitle>
+            <DialogDescription className="text-center text-[#A1A1AA] text-sm font-medium">
+              You must log in to your MOBOUI developer profile to save custom playground configurations.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex gap-3 mt-6">
+            <Button
+              variant="outline"
+              onClick={() => setShowAuthModal(false)}
+              className="flex-1 h-12 rounded-xl border-[#27272A] text-white hover:bg-white/5"
+            >
+              Cancel
+            </Button>
+            <Button
+              asChild
+              onClick={() => setShowAuthModal(false)}
+              className="flex-1 h-12 rounded-xl btn-primary border-0"
+            >
+              <Link href="/login" className="flex items-center justify-center">
+                Sign In
+              </Link>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}

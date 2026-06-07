@@ -175,7 +175,8 @@ export function Playground() {
 
     // Default template if no code
     if (!code && !templateSlug) {
-      setCode(TEMPLATES[framework]);
+      const templateKey = framework === 'expo' ? 'react-native' : framework;
+      setCode(TEMPLATES[templateKey]);
     }
   }, [templateSlug, mounted]); // Dependency on mounted to ensure hydration first
 
@@ -212,7 +213,7 @@ export function Playground() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <FrameworkTabs activeFramework={framework} onFrameworkChange={handleFrameworkChange} />
+          <FrameworkTabs activeFramework={framework === 'expo' ? 'react-native' : framework} onFrameworkChange={handleFrameworkChange} />
         </motion.div>
       </div>
 

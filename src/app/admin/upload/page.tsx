@@ -16,6 +16,7 @@ import {
 import { cn } from "@/lib/utils/cn";
 import { useFrontendAppStore } from "@/lib/store/frontend-app-store";
 import type { Component } from "@/lib/types/component";
+import { AuthGuard } from "@/components/shared/AuthGuard";
 
 const CATEGORIES = ["Buttons", "Inputs", "Navigation", "Cards", "Dialogs", "Media", "Utilities", "Auth", "Finance", "Analytics"];
 const FRAMEWORKS = [
@@ -117,7 +118,8 @@ export default function UploadPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-32 max-w-5xl">
+        <AuthGuard requireAdmin>
+            <div className="container mx-auto px-4 py-32 max-w-5xl">
             <PageHeader
                 badge="Admin"
                 title="Upload Component"
@@ -294,5 +296,6 @@ export default function UploadPage() {
                 </div>
             </form>
         </div>
+        </AuthGuard>
     );
 }

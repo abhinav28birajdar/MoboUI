@@ -17698,7 +17698,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '\$129.00',
+                          '$129.00',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
