@@ -36,7 +36,7 @@ export function AuthGuard({ children, requireAdmin = false }: AuthGuardProps) {
 
         if (requireAdmin) {
           // Fetch profile to verify role
-          const { data: profile, error } = await supabase
+          const { data: profile, error } = await (supabase as any)
             .from('profiles')
             .select('role')
             .eq('id', session.user.id)

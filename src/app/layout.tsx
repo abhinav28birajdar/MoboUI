@@ -1,25 +1,35 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import { DM_Sans, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/providers/ThemeProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
+import { PageAnimate } from "@/components/layout/PageAnimate";
+import LoginPromptModal from "@/components/global/login-prompt-modal";
 
-const dmSans = DM_Sans({
+const spaceGrotesk = Space_Grotesk({
     subsets: ["latin"],
-    variable: "--font-dm-sans",
+    weight: ["400", "500", "600", "700"],
+    variable: "--font-heading",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const inter = Inter({
     subsets: ["latin"],
-    variable: "--font-jetbrains-mono",
+    weight: ["300", "400", "500", "600", "700"],
+    variable: "--font-body",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+    subsets: ["latin"],
+    weight: ["400", "500"],
+    variable: "--font-code",
 });
 
 export const metadata: Metadata = {
     title: "MOBOUI — Mobile UI Components for Flutter, React Native & Expo",
-    description: "Production-ready mobile UI kit with 30+ components for Flutter, React Native & Expo. Copy, paste, and ship beautiful apps faster.",
+    description: "Production-ready mobile UI kit with 50+ components for Flutter, React Native & Expo. Copy, paste, and ship beautiful apps faster.",
     keywords: ["mobile ui", "flutter components", "react native ui", "expo components", "ui kit", "app design"],
 };
 
@@ -29,10 +39,13 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en" suppressHydrationWarning className="dark">
             <body
-                className={`${dmSans.variable} ${jetbrainsMono.variable} antialiased font-body selection:bg-primary selection:text-primary-foreground`}
+                className={`${spaceGrotesk.variable} ${inter.variable} ${jetBrainsMono.variable} antialiased bg-bg-base text-text-primary min-h-screen relative overflow-x-hidden`}
             >
+                {/* Noise Overlay */}
+                <div className="fixed inset-0 pointer-events-none bg-noise z-50 opacity-[0.6]" />
+                
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="dark"
@@ -40,10 +53,13 @@ export default function RootLayout({
                     enableSystem={false}
                     disableTransitionOnChange
                 >
-                    <div className="flex flex-col min-h-screen">
+                    <div className="flex flex-col min-h-screen relative z-10">
                         <Navbar />
-                        <main className="flex-grow">
-                            {children}
+                        <LoginPromptModal />
+                        <main className="flex-grow flex flex-col pt-20">
+                            <PageAnimate>
+                                {children}
+                            </PageAnimate>
                         </main>
                         <Footer />
                     </div>
@@ -51,10 +67,10 @@ export default function RootLayout({
                         position="bottom-right"
                         toastOptions={{
                             style: {
-                                background: '#111113',
-                                color: '#fafafa',
-                                border: '1px solid rgba(39,39,42,0.5)',
-                                borderRadius: '12px',
+                                background: '#0F0F12',
+                                color: '#FAFAFA',
+                                border: '1px solid rgba(39,39,42,0.6)',
+                                borderRadius: '10px',
                             },
                         }}
                     />

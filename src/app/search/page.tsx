@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Search, Layers, Layout, BookOpen } from "lucide-react";
 import { PageHeader } from "@/components/shared/PageHeader";
-import { ComponentCard } from "@/components/components/ComponentCard";
+import { ComponentCard } from "@/components/ComponentCard";
 import Link from "next/link";
 import { cn } from "@/lib/utils/cn";
 import { docsData } from "@/lib/data/docs";

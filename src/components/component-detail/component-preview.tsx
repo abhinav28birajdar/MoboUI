@@ -1,0 +1,1 @@
+export { ComponentPreview as default } from "@/components/ComponentPreview";

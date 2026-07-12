@@ -1,115 +1,63 @@
-import { supabase } from '@/lib/supabase/client';
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-/**
- * GET /api/favorites - Get user's favorite components
- * POST /api/favorites - Add/remove component from favorites
- */
 export async function GET(request: NextRequest) {
   try {
-    const hasDb = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    const db = hasDb ? await createClient() : supabase;
-
-    if (!hasDb || !db || typeof db.auth === 'undefined') {
-      return NextResponse.json({ favorites: [] });
-    }
-
+    const db = await createClient();
     const { data: { session } } = await db.auth.getSession();
-
     if (!session) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { data: favorites, error } = await db
+    const { data, error } = await db
       .from('favorites')
-      .select('component_id, components(name, slug, image_url, framework)')
+      .select('*, components(*)')
       .eq('user_id', session.user.id);
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
 
-    return NextResponse.json({ favorites: favorites || [] });
-  } catch (error) {
-    console.error('Error fetching favorites:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch favorites' },
-      { status: 500 }
-    );
+    return NextResponse.json(data.map((fav: any) => fav.components));
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const hasDb = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    const db = hasDb ? await createClient() : supabase;
-
-    if (!hasDb || !db || typeof db.auth === 'undefined') {
-      return NextResponse.json({ favorited: true, message: 'Local fallback mode active' });
-    }
-
+    const db = await createClient();
     const { data: { session } } = await db.auth.getSession();
-
     if (!session) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const body = await request.json();
-    const { componentId } = body;
-
-    if (!componentId) {
-      return NextResponse.json(
-        { error: 'componentId is required' },
-        { status: 400 }
-      );
+    const { component_id } = await request.json();
+    if (!component_id) {
+      return NextResponse.json({ error: 'Missing component_id' }, { status: 400 });
     }
 
-    // Check if already favorited
-    const { data: existing, error: checkError } = await db
+    const { data: existing } = await db
       .from('favorites')
       .select('id')
       .eq('user_id', session.user.id)
-      .eq('component_id', componentId)
+      .eq('component_id', component_id)
       .maybeSingle();
 
-    if (checkError) throw checkError;
-
     if (existing) {
-      // Remove favorite
-      const { error: deleteError } = await db
+      const { error } = await db
         .from('favorites')
         .delete()
         .eq('user_id', session.user.id)
-        .eq('component_id', componentId);
-
-      if (deleteError) throw deleteError;
-
+        .eq('component_id', component_id);
+      if (error) throw error;
       return NextResponse.json({ favorited: false });
     } else {
-      // Add favorite
-      const { error: insertError } = await db
+      const { error } = await db
         .from('favorites')
-        .insert({
-          user_id: session.user.id,
-          component_id: componentId,
-        });
-
-      if (insertError) throw insertError;
-
+        .insert({ user_id: session.user.id, component_id });
+      if (error) throw error;
       return NextResponse.json({ favorited: true });
     }
-  } catch (error) {
-    console.error('Error toggling favorite:', error);
-    return NextResponse.json(
-      { error: 'Failed to toggle favorite' },
-      { status: 500 }
-    );
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
   }
 }

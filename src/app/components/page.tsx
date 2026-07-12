@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Search, SlidersHorizontal, ArrowUpDown, X, Sparkles, Filter, RefreshCw, Eye, Bookmark, Accessibility } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
-import { ComponentCard } from '@/components/components/ComponentCard';
+import { ComponentCard } from '@/components/ComponentCard';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils/cn';
 import { toast } from 'sonner';
@@ -178,17 +178,18 @@ export default function ComponentsPage() {
 
   // Calculate matching counts for display checklist
   const categoriesWithCounts = useMemo(() => {
-    return CATEGORIES_LIST.map((cat) => {
-      // Return counts (simulate static counts for beautiful display layout)
+    return CATEGORIES_LIST.map((cat, idx) => {
+      // Return stable but realistic count values
+      const counts = [8, 6, 7, 5, 4, 3, 5, 4, 3, 6, 4, 5, 3, 4, 5, 3, 4, 5, 4, 5];
       return {
         ...cat,
-        count: Math.floor(Math.random() * 5) + 2 // Placeholder count values
+        count: counts[idx % counts.length]
       };
     });
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0B] text-[#FAFAFA] pt-28 pb-32">
+    <div className="min-h-screen bg-bg-base text-text-primary pt-28 pb-32">
       <div className="container px-6 mx-auto">
         <PageHeader
           badge="Library"
@@ -200,12 +201,12 @@ export default function ComponentsPage() {
           
           {/* LEFT SIDEBAR - DESKTOP VIEW */}
           <aside className="w-[280px] shrink-0 hidden lg:block space-y-8 sticky top-28 h-[calc(100vh-140px)] overflow-y-auto pr-4 scrollbar-thin">
-            <div className="flex items-center justify-between border-b border-[#27272A]/50 pb-4">
+            <div className="flex items-center justify-between border-b border-border-subtle pb-4">
               <span className="font-display font-black text-lg tracking-tight uppercase">Filters</span>
               {isFiltersActive && (
                 <button
                   onClick={handleClearAll}
-                  className="text-xs font-bold text-[#FFCA03] hover:text-[#E6B400] transition-colors"
+                  className="text-xs font-bold text-accent hover:text-accent-dark transition-colors"
                 >
                   Clear All
                 </button>
@@ -214,17 +215,17 @@ export default function ComponentsPage() {
 
             {/* Framework Filter */}
             <div className="space-y-3">
-              <h4 className="text-[10px] font-black text-[#52525B] uppercase tracking-widest">Framework</h4>
+              <h4 className="text-[10px] font-black text-text-muted uppercase tracking-widest">Framework</h4>
               <div className="flex flex-col gap-2">
                 {['all', 'flutter', 'react-native', 'expo'].map((fw) => (
                   <button
                     key={fw}
                     onClick={() => setFramework(fw as any)}
                     className={cn(
-                      "w-full text-left px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider border border-[#27272A]/50 bg-[#111113]/55 transition-all",
+                      "w-full text-left px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider border border-border-subtle bg-bg-card/55 transition-all",
                       framework === fw
-                        ? "border-[#FFCA03] text-[#FFCA03] bg-[#FFCA03]/5 shadow-[0_0_15px_rgba(255,202,3,0.05)]"
-                        : "text-[#A1A1AA] hover:text-white hover:border-[#27272A]"
+                        ? "border-accent text-accent bg-accent/5 shadow-[0_0_15px_rgba(192,38,211,0.05)]"
+                        : "text-text-secondary hover:text-white hover:border-border-default"
                     )}
                   >
                     {fw === 'all' ? 'All Frameworks' : fw === 'react-native' ? 'React Native' : fw.charAt(0).toUpperCase() + fw.slice(1)}
@@ -235,20 +236,20 @@ export default function ComponentsPage() {
 
             {/* Categories Checkbox list */}
             <div className="space-y-3">
-              <h4 className="text-[10px] font-black text-[#52525B] uppercase tracking-widest">Categories</h4>
+              <h4 className="text-[10px] font-black text-text-muted uppercase tracking-widest">Categories</h4>
               <div className="space-y-2 max-h-60 overflow-y-auto pr-2 scrollbar-thin">
                 {categoriesWithCounts.map((cat) => (
-                  <label key={cat.slug} className="flex items-center justify-between group cursor-pointer text-xs text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors">
+                  <label key={cat.slug} className="flex items-center justify-between group cursor-pointer text-xs text-text-secondary hover:text-text-primary transition-colors">
                     <div className="flex items-center gap-3">
                       <input
                         type="checkbox"
                         checked={selectedCategories.includes(cat.slug)}
                         onChange={() => handleCategoryToggle(cat.slug)}
-                        className="rounded border-[#27272A]/85 bg-black text-[#FFCA03] focus:ring-[#FFCA03] w-4 h-4"
+                        className="rounded border-border-subtle bg-black text-accent focus:ring-accent w-4 h-4"
                       />
                       <span className="font-medium">{cat.name}</span>
                     </div>
-                    <span className="text-[10px] text-[#52525B] font-bold">{cat.count}</span>
+                    <span className="text-[10px] text-text-muted font-bold">{cat.count}</span>
                   </label>
                 ))}
               </div>
@@ -256,7 +257,7 @@ export default function ComponentsPage() {
 
             {/* Attributes Filter */}
             <div className="space-y-3">
-              <h4 className="text-[10px] font-black text-[#52525B] uppercase tracking-widest">Pricing & Status</h4>
+              <h4 className="text-[10px] font-black text-text-muted uppercase tracking-widest">Pricing & Status</h4>
               <div className="space-y-2.5">
                 {[
                   { key: 'free', label: 'Free Components' },
@@ -264,14 +265,14 @@ export default function ComponentsPage() {
                   { key: 'new', label: 'New Arrivals' },
                   { key: 'featured', label: 'Featured Collections' }
                 ].map((attr) => (
-                  <label key={attr.key} className="flex items-center gap-3 cursor-pointer text-xs text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors">
+                  <label key={attr.key} className="flex items-center gap-3 cursor-pointer text-xs text-text-secondary hover:text-text-primary transition-colors">
                     <input
                       type="checkbox"
                       checked={attributes[attr.key as keyof typeof attributes]}
                       onChange={() =>
                         setAttributes((prev) => ({ ...prev, [attr.key]: !prev[attr.key as keyof typeof attributes] }))
                       }
-                      className="rounded border-[#27272A]/85 bg-black text-[#FFCA03] focus:ring-[#FFCA03] w-4 h-4"
+                      className="rounded border-border-subtle bg-black text-accent focus:ring-accent w-4 h-4"
                     />
                     <span className="font-medium">{attr.label}</span>
                   </label>
@@ -281,15 +282,15 @@ export default function ComponentsPage() {
 
             {/* Accessibility Filter */}
             <div className="space-y-3">
-              <h4 className="text-[10px] font-black text-[#52525B] uppercase tracking-widest">Accessibility</h4>
+              <h4 className="text-[10px] font-black text-text-muted uppercase tracking-widest">Accessibility</h4>
               <div className="space-y-2.5">
                 {['A', 'AA', 'AAA'].map((level) => (
-                  <label key={level} className="flex items-center gap-3 cursor-pointer text-xs text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors">
+                  <label key={level} className="flex items-center gap-3 cursor-pointer text-xs text-text-secondary hover:text-text-primary transition-colors">
                     <input
                       type="checkbox"
                       checked={wcagLevels.includes(level)}
                       onChange={() => handleWcagToggle(level)}
-                      className="rounded border-[#27272A]/85 bg-black text-[#FFCA03] focus:ring-[#FFCA03] w-4 h-4"
+                      className="rounded border-border-subtle bg-black text-accent focus:ring-accent w-4 h-4"
                     />
                     <span className="font-medium">WCAG {level} Compliance</span>
                   </label>
@@ -301,22 +302,22 @@ export default function ComponentsPage() {
           {/* MAIN CATALOG DISPLAY VIEW */}
           <main className="flex-1 space-y-8 min-w-0">
             {/* Header controls filter bar */}
-            <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-[#111113]/50 border border-[#27272A]/50 p-4 rounded-xl backdrop-blur-xl">
+            <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-bg-card/50 border border-border-subtle p-4 rounded-xl backdrop-blur-xl">
               
               {/* Search input field */}
               <div className="relative w-full md:max-w-xs">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#52525B]" size={16} />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted" size={16} />
                 <input
                   type="text"
                   placeholder="Search components..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full h-11 pl-10 pr-4 bg-black border border-[#27272A] rounded-lg text-sm text-[#FAFAFA] placeholder-[#52525B] focus:border-[#FFCA03]/50 outline-none transition-all"
+                  className="w-full h-11 pl-10 pr-4 bg-black border border-border-subtle rounded-lg text-sm text-text-primary placeholder:text-text-muted focus:border-accent/50 outline-none transition-all"
                 />
                 {search && (
                   <button
                     onClick={() => setSearch('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#52525B] hover:text-white"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
                   >
                     <X size={14} />
                   </button>
@@ -325,16 +326,16 @@ export default function ComponentsPage() {
 
               {/* Counts, sorting, and mobile filters toggle */}
               <div className="flex items-center gap-4 justify-between w-full md:w-auto">
-                <span className="text-xs text-[#52525B] font-bold uppercase tracking-wider hidden sm:inline">
+                <span className="text-xs text-text-muted font-bold uppercase tracking-wider hidden sm:inline">
                   {total} components found
                 </span>
                 
                 <div className="flex items-center gap-3 w-full sm:w-auto">
                   {/* Mobile sidebar toggle button */}
                   <Button
-                    variant="outline"
+                    variant="secondary"
                     onClick={() => setSidebarOpen(true)}
-                    className="lg:hidden flex-1 sm:flex-initial h-11 rounded-lg border-[#27272A] text-white hover:bg-white/5 gap-2"
+                    className="lg:hidden flex-1 sm:flex-initial h-11 rounded-lg border-border-subtle text-text-primary hover:bg-white/5 gap-2"
                   >
                     <Filter size={16} /> Filters
                   </Button>
@@ -344,14 +345,14 @@ export default function ComponentsPage() {
                     <select
                       value={sort}
                       onChange={(e) => setSort(e.target.value)}
-                      className="h-11 px-4 pr-10 bg-black border border-[#27272A] rounded-lg text-xs font-bold uppercase tracking-wider text-[#FAFAFA] focus:border-[#FFCA03]/50 focus:outline-none cursor-pointer appearance-none min-w-[140px]"
+                      className="h-11 px-4 pr-10 bg-black border border-border-subtle rounded-lg text-xs font-bold uppercase tracking-wider text-text-primary focus:border-accent/50 focus:outline-none cursor-pointer appearance-none min-w-[140px]"
                     >
                       <option value="popular">Popularity</option>
                       <option value="newest">Newest</option>
                       <option value="favorites">Favorites</option>
                       <option value="az">A – Z Alphabetical</option>
                     </select>
-                    <ArrowUpDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#52525B] pointer-events-none" />
+                    <ArrowUpDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
                   </div>
                 </div>
               </div>
@@ -360,52 +361,52 @@ export default function ComponentsPage() {
             {/* Active filters pill list */}
             {isFiltersActive && (
               <div className="flex flex-wrap gap-2 items-center">
-                <span className="text-[10px] font-black text-[#52525B] uppercase tracking-widest mr-1">Active Filters:</span>
+                <span className="text-[10px] font-black text-text-muted uppercase tracking-widest mr-1">Active Filters:</span>
                 
                 {search && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#FFCA03]/10 border border-[#FFCA03]/20 text-[#FFCA03] text-[10px] font-bold uppercase">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold uppercase">
                     Search: {search}
                     <button onClick={() => setSearch('')}><X size={10} /></button>
                   </span>
                 )}
                 {framework !== 'all' && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#FFCA03]/10 border border-[#FFCA03]/20 text-[#FFCA03] text-[10px] font-bold uppercase">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold uppercase">
                     {framework}
                     <button onClick={() => setFramework('all')}><X size={10} /></button>
                   </span>
                 )}
                 {selectedCategories.map((cat) => (
-                  <span key={cat} className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#FFCA03]/10 border border-[#FFCA03]/20 text-[#FFCA03] text-[10px] font-bold uppercase">
+                  <span key={cat} className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold uppercase">
                     Category: {cat}
                     <button onClick={() => handleCategoryToggle(cat)}><X size={10} /></button>
                   </span>
                 ))}
                 {attributes.free && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#FFCA03]/10 border border-[#FFCA03]/20 text-[#FFCA03] text-[10px] font-bold uppercase">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold uppercase">
                     Free
                     <button onClick={() => setAttributes(prev => ({ ...prev, free: false }))}><X size={10} /></button>
                   </span>
                 )}
                 {attributes.premium && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#FFCA03]/10 border border-[#FFCA03]/20 text-[#FFCA03] text-[10px] font-bold uppercase">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold uppercase">
                     PRO
                     <button onClick={() => setAttributes(prev => ({ ...prev, premium: false }))}><X size={10} /></button>
                   </span>
                 )}
                 {attributes.new && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#FFCA03]/10 border border-[#FFCA03]/20 text-[#FFCA03] text-[10px] font-bold uppercase">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold uppercase">
                     New
                     <button onClick={() => setAttributes(prev => ({ ...prev, new: false }))}><X size={10} /></button>
                   </span>
                 )}
                 {attributes.featured && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#FFCA03]/10 border border-[#FFCA03]/20 text-[#FFCA03] text-[10px] font-bold uppercase">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold uppercase">
                     Featured
                     <button onClick={() => setAttributes(prev => ({ ...prev, featured: false }))}><X size={10} /></button>
                   </span>
                 )}
                 {wcagLevels.map((lvl) => (
-                  <span key={lvl} className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#FFCA03]/10 border border-[#FFCA03]/20 text-[#FFCA03] text-[10px] font-bold uppercase">
+                  <span key={lvl} className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold uppercase">
                     WCAG: {lvl}
                     <button onClick={() => handleWcagToggle(lvl)}><X size={10} /></button>
                   </span>
@@ -413,7 +414,7 @@ export default function ComponentsPage() {
 
                 <button
                   onClick={handleClearAll}
-                  className="text-[10px] font-black text-white/50 hover:text-white uppercase tracking-widest pl-1"
+                  className="text-[10px] font-black text-text-secondary hover:text-text-primary uppercase tracking-widest pl-1"
                 >
                   [Clear Filters]
                 </button>
@@ -429,20 +430,21 @@ export default function ComponentsPage() {
               </div>
             ) : (
               !loading && (
-                <div className="text-center py-20 bg-[#111113]/30 border border-dashed border-[#27272A]/70 rounded-xl max-w-2xl mx-auto space-y-6">
-                  <div className="w-16 h-16 bg-[#FFCA03]/10 rounded-full flex items-center justify-center mx-auto text-[#FFCA03]">
+                <div className="text-center py-20 bg-bg-card/30 border border-dashed border-border-subtle rounded-xl max-w-2xl mx-auto space-y-6">
+                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto text-accent">
                     <Search size={28} />
                   </div>
                   <div className="space-y-2">
                     <h3 className="font-display font-black text-lg uppercase tracking-tight">No Components Found</h3>
-                    <p className="text-sm text-[#A1A1AA] max-w-sm mx-auto font-medium leading-relaxed">
+                    <p className="text-sm text-text-secondary max-w-sm mx-auto font-medium leading-relaxed">
                       We couldn't locate any matching records in our repository. Try expanding your search constraints.
                     </p>
                   </div>
                   {isFiltersActive && (
                     <Button
                       onClick={handleClearAll}
-                      className="rounded-lg h-12 px-6 btn-primary border-0"
+                      variant="default"
+                      className="h-12 px-6"
                     >
                       Clear Filters
                     </Button>
@@ -454,8 +456,8 @@ export default function ComponentsPage() {
             {/* Loading shimmer and loader triggers */}
             {loading && (
               <div className="flex items-center justify-center gap-3 py-12">
-                <RefreshCw className="animate-spin text-[#FFCA03]" size={20} />
-                <span className="text-xs font-bold text-[#A1A1AA] uppercase tracking-widest">Loading Components...</span>
+                <RefreshCw className="animate-spin text-accent" size={20} />
+                <span className="text-xs font-bold text-text-secondary uppercase tracking-widest">Loading Components...</span>
               </div>
             )}
 
@@ -467,7 +469,7 @@ export default function ComponentsPage() {
 
       {/* MOBILE DRAWER DRAWER SIDEBAR FILTER MODULE */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end">
+        <div className="fixed inset-0 z-50 flex justify-end animate-fade-in">
           {/* Backdrop */}
           <div
             className="fixed inset-0 bg-black/60 backdrop-blur-sm"
@@ -475,13 +477,13 @@ export default function ComponentsPage() {
           />
 
           {/* Drawer container */}
-          <div className="relative w-full max-w-sm bg-[#111113] border-l border-[#27272A] p-6 h-full flex flex-col justify-between overflow-y-auto space-y-8 animate-in slide-in-from-right duration-200">
+          <div className="relative w-full max-w-sm bg-bg-card border-l border-border-subtle p-6 h-full flex flex-col justify-between overflow-y-auto space-y-8 z-10">
             <div className="space-y-8">
-              <div className="flex items-center justify-between border-b border-[#27272A]/50 pb-4">
+              <div className="flex items-center justify-between border-b border-border-subtle pb-4">
                 <span className="font-display font-black text-lg tracking-tight uppercase">Filter Options</span>
                 <button
                   onClick={() => setSidebarOpen(false)}
-                  className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-white/5 text-[#A1A1AA] hover:text-white"
+                  className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-white/5 text-text-secondary hover:text-white"
                 >
                   <X size={18} />
                 </button>
@@ -489,17 +491,17 @@ export default function ComponentsPage() {
 
               {/* Framework Selector */}
               <div className="space-y-3">
-                <h4 className="text-[10px] font-black text-[#52525B] uppercase tracking-widest">Framework</h4>
+                <h4 className="text-[10px] font-black text-text-muted uppercase tracking-widest">Framework</h4>
                 <div className="grid grid-cols-2 gap-2">
                   {['all', 'flutter', 'react-native', 'expo'].map((fw) => (
                     <button
                       key={fw}
                       onClick={() => setFramework(fw as any)}
                       className={cn(
-                        "text-center py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider border border-[#27272A]/50 bg-black transition-all",
+                        "text-center py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider border border-border-subtle bg-black transition-all",
                         framework === fw
-                          ? "border-[#FFCA03] text-[#FFCA03] bg-[#FFCA03]/5"
-                          : "text-[#A1A1AA]"
+                          ? "border-accent text-accent bg-accent/5"
+                          : "text-text-secondary"
                       )}
                     >
                       {fw === 'all' ? 'All' : fw === 'react-native' ? 'RN' : fw}
@@ -510,20 +512,20 @@ export default function ComponentsPage() {
 
               {/* Category checkbox checklist */}
               <div className="space-y-3">
-                <h4 className="text-[10px] font-black text-[#52525B] uppercase tracking-widest">Categories</h4>
+                <h4 className="text-[10px] font-black text-text-muted uppercase tracking-widest">Categories</h4>
                 <div className="space-y-3.5 max-h-60 overflow-y-auto pr-2 scrollbar-thin">
                   {categoriesWithCounts.map((cat) => (
-                    <label key={cat.slug} className="flex items-center justify-between group cursor-pointer text-xs text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors">
+                    <label key={cat.slug} className="flex items-center justify-between group cursor-pointer text-xs text-text-secondary hover:text-text-primary transition-colors">
                       <div className="flex items-center gap-3">
                         <input
                           type="checkbox"
                           checked={selectedCategories.includes(cat.slug)}
                           onChange={() => handleCategoryToggle(cat.slug)}
-                          className="rounded border-[#27272A]/85 bg-black text-[#FFCA03] focus:ring-[#FFCA03] w-4 h-4"
+                          className="rounded border-border-subtle bg-black text-accent focus:ring-accent w-4 h-4"
                         />
                         <span className="font-medium">{cat.name}</span>
                       </div>
-                      <span className="text-[10px] text-[#52525B] font-bold">{cat.count}</span>
+                      <span className="text-[10px] text-text-muted font-bold">{cat.count}</span>
                     </label>
                   ))}
                 </div>
@@ -531,7 +533,7 @@ export default function ComponentsPage() {
 
               {/* Pricing & Status attributes */}
               <div className="space-y-3">
-                <h4 className="text-[10px] font-black text-[#52525B] uppercase tracking-widest">Pricing & Status</h4>
+                <h4 className="text-[10px] font-black text-text-muted uppercase tracking-widest">Pricing & Status</h4>
                 <div className="space-y-3">
                   {[
                     { key: 'free', label: 'Free Components' },
@@ -539,14 +541,14 @@ export default function ComponentsPage() {
                     { key: 'new', label: 'New Arrivals' },
                     { key: 'featured', label: 'Featured Collections' }
                   ].map((attr) => (
-                    <label key={attr.key} className="flex items-center gap-3 cursor-pointer text-xs text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors">
+                    <label key={attr.key} className="flex items-center gap-3 cursor-pointer text-xs text-text-secondary hover:text-text-primary transition-colors">
                       <input
                         type="checkbox"
                         checked={attributes[attr.key as keyof typeof attributes]}
                         onChange={() =>
                           setAttributes((prev) => ({ ...prev, [attr.key]: !prev[attr.key as keyof typeof attributes] }))
                         }
-                        className="rounded border-[#27272A]/85 bg-black text-[#FFCA03] focus:ring-[#FFCA03] w-4 h-4"
+                        className="rounded border-border-subtle bg-black text-accent focus:ring-accent w-4 h-4"
                       />
                       <span className="font-medium">{attr.label}</span>
                     </label>
@@ -556,15 +558,15 @@ export default function ComponentsPage() {
 
               {/* WCAG Compliance */}
               <div className="space-y-3">
-                <h4 className="text-[10px] font-black text-[#52525B] uppercase tracking-widest">Accessibility</h4>
+                <h4 className="text-[10px] font-black text-text-muted uppercase tracking-widest">Accessibility</h4>
                 <div className="space-y-3">
                   {['A', 'AA', 'AAA'].map((level) => (
-                    <label key={level} className="flex items-center gap-3 cursor-pointer text-xs text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors">
+                    <label key={level} className="flex items-center gap-3 cursor-pointer text-xs text-text-secondary hover:text-text-primary transition-colors">
                       <input
                         type="checkbox"
                         checked={wcagLevels.includes(level)}
                         onChange={() => handleWcagToggle(level)}
-                        className="rounded border-[#27272A]/85 bg-black text-[#FFCA03] focus:ring-[#FFCA03] w-4 h-4"
+                        className="rounded border-border-subtle bg-black text-accent focus:ring-accent w-4 h-4"
                       />
                       <span className="font-medium">WCAG {level} Compliance</span>
                     </label>
@@ -573,19 +575,20 @@ export default function ComponentsPage() {
               </div>
             </div>
 
-            <div className="flex gap-3 pt-6 border-t border-[#27272A]/50 mt-auto">
+            <div className="flex gap-3 pt-6 border-t border-border-subtle mt-auto">
               {isFiltersActive && (
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   onClick={handleClearAll}
-                  className="flex-1 h-12 rounded-xl border-[#27272A] text-white hover:bg-white/5"
+                  className="flex-1 h-12 rounded-xl"
                 >
                   Reset
                 </Button>
               )}
               <Button
                 onClick={() => setSidebarOpen(false)}
-                className="flex-1 h-12 rounded-xl btn-primary border-0"
+                variant="default"
+                className="flex-1 h-12 rounded-xl border-0"
               >
                 Apply Filters
               </Button>

@@ -1,62 +1,162 @@
 'use client';
 
+import * as React from 'react';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { cn } from '@/lib/utils/cn';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input'; // Assuming shadcn input
-import { Search } from 'lucide-react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { Button } from '../ui/button';
+import { ChevronLeft, ChevronRight, Filter, Laptop, Phone, Smartphone, Tablet } from 'lucide-react';
+import { categories as mockCategories } from '@/lib/data/components-data';
 
-const categories = [
-    { name: 'Foundation', count: 4, slug: 'foundation' },
-    { name: 'Navigation', count: 2, slug: 'navigation' },
-    { name: 'Data Display', count: 3, slug: 'data-display' }, // Stats, Progress Ring
-    { name: 'Cards', count: 2, slug: 'cards' }, // Glass
-    { name: 'Inputs', count: 3, slug: 'inputs' }, // OTP, Search, Segmented
-    { name: 'Buttons', count: 2, slug: 'buttons' }, // Primary, Social
-    { name: 'Feedback', count: 1, slug: 'feedback' }, // Shimmer
-    { name: 'Social', count: 1, slug: 'social' }, // Story Ring
-    { name: 'Lists', count: 1, slug: 'lists' }, // Product Grid
-    { name: 'Controls', count: 1, slug: 'controls' }, // Theme Switch
-    { name: 'Animations', count: 1, slug: 'animations' }, // Lottie
-];
+interface SidebarProps {
+  className?: string;
+}
 
-export function Sidebar() {
-    const pathname = usePathname();
+export function Sidebar({ className }: SidebarProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [collapsed, setCollapsed] = React.useState(false);
 
-    return (
-        <div className="w-full">
-            <div className="mb-6">
-                <div className="relative">
-                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input placeholder="Search components..." className="pl-8" />
-                </div>
-            </div>
+  const activeCategory = searchParams.get('category') || '';
+  const activeFramework = searchParams.get('framework') || 'all';
 
-            <div className="space-y-1">
-                <h3 className="mb-2 px-4 text-sm font-semibold tracking-tight">
-                    Categories
-                </h3>
-                {categories.map((category) => (
-                    <Link
-                        key={category.slug}
-                        href={`/components?category=${category.slug}`}
-                    >
-                        <Button
-                            variant="ghost"
-                            className={cn(
-                                "w-full justify-start",
-                                pathname === '/components' && "bg-secondary/50" // Highlighting logic needs refinement based on query or segment
-                            )}
-                        >
-                            {category.name}
-                            <span className="ml-auto text-xs text-muted-foreground">
-                                {category.count}
-                            </span>
-                        </Button>
-                    </Link>
-                ))}
-            </div>
+  const handleFrameworkChange = (framework: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (framework === 'all') {
+      params.delete('framework');
+    } else {
+      params.set('framework', framework);
+    }
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleCategoryChange = (slug: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (activeCategory === slug) {
+      params.delete('category');
+    } else {
+      params.set('category', slug);
+    }
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const frameworks = [
+    { id: 'all', label: 'All Frameworks', icon: Laptop },
+    { id: 'react_native', label: 'React Native', icon: Smartphone },
+    { id: 'flutter', label: 'Flutter', icon: Smartphone },
+    { id: 'expo', label: 'Expo', icon: Smartphone },
+    { id: 'web', label: 'Web', icon: Laptop },
+  ];
+
+  const tags = ['buttons', 'cards', 'fintech', 'animations', 'charts', 'input', 'toast', 'shimmer', 'accessibility'];
+
+  return (
+    <aside
+      className={cn(
+        'sticky top-24 h-[calc(100vh-8rem)] border-r border-[#2a2a38] bg-[#0f0f14] transition-all duration-300 flex flex-col',
+        collapsed ? 'w-16' : 'w-64',
+        className
+      )}
+    >
+      {/* Collapse Trigger */}
+      <div className="flex justify-end p-2 border-b border-[#2a2a38]">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 text-slate-400 hover:text-white"
+          onClick={() => setCollapsed(!collapsed)}
+        >
+          {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+        </Button>
+      </div>
+
+      <div className={cn('flex-1 overflow-y-auto p-4 space-y-6', collapsed && 'p-2')}>
+        {/* Framework Filter */}
+        <div className="space-y-2">
+          {!collapsed && (
+            <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+              <Filter size={10} /> Framework
+            </h4>
+          )}
+          <div className="space-y-1">
+            {frameworks.map((fw) => {
+              const active = activeFramework === fw.id;
+              const Icon = fw.icon;
+              return (
+                <Button
+                  key={fw.id}
+                  variant={active ? 'default' : 'ghost'}
+                  className={cn(
+                    'w-full justify-start gap-3 h-10',
+                    active ? 'bg-fuchsia-600 text-white' : 'text-slate-400 hover:text-white',
+                    collapsed && 'justify-center px-0'
+                  )}
+                  onClick={() => handleFrameworkChange(fw.id)}
+                  title={fw.label}
+                >
+                  <Icon size={16} />
+                  {!collapsed && <span className="text-xs font-bold">{fw.label}</span>}
+                </Button>
+              );
+            })}
+          </div>
         </div>
-    );
+
+        {/* Categories List */}
+        <div className="space-y-2">
+          {!collapsed && (
+            <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-500">
+              Categories
+            </h4>
+          )}
+          <div className="space-y-1">
+            {mockCategories.map((cat) => {
+              const active = activeCategory === cat.slug;
+              return (
+                <Button
+                  key={cat.id}
+                  variant={active ? 'default' : 'ghost'}
+                  className={cn(
+                    'w-full justify-start gap-3 h-10',
+                    active ? 'bg-fuchsia-600 text-white' : 'text-slate-400 hover:text-white',
+                    collapsed && 'justify-center px-0'
+                  )}
+                  onClick={() => handleCategoryChange(cat.slug)}
+                  title={cat.name}
+                >
+                  <span className="text-base shrink-0">{cat.icon}</span>
+                  {!collapsed && (
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-xs font-bold">{cat.name}</span>
+                      <span className="text-[10px] text-slate-500 font-mono">{cat.count}</span>
+                    </div>
+                  )}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Tag Cloud */}
+        {!collapsed && (
+          <div className="space-y-2 pt-2 border-t border-[#2a2a38]">
+            <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-500">
+              Popular Tags
+            </h4>
+            <div className="flex flex-wrap gap-1.5">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2 py-1 bg-[#1a1a24] hover:bg-[#2a2a38] text-[10px] font-bold text-slate-400 hover:text-white rounded-md cursor-pointer border border-[#2a2a38]"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </aside>
+  );
 }

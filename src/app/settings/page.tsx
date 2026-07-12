@@ -127,7 +127,7 @@ export default function UserSettings() {
     try {
       toast.loading('Assembling backup files...');
       
-      let exportData: any = {
+      const exportData: any = {
         exportedAt: new Date().toISOString(),
         user: {
           id: user.id,

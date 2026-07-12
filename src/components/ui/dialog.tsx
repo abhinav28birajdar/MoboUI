@@ -115,12 +115,14 @@ const DialogTitle = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDi
         <div ref={ref} className={cn("text-lg font-semibold leading-none tracking-tight", className)} {...props} />
     )
 );
+DialogTitle.displayName = 'DialogTitle';
 
 const DialogDescription = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
     ({ className, ...props }, ref) => (
         <div ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
     )
 );
+DialogDescription.displayName = 'DialogDescription';
 
 export {
     Dialog,

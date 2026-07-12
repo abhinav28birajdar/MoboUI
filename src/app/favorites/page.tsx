@@ -4,7 +4,7 @@ import React, { useMemo, useState } from "react";
 import { FolderHeart, Plus, Share2, LayoutGrid, List, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useFrontendAppStore } from "@/lib/store/frontend-app-store";
-import { ComponentCard } from "@/components/components/ComponentCard";
+import { ComponentCard } from "@/components/ComponentCard";
 import { cn } from "@/lib/utils/cn";
 
 export default function FavoritesPage() {

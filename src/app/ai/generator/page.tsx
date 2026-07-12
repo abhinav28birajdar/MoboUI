@@ -26,7 +26,7 @@ export default function AIGeneratorPage() {
 
             setGeneratedCode({
                 flutter: `// Generated Flutter Component\nimport 'package:flutter/material.dart';\n\nclass CustomGenerated extends StatelessWidget {\n  @override\n  Widget build(BuildContext context) {\n    return Center(\n      child: Container(\n        padding: EdgeInsets.all(24),\n        decoration: BoxDecoration(\n          color: Color(0xFFD97706),\n          borderRadius: BorderRadius.circular(20),\n        ),\n        child: Text("${prompt}", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),\n      ),\n    );\n  }\n}`,
-                reactNative: `// Generated React Native Component\nimport React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport const CustomGenerated = () => (\n  <View style={styles.container}>\n    <View style={styles.button}>\n      <Text style={styles.text}>${prompt}</Text>\n    </View>\n  </View>\n);\n\nconst styles = StyleSheet.create({\n  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },\n  button: { backgroundColor: '#FFCA03', padding: 20, borderRadius: 20 },\n  text: { color: '#111827', fontWeight: 'bold' }\n});`,
+                reactNative: `// Generated React Native Component\nimport React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport const CustomGenerated = () => (\n  <View style={styles.container}>\n    <View style={styles.button}>\n      <Text style={styles.text}>${prompt}</Text>\n    </View>\n  </View>\n);\n\nconst styles = StyleSheet.create({\n  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },\n  button: { backgroundColor: '#C026D3', padding: 20, borderRadius: 20 },\n  text: { color: '#111827', fontWeight: 'bold' }\n});`,
             });
             toast.success("Component generated!");
         } catch (error) {
@@ -107,7 +107,7 @@ export default function AIGeneratorPage() {
                                     size="lg"
                                     onClick={handleGenerate}
                                     disabled={!prompt || isGenerating}
-                                    className="h-24 px-14 rounded-[2rem] bg-primary text-primary-foreground font-medium text-xl hover:scale-[1.02] shadow-glow-amber transition-all tracking-tight disabled:opacity-50"
+                                    className="h-24 px-14 rounded-[2rem] bg-primary text-primary-foreground font-medium text-xl hover:scale-[1.02] shadow-glow-fuchsia transition-all tracking-tight disabled:opacity-50"
                                 >
                                     {isGenerating ? (
                                         <Loader2 className="animate-spin w-8 h-8" />

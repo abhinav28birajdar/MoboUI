@@ -53,8 +53,8 @@ Historically, mobile developers wrote themes directly into platform structures:
 \`\`\`typescript
 // React Native static color map
 const colors = {
-  light: { primary: '#FFCA03', background: '#FFFFFF' },
-  dark: { primary: '#FFCA03', background: '#0A0A0B' }
+  light: { primary: '#C026D3', background: '#FFFFFF' },
+  dark: { primary: '#C026D3', background: '#0A0A0B' }
 };
 \`\`\`
 
@@ -70,7 +70,7 @@ A typical design token definitions JSON file looks like this:
 {
   "color": {
     "brand": {
-      "primary": { "value": "#FFCA03", "type": "color" },
+      "primary": { "value": "#C026D3", "type": "color" },
       "dark": { "value": "#E6B400", "type": "color" }
     },
     "background": {

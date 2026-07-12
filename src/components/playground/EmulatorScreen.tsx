@@ -89,7 +89,7 @@ export function EmulatorScreen({
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 bg-gradient-to-br from-amber-300 to-amber-400 text-gray-900 font-bold text-lg rounded-3xl shadow-lg hover:shadow-xl transition-all cursor-pointer border-2 border-amber-500/30"
+                    className="px-8 py-4 bg-gradient-to-br from-fuchsia-500 to-fuchsia-600 text-white font-bold text-lg rounded-3xl shadow-lg hover:shadow-xl transition-all cursor-pointer border border-fuchsia-500/30"
                 >
                     {label}
                 </motion.button>
@@ -123,8 +123,8 @@ export function EmulatorScreen({
                         className={cn(
                             "w-full px-4 py-3 rounded-2xl border-2 font-semibold outline-none transition-all",
                             mode === "dark"
-                                ? "bg-gray-800 border-gray-600 text-white placeholder:text-gray-500 focus:border-amber-400"
-                                : "bg-gray-100 border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-amber-400"
+                                ? "bg-gray-800 border-gray-600 text-white placeholder:text-gray-500 focus:border-fuchsia-500 focus:ring-1 focus:ring-fuchsia-550"
+                                : "bg-gray-100 border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-fuchsia-500 focus:ring-1 focus:ring-fuchsia-550"
                         )}
                     />
                 </div>
@@ -146,8 +146,8 @@ export function EmulatorScreen({
                 <div className={cn(
                     "w-3/4 p-6 rounded-3xl border-2 text-center",
                     mode === "dark"
-                        ? "bg-gray-800/50 border-amber-400/30"
-                        : "bg-gray-100 border-amber-300/50"
+                        ? "bg-gray-800/50 border-fuchsia-600/30"
+                        : "bg-gray-100 border-fuchsia-600/20"
                 )}>
                     <p className={cn("text-lg font-bold", mode === "dark" ? "text-white" : "text-gray-900")}>
                         {label}
@@ -175,7 +175,7 @@ export function EmulatorScreen({
                     exit={{ opacity: 0 }}
                     className="relative z-10 flex flex-col items-center gap-4"
                 >
-                    <div className="w-12 h-12 border-3 border-amber-400 border-t-transparent rounded-full animate-spin" />
+                    <div className="w-12 h-12 border-3 border-fuchsia-600 border-t-transparent rounded-full animate-spin" />
                     <p className={cn("text-xs font-bold uppercase tracking-wider", theme === "dark" ? "text-gray-400" : "text-gray-600")}>
                         Rendering...
                     </p>

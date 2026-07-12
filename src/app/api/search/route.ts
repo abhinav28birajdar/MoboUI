@@ -1,74 +1,50 @@
-import { components } from '@/lib/data/components';
-import { docsData } from '@/lib/data/docs';
+import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
+import { components as mockComponents } from '@/lib/data/components-data';
 
-type SearchResult = {
-    id: string;
-    title: string;
-    description: string;
-    category: string;
-    type: 'component' | 'doc';
-    url: string;
-    tags?: string[];
-};
+const hasDb = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export async function GET(request: NextRequest) {
+  try {
     const searchParams = request.nextUrl.searchParams;
-    const query = (searchParams.get('q') || '').trim().toLowerCase();
-    const type = searchParams.get('type');
-    const limitParam = searchParams.get('limit');
-    const limit = limitParam ? Math.min(Math.max(Number(limitParam) || 0, 1), 50) : 20;
+    const query = searchParams.get('q') || '';
 
     if (!query) {
-        return NextResponse.json({ results: [], total: 0 });
+      return NextResponse.json({ components: [], projects: [], blogs: [], users: [] });
     }
 
-    const componentResults: SearchResult[] = components
-        .filter(
-            (item) =>
-                item.name.toLowerCase().includes(query) ||
-                item.category.toLowerCase().includes(query) ||
-                item.description.toLowerCase().includes(query) ||
-                item.tags.some((tag) => tag.toLowerCase().includes(query))
-        )
-        .map((item) => ({
-            id: item.id,
-            title: item.name,
-            description: item.description,
-            category: item.category,
-            type: 'component',
-            url: `/components/${item.slug}`,
-            tags: item.tags,
-        }));
+    if (hasDb) {
+      const db = await createClient();
+      const match = `%${query}%`;
 
-    const docResults: SearchResult[] = docsData.flatMap((section) =>
-        (section.items || [])
-            .filter(
-                (item) =>
-                    item.title.toLowerCase().includes(query) ||
-                    item.description.toLowerCase().includes(query) ||
-                    section.title.toLowerCase().includes(query)
-            )
-            .map((item) => ({
-                id: `${section.slug}-${item.slug}`,
-                title: item.title,
-                description: item.description,
-                category: section.title,
-                type: 'doc',
-                url: `/docs/${section.slug}/${item.slug}`,
-            }))
-    );
+      const [compsRes, projsRes, blogsRes, usersRes] = await Promise.all([
+        db.from('components').select('*').or(`name.ilike.${match},description.ilike.${match}`).limit(8),
+        db.from('projects').select('*').or(`title.ilike.${match},description.ilike.${match}`).eq('status', 'approved').limit(8),
+        db.from('blog_posts').select('*').or(`title.ilike.${match},excerpt.ilike.${match}`).limit(8),
+        db.from('profiles').select('id, username, full_name, avatar_url').or(`username.ilike.${match},full_name.ilike.${match}`).limit(8),
+      ]);
 
-    const merged = [...componentResults, ...docResults];
-    const filteredByType =
-        type === 'component' || type === 'doc'
-            ? merged.filter((item) => item.type === type)
-            : merged;
+      return NextResponse.json({
+        components: compsRes.data || [],
+        projects: projsRes.data || [],
+        blogs: blogsRes.data || [],
+        users: usersRes.data || [],
+      });
+    }
 
-    const results = filteredByType.slice(0, limit);
+    // Mock Fallback
+    const q = query.toLowerCase();
+    const matchedComponents = mockComponents.filter(
+      (c) => c.name.toLowerCase().includes(q) || (c.description || '').toLowerCase().includes(q)
+    ).slice(0, 8);
 
     return NextResponse.json({
-        results,
-        total: filteredByType.length,
+      components: matchedComponents,
+      projects: [],
+      blogs: [],
+      users: [],
     });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+  }
 }

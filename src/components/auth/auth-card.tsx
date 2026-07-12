@@ -1,0 +1,2 @@
+import React from "react";
+export default function AuthCard({ children }: { children: React.ReactNode }) { return <div className="p-8 bg-zinc-900 border border-zinc-800 rounded-2xl">{children}</div>; }

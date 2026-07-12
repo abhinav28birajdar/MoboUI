@@ -32,7 +32,7 @@ export default function AdminDashboardPage() {
       value: `${components.length}`,
       change: "+6%",
       positive: true,
-      icon: <Layers className="text-amber-600" />,
+      icon: <Layers className="text-fuchsia-600" />,
     },
     {
       label: "Saved Favorites",
@@ -53,7 +53,7 @@ export default function AdminDashboardPage() {
       value: "93%",
       change: "-1%",
       positive: false,
-      icon: <TrendingUp className="text-amber-500" />,
+      icon: <TrendingUp className="text-slate-400" />,
     },
   ];
 
@@ -66,16 +66,16 @@ export default function AdminDashboardPage() {
         <aside className="card-premium p-4 h-fit sticky top-24">
           <p className="px-3 py-2 text-[11px] uppercase tracking-[0.2em] font-bold text-text-muted">Dashboard</p>
           <nav className="space-y-1">
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-amber-50 text-amber-700 font-semibold border border-amber-100">
+            <a className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-fuchsia-600/10 text-fuchsia-500 font-semibold border border-fuchsia-600/20">
               <BarChart3 className="w-4 h-4" /> Overview
             </a>
-            <Link href="/admin/upload" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-text-secondary hover:text-amber-700 hover:bg-amber-50 transition-colors font-semibold">
+            <Link href="/admin/upload" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-text-secondary hover:text-fuchsia-500 hover:bg-fuchsia-600/5 transition-colors font-semibold">
               <Upload className="w-4 h-4" /> Upload Queue
             </Link>
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-text-secondary hover:text-amber-700 hover:bg-amber-50 transition-colors font-semibold">
+            <a className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-text-secondary hover:text-fuchsia-500 hover:bg-fuchsia-600/5 transition-colors font-semibold">
               <Activity className="w-4 h-4" /> Activity Feed
             </a>
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-text-secondary hover:text-amber-700 hover:bg-amber-50 transition-colors font-semibold">
+            <a className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-text-secondary hover:text-fuchsia-500 hover:bg-fuchsia-600/5 transition-colors font-semibold">
               <Settings className="w-4 h-4" /> Settings
             </a>
           </nav>
@@ -89,7 +89,7 @@ export default function AdminDashboardPage() {
             </div>
             <div className="flex items-center gap-3">
               <Button variant="secondary">Export CSV</Button>
-              <Button variant="neon">Refresh Snapshot</Button>
+              <Button variant="default">Refresh Snapshot</Button>
             </div>
           </div>
 
@@ -115,7 +115,7 @@ export default function AdminDashboardPage() {
             <section className="card-premium p-6">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-xl font-bold text-text-primary flex items-center gap-2">
-                  <Clock size={18} className="text-amber-600" /> Recent Upload Activity
+                  <Clock size={18} className="text-fuchsia-600" /> Recent Upload Activity
                 </h2>
                 <Button variant="ghost">View All</Button>
               </div>
@@ -127,13 +127,13 @@ export default function AdminDashboardPage() {
               ) : (
                 <div className="space-y-3">
                   {latestSubmissions.map((submission) => (
-                    <div key={submission.id} className="rounded-xl border border-border bg-white p-4 hover:border-amber-300 transition-colors">
+                    <div key={submission.id} className="rounded-xl border border-border bg-surface p-4 hover:border-fuchsia-600/30 transition-colors">
                       <div className="flex items-center justify-between gap-4">
                         <div>
                           <p className="font-semibold text-text-primary">{submission.title}</p>
                           <p className="text-xs text-text-secondary mt-1">by {submission.author}</p>
                         </div>
-                        <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-100">Pending</span>
+                        <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-fuchsia-600/10 text-fuchsia-500 border border-fuchsia-600/20">Pending</span>
                       </div>
                     </div>
                   ))}
@@ -165,7 +165,7 @@ export default function AdminDashboardPage() {
               <div className="rounded-2xl bg-primary p-6 text-primary-foreground shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
                 <h3 className="text-xl font-black tracking-tight mb-2">Publish Faster</h3>
                 <p className="text-primary-foreground/85 text-sm mb-5">Use the upload workflow to ship polished components with live preview and tags.</p>
-                <Button asChild className="w-full bg-primary-foreground text-primary hover:bg-amber-50">
+                <Button asChild className="w-full bg-fuchsia-600 text-white hover:bg-fuchsia-700 transition-colors">
                   <Link href="/admin/upload">Go To Upload</Link>
                 </Button>
               </div>

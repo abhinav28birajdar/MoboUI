@@ -172,7 +172,7 @@ export default function UploadPage() {
                                         className={cn(
                                             "flex flex-col items-center justify-center p-3 rounded-2xl border transition-all gap-2",
                                             formData.framework === fw.id
-                                                ? "bg-primary/10 border-primary text-primary shadow-glow-amber"
+                                                ? "bg-primary/10 border-primary text-primary shadow-glow-fuchsia"
                                                 : "bg-background border-border text-text-muted hover:border-border-hover"
                                         )}
                                     >
@@ -281,7 +281,7 @@ export default function UploadPage() {
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="w-full h-16 rounded-full bg-primary text-black font-black uppercase tracking-[0.2em] text-sm hover:bg-white transition-all shadow-glow-amber disabled:opacity-50"
+                            className="w-full h-16 rounded-full bg-primary text-black font-black uppercase tracking-[0.2em] text-sm hover:bg-white transition-all shadow-glow-fuchsia disabled:opacity-50"
                         >
                             {loading ? (
                                 <>

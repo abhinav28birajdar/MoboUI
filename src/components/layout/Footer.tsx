@@ -50,7 +50,7 @@ export function Footer() {
     };
 
     return (
-        <footer className="relative bg-background border-t border-border pt-24 pb-12 overflow-hidden">
+        <footer className="relative bg-bg-base border-t border-border-subtle pt-24 pb-12 overflow-hidden">
             <div className="container mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-24">
                     {/* Brand & Newsletter */}
@@ -58,13 +58,13 @@ export function Footer() {
                         <div className="space-y-6">
                             <Link href="/" className="flex flex-col group">
                                 <span className="font-display font-black text-3xl tracking-tighter uppercase text-text-primary leading-none ">
-                                    MOBOUI<span className="text-primary">.</span>
+                                    MOBOUI<span className="text-accent">.</span>
                                 </span>
                                 <span className="text-[10px] text-text-muted font-black tracking-[0.2em] uppercase">
                                     Premium Mobile Kit
                                 </span>
-                            </Link>
-                            <p className="text-text-secondary text-lg leading-relaxed max-w-sm font-medium">
+                             </Link>
+                            <p className="text-text-secondary text-base leading-relaxed max-w-sm font-medium">
                                 Designing the future of mobile development. Production-ready components for the modern web.
                             </p>
                         </div>
@@ -79,11 +79,11 @@ export function Footer() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="your@email.com"
-                                    className="w-full h-14 bg-surface border border-border rounded-2xl px-6 py-2 text-sm text-text-primary focus:outline-none focus:border-primary/50 transition-all"
+                                    className="w-full h-14 bg-bg-surface border border-border-subtle rounded-[8px] px-6 py-2 text-sm text-text-primary focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent-glow transition-all"
                                 />
                                 <button
                                     type="submit"
-                                    className="absolute right-1.5 top-1.5 h-11 px-6 bg-primary text-primary-foreground font-black text-[10px] uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 hover:scale-105 transition-all shadow-glow-amber "
+                                    className="absolute right-1.5 top-1.5 h-11 px-6 bg-accent text-white font-black text-[10px] uppercase tracking-widest rounded-[6px] flex items-center justify-center gap-2 hover:scale-105 transition-all shadow-[0_0_24px_rgba(192,38,211,0.2)]"
                                 >
                                     JOIN <ArrowRight size={14} />
                                 </button>
@@ -102,7 +102,7 @@ export function Footer() {
                                     {group.links.map((link) => (
                                         <li key={link.label}>
                                             <Link href={link.href}>
-                                                <span className="text-sm text-text-secondary hover:text-primary transition-all cursor-pointer block font-bold">
+                                                <span className="text-sm text-text-secondary hover:text-accent transition-all cursor-pointer block font-bold">
                                                     {link.label}
                                                 </span>
                                             </Link>
@@ -115,14 +115,14 @@ export function Footer() {
                 </div>
 
                 {/* Bottom Section */}
-                <div className="pt-12 border-t border-border flex flex-col md:flex-row justify-between items-center gap-8">
+                <div className="pt-12 border-t border-border-subtle flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
                         <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">
                             © {new Date().getFullYear()} MOBOUI LABS.
                         </p>
                         <div className="flex gap-6">
                             {[Twitter, Github, Youtube, Instagram].map((Icon, i) => (
-                                <Link key={i} href="#" className="text-text-muted hover:text-primary transition-colors">
+                                <Link key={i} href="#" className="text-text-muted hover:text-accent transition-colors">
                                     <Icon size={18} />
                                 </Link>
                             ))}
@@ -136,7 +136,7 @@ export function Footer() {
                         <Link href="/terms" className="hover:text-text-primary transition-colors">
                             Terms
                         </Link>
-                        <Link href="https://instagram.com/abhinav28birajdar" target="_blank" className="text-primary hover:scale-105 transition-all ">
+                        <Link href="https://instagram.com/abhinav28birajdar" target="_blank" className="text-accent hover:scale-105 transition-all ">
                             @abhinav28birajdar
                         </Link>
                     </div>

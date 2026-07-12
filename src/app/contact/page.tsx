@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from 'react-hot-toast';
+import Link from 'next/link';
 
 export default function ContactPage() {
   const [name, setName] = useState('');
@@ -98,7 +99,7 @@ export default function ContactPage() {
                   <div>
                     <h4 className="text-xs font-black uppercase tracking-widest text-neutral-400">Knowledge Hub</h4>
                     <p className="text-sm font-medium text-neutral-400 mt-1">
-                      Check out our guides on integration in the <a href="/docs" className="text-primary hover:underline font-bold">Documentation</a>.
+                      Check out our guides on integration in the <Link href="/docs" className="text-primary hover:underline font-bold">Documentation</Link>.
                     </p>
                   </div>
                 </div>

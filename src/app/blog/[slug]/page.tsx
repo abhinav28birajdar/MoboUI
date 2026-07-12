@@ -126,7 +126,7 @@ export default function BlogPostDetail() {
                 <span className="text-[10px] font-black uppercase text-[#52525B] tracking-wider">{lang}</span>
                 <button
                   onClick={() => handleCopyCodeBlock(content, blockIndex)}
-                  className="text-[10px] font-black uppercase text-[#A1A1AA] hover:text-[#FFCA03] transition-colors flex items-center gap-1.5"
+                  className="text-[10px] font-black uppercase text-[#A1A1AA] hover:text-[#C026D3] transition-colors flex items-center gap-1.5"
                 >
                   {copiedIndex === blockIndex ? <Check size={11} className="text-[#22C55E]" /> : <Link2 size={11} />}
                   <span>{copiedIndex === blockIndex ? 'Copied!' : 'Copy'}</span>
@@ -184,7 +184,7 @@ export default function BlogPostDetail() {
       // Blockquotes
       if (line.startsWith('> ')) {
         return (
-          <blockquote key={idx} className="pl-6 border-l-2 border-[#FFCA03] py-2 bg-[#18181B]/40 rounded-r-lg text-sm text-[#FAFAFA] font-medium italic my-4">
+          <blockquote key={idx} className="pl-6 border-l-2 border-[#C026D3] py-2 bg-[#18181B]/40 rounded-r-lg text-sm text-[#FAFAFA] font-medium italic my-4">
             {line.replace('> ', '').trim()}
           </blockquote>
         );
@@ -206,7 +206,7 @@ export default function BlogPostDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0A0A0B] flex flex-col items-center justify-center space-y-6">
-        <RefreshCw className="w-12 h-12 text-[#FFCA03] animate-spin" />
+        <RefreshCw className="w-12 h-12 text-[#C026D3] animate-spin" />
         <p className="text-[10px] font-black uppercase text-[#52525B] tracking-[0.3em]">Loading Article Details...</p>
       </div>
     );
@@ -238,7 +238,7 @@ export default function BlogPostDetail() {
 
         {/* Hero Header Article Info */}
         <div className="max-w-4xl mx-auto mb-12">
-          <div className="inline-block px-3 py-1 rounded bg-[#FFCA03]/10 border border-[#FFCA03]/20 text-[#FFCA03] text-[9px] font-black uppercase tracking-widest mb-6">
+          <div className="inline-block px-3 py-1 rounded bg-[#C026D3]/10 border border-[#C026D3]/20 text-[#C026D3] text-[9px] font-black uppercase tracking-widest mb-6">
             {post.category}
           </div>
 
@@ -253,7 +253,7 @@ export default function BlogPostDetail() {
           {/* Writer & Stats block */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-8 border-b border-[#27272A]/50">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-[#FFCA03] flex items-center justify-center text-black font-black text-sm border border-[#FFCA03]/30">
+              <div className="w-12 h-12 rounded-full bg-[#C026D3] flex items-center justify-center text-black font-black text-sm border border-[#C026D3]/30">
                 {post.author?.name?.charAt(0) || 'M'}
               </div>
               <div>
@@ -305,13 +305,13 @@ export default function BlogPostDetail() {
           <div className="bg-[#111113]/40 border border-[#27272A]/50 p-6 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-6 mb-24 backdrop-blur-xl">
             <p className="text-xs font-black text-[#A1A1AA] uppercase tracking-wider">Share this article</p>
             <div className="flex items-center gap-3">
-              <Button onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`)} variant="ghost" size="icon" className="h-10 w-10 rounded-full border border-[#27272A] bg-black text-[#A1A1AA] hover:text-[#FFCA03] hover:border-[#FFCA03]/40">
+              <Button onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`)} variant="ghost" size="icon" className="h-10 w-10 rounded-full border border-[#27272A] bg-black text-[#A1A1AA] hover:text-[#C026D3] hover:border-[#C026D3]/40">
                 <Twitter size={14} />
               </Button>
-              <Button onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`)} variant="ghost" size="icon" className="h-10 w-10 rounded-full border border-[#27272A] bg-black text-[#A1A1AA] hover:text-[#FFCA03] hover:border-[#FFCA03]/40">
+              <Button onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`)} variant="ghost" size="icon" className="h-10 w-10 rounded-full border border-[#27272A] bg-black text-[#A1A1AA] hover:text-[#C026D3] hover:border-[#C026D3]/40">
                 <Linkedin size={14} />
               </Button>
-              <Button onClick={handleCopyLink} variant="ghost" size="icon" className="h-10 w-10 rounded-full border border-[#27272A] bg-black text-[#A1A1AA] hover:text-[#FFCA03] hover:border-[#FFCA03]/40">
+              <Button onClick={handleCopyLink} variant="ghost" size="icon" className="h-10 w-10 rounded-full border border-[#27272A] bg-black text-[#A1A1AA] hover:text-[#C026D3] hover:border-[#C026D3]/40">
                 {copied ? <Check size={14} className="text-success" /> : <Link2 size={14} />}
               </Button>
             </div>
@@ -326,7 +326,7 @@ export default function BlogPostDetail() {
               Subscribe to get the latest custom components, design frameworks, and mobile animation tutorials straight to your inbox.
             </p>
             {subscribed ? (
-              <div className="flex items-center justify-center gap-2 text-[#FFCA03] font-black text-xs uppercase tracking-widest">
+              <div className="flex items-center justify-center gap-2 text-[#C026D3] font-black text-xs uppercase tracking-widest">
                 <Check size={16} /> Subscribed successfully!
               </div>
             ) : (
@@ -337,7 +337,7 @@ export default function BlogPostDetail() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 bg-black border border-[#27272A] rounded-lg px-4 py-3 text-xs focus:border-[#FFCA03]/50 outline-none transition-all text-white font-medium placeholder-[#52525B]"
+                  className="flex-1 bg-black border border-[#27272A] rounded-lg px-4 py-3 text-xs focus:border-[#C026D3]/50 outline-none transition-all text-white font-medium placeholder-[#52525B]"
                 />
                 <Button type="submit" className="bg-primary hover:bg-primary/90 text-black font-black uppercase tracking-widest text-xs h-12 px-6 rounded-lg flex items-center justify-center gap-2 border-0 btn-primary">
                   Subscribe <Send size={12} />
@@ -350,13 +350,13 @@ export default function BlogPostDetail() {
           {relatedPosts.length > 0 && (
             <div className="space-y-8">
               <h3 className="text-xl font-display font-black text-white tracking-tighter uppercase flex items-center gap-2">
-                <Sparkles size={16} className="text-[#FFCA03]" />
+                <Sparkles size={16} className="text-[#C026D3]" />
                 Keep Reading
               </h3>
               <div className="grid md:grid-cols-2 gap-8">
                 {relatedPosts.map((rPost) => (
                   <Link key={rPost.slug} href={`/blog/${rPost.slug}`} className="group">
-                    <div className="bg-[#111113]/40 border border-[#27272A]/50 rounded-xl overflow-hidden hover:border-[#FFCA03]/30 transition-all duration-300">
+                    <div className="bg-[#111113]/40 border border-[#27272A]/50 rounded-xl overflow-hidden hover:border-[#C026D3]/30 transition-all duration-300">
                       <div className="aspect-video overflow-hidden bg-zinc-900">
                         <img
                           src={rPost.coverImageUrl || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&fit=crop'}
@@ -365,7 +365,7 @@ export default function BlogPostDetail() {
                         />
                       </div>
                       <div className="p-6 space-y-2">
-                        <span className="text-[#FFCA03] text-[9px] font-black uppercase tracking-widest">{rPost.category}</span>
+                        <span className="text-[#C026D3] text-[9px] font-black uppercase tracking-widest">{rPost.category}</span>
                         <h4 className="text-base font-display font-black text-white tracking-tight leading-snug group-hover:text-primary transition-colors line-clamp-2 uppercase">
                           {rPost.title}
                         </h4>

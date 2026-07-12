@@ -193,7 +193,7 @@ export default function DocPage({ params }: PageProps) {
                     className="group flex items-center gap-2 text-2xl md:text-3xl font-display font-black text-white uppercase tracking-tight pt-10 border-t border-[#27272A]/40 scroll-m-20"
                   >
                     {block.text}
-                    <a href={`#${block.id}`} className="opacity-0 group-hover:opacity-100 text-[#FFCA03] transition-opacity">
+                    <a href={`#${block.id}`} className="opacity-0 group-hover:opacity-100 text-[#C026D3] transition-opacity">
                       <Hash size={16} />
                     </a>
                   </h2>
@@ -206,7 +206,7 @@ export default function DocPage({ params }: PageProps) {
                     className="group flex items-center gap-2 text-xl font-bold text-white uppercase tracking-tight pt-6 scroll-m-20"
                   >
                     {block.text}
-                    <a href={`#${block.id}`} className="opacity-0 group-hover:opacity-100 text-[#FFCA03] transition-opacity">
+                    <a href={`#${block.id}`} className="opacity-0 group-hover:opacity-100 text-[#C026D3] transition-opacity">
                       <Hash size={14} />
                     </a>
                   </h3>
@@ -219,7 +219,7 @@ export default function DocPage({ params }: PageProps) {
                 );
               case 'blockquote':
                 return (
-                  <blockquote key={block.id} className="pl-6 border-l-2 border-[#FFCA03] py-2 bg-[#18181B]/40 rounded-r-lg text-sm text-[#FAFAFA] font-medium italic">
+                  <blockquote key={block.id} className="pl-6 border-l-2 border-[#C026D3] py-2 bg-[#18181B]/40 rounded-r-lg text-sm text-[#FAFAFA] font-medium italic">
                     {block.text}
                   </blockquote>
                 );
@@ -241,7 +241,7 @@ export default function DocPage({ params }: PageProps) {
                       <span className="text-[10px] font-black uppercase text-[#52525B] tracking-wider">{block.language}</span>
                       <button
                         onClick={() => handleCopyCode(block.code, index)}
-                        className="text-[10px] font-black uppercase text-[#A1A1AA] hover:text-[#FFCA03] transition-colors flex items-center gap-1.5"
+                        className="text-[10px] font-black uppercase text-[#A1A1AA] hover:text-[#C026D3] transition-colors flex items-center gap-1.5"
                       >
                         {copiedIndex === index ? <Check size={11} className="text-[#22C55E]" /> : <Copy size={11} />}
                         <span>{copiedIndex === index ? 'Copied!' : 'Copy'}</span>
@@ -276,20 +276,20 @@ export default function DocPage({ params }: PageProps) {
         <div className="bg-[#111113]/55 border border-[#27272A]/50 p-6 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="text-xs font-bold text-[#A1A1AA] uppercase tracking-wider">Was this helpful?</span>
           {feedbackSubmitted ? (
-            <span className="text-xs font-black text-[#FFCA03] uppercase tracking-wider flex items-center gap-2">
+            <span className="text-xs font-black text-[#C026D3] uppercase tracking-wider flex items-center gap-2">
               <Check size={14} /> Feedback submitted successfully!
             </span>
           ) : (
             <div className="flex items-center gap-2.5">
               <button
                 onClick={() => submitFeedback('yes')}
-                className="h-10 px-4 rounded-lg bg-[#18181B] border border-[#27272A] text-xs font-bold uppercase tracking-wider text-[#A1A1AA] hover:text-white hover:border-[#FFCA03]/40 transition-all flex items-center gap-1.5"
+                className="h-10 px-4 rounded-lg bg-[#18181B] border border-[#27272A] text-xs font-bold uppercase tracking-wider text-[#A1A1AA] hover:text-white hover:border-[#C026D3]/40 transition-all flex items-center gap-1.5"
               >
                 <ThumbsUp size={14} /> Yes
               </button>
               <button
                 onClick={() => submitFeedback('no')}
-                className="h-10 px-4 rounded-lg bg-[#18181B] border border-[#27272A] text-xs font-bold uppercase tracking-wider text-[#A1A1AA] hover:text-white hover:border-[#FFCA03]/40 transition-all flex items-center gap-1.5"
+                className="h-10 px-4 rounded-lg bg-[#18181B] border border-[#27272A] text-xs font-bold uppercase tracking-wider text-[#A1A1AA] hover:text-white hover:border-[#C026D3]/40 transition-all flex items-center gap-1.5"
               >
                 <ThumbsDown size={14} /> No
               </button>
@@ -302,7 +302,7 @@ export default function DocPage({ params }: PageProps) {
           {prevDoc ? (
             <Link href={prevDoc.href} className="group text-left space-y-1">
               <span className="text-[9px] font-black text-[#52525B] uppercase tracking-widest block">Previous</span>
-              <span className="text-sm font-bold text-[#A1A1AA] group-hover:text-[#FFCA03] transition-colors flex items-center gap-1.5">
+              <span className="text-sm font-bold text-[#A1A1AA] group-hover:text-[#C026D3] transition-colors flex items-center gap-1.5">
                 ← {prevDoc.title}
               </span>
             </Link>
@@ -311,7 +311,7 @@ export default function DocPage({ params }: PageProps) {
           {nextDoc ? (
             <Link href={nextDoc.href} className="group text-right space-y-1 ml-auto">
               <span className="text-[9px] font-black text-[#52525B] uppercase tracking-widest block">Next</span>
-              <span className="text-sm font-bold text-[#A1A1AA] group-hover:text-[#FFCA03] transition-colors flex items-center gap-1.5">
+              <span className="text-sm font-bold text-[#A1A1AA] group-hover:text-[#C026D3] transition-colors flex items-center gap-1.5">
                 {nextDoc.title} →
               </span>
             </Link>
@@ -332,7 +332,7 @@ export default function DocPage({ params }: PageProps) {
                   className={cn(
                     "text-xs font-medium transition-all hover:text-white block",
                     h.depth === 3 ? "pl-3 text-[#52525B] text-[11px]" : "",
-                    activeSection === h.id ? "text-[#FFCA03] font-bold" : "text-[#A1A1AA]"
+                    activeSection === h.id ? "text-[#C026D3] font-bold" : "text-[#A1A1AA]"
                   )}
                 >
                   {h.text}

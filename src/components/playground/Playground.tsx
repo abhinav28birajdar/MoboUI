@@ -271,7 +271,7 @@ export function Playground() {
               <LiveEditor
                 code={code}
                 onChange={(val) => setCode(val || "")}
-                language={framework === "react-native" ? "typescript" : "dart"}
+                language={framework === "flutter" ? "dart" : "typescript"}
               />
             </div>
           </motion.div>

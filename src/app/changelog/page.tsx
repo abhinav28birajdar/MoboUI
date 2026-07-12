@@ -83,7 +83,7 @@ export default function ChangelogPage() {
                                     {log.version}
                                 </div>
                                 {log.type === 'major' && (
-                                    <div className="flex items-center gap-1 text-yellow-500 text-xs font-bold uppercase tracking-widest">
+                                    <div className="flex items-center gap-1 text-fuchsia-550 text-xs font-bold uppercase tracking-widest">
                                         <Star className="w-3 h-3" fill="currentColor" /> Major Release
                                     </div>
                                 )}

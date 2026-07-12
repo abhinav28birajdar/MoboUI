@@ -187,7 +187,7 @@ export function onAuthStateChange(
  */
 export async function getUserProfile(userId: string) {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('profiles')
       .select('*')
       .eq('id', userId)
@@ -205,7 +205,7 @@ export async function getUserProfile(userId: string) {
  */
 export async function updateUserProfile(userId: string, updates: Record<string, any>) {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('profiles')
       .update(updates)
       .eq('id', userId)
@@ -224,7 +224,7 @@ export async function updateUserProfile(userId: string, updates: Record<string, 
  */
 export async function checkUsernameAvailability(username: string) {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('profiles')
       .select('id')
       .eq('username', username)

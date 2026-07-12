@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ThemeToggle } from "./ThemeToggle";
 import { Search, Menu, X, Sparkles, User as UserIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase/client";
+import { NotificationsPopover } from "@/components/shared/notifications-popover";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -40,7 +40,7 @@ export function Navbar() {
     };
   }, []);
 
-  // Smart Hide logic
+  // Smart Hide logic on scroll
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
     if (latest > previous && latest > 150) {
@@ -66,24 +66,24 @@ export function Navbar() {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-      className="fixed top-0 z-50 w-full h-20 bg-background/70 backdrop-blur-xl border-b border-border/40"
+      className="fixed top-0 z-50 w-full h-20 bg-bg-base/70 backdrop-blur-xl border-b border-border-subtle"
     >
       <div className="container h-full flex items-center justify-between px-6 mx-auto">
         {/* Logo */}
         <Link href="/" className="flex flex-col group">
-          <span className="font-display font-bold text-2xl tracking-tighter uppercase text-text-primary leading-none">
-            MOBOUI<span className="text-primary">.</span>
+          <span className="font-display font-black text-2xl tracking-tighter uppercase text-text-primary leading-none">
+            MOBOUI<span className="text-accent">.</span>
           </span>
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center gap-8 flex-1 justify-center">
           <div className="relative group w-56 xl:w-72">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-focus-within:text-primary transition-colors duration-300" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-focus-within:text-accent transition-colors duration-300" />
             <input
               type="text"
               placeholder="Search components, docs..."
-              className="w-full bg-background border-2 border-border rounded-2xl py-2.5 pl-12 pr-5 text-xs font-medium text-text-primary placeholder:text-text-muted/60 focus:ring-2 focus:ring-primary/20 focus:border-primary/60 focus:outline-none transition-all duration-300 hover:border-border-hover"
+              className="w-full bg-bg-surface border border-border-subtle rounded-[8px] py-2 pl-10 pr-4 text-xs font-medium text-text-primary placeholder:text-text-muted focus:border-accent focus:ring-2 focus:ring-accent-glow focus:outline-none transition-all duration-300 hover:border-border-default"
             />
           </div>
 
@@ -93,15 +93,15 @@ export function Navbar() {
                 key={route.href}
                 href={route.href}
                 className={cn(
-                  "relative text-[11px] font-medium uppercase tracking-[0.1em] transition-all py-1 px-2",
-                  pathname?.startsWith(route.href) ? "text-text-primary" : "text-text-muted hover:text-text-primary"
+                  "relative text-xs font-bold uppercase tracking-[0.1em] transition-all py-1 px-2",
+                  pathname?.startsWith(route.href) ? "text-text-primary" : "text-text-secondary hover:text-text-primary"
                 )}
               >
                 {route.label}
                 {pathname?.startsWith(route.href) && (
                   <motion.div 
                     layoutId="nav-underline"
-                    className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-primary"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent"
                   />
                 )}
               </Link>
@@ -111,27 +111,22 @@ export function Navbar() {
 
         {/* Actions */}
         <div className="hidden lg:flex items-center gap-4">
-          <ThemeToggle />
-          <Button
-            asChild
-            variant="ghost"
-            className="h-10 px-4 text-xs font-semibold rounded-xl text-text-secondary hover:text-text-primary"
-          >
-            <Link href="/playground" className="flex items-center gap-2">
-              Playground <Sparkles size={14} />
-            </Link>
-          </Button>
+          <Link href="/playground" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-3 gap-2 text-text-primary">
+              Playground <Sparkles size={14} className="text-fuchsia-600" />
+          </Link>
 
           {user ? (
             <div className="flex items-center gap-3">
+              <NotificationsPopover />
               <Button
                 asChild
-                variant="outline"
-                className="h-10 px-4 text-xs font-semibold rounded-xl border-border hover:bg-surface text-text-primary flex items-center gap-2"
+                variant="secondary"
+                size="sm"
+                className="flex items-center gap-2"
               >
-                <Link href="/account">
+                <Link href="/dashboard">
                   <UserIcon size={14} />
-                  Account
+                  Dashboard
                 </Link>
               </Button>
               <Button
@@ -142,7 +137,8 @@ export function Navbar() {
                   }
                 }}
                 variant="ghost"
-                className="h-10 px-4 text-xs font-semibold text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl"
+                size="sm"
+                className="text-error hover:text-error"
               >
                 Sign Out
               </Button>
@@ -150,7 +146,9 @@ export function Navbar() {
           ) : (
             <Button
               asChild
-              className="h-10 px-5 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-xl transition-all uppercase tracking-widest text-[10px]"
+              variant="default"
+              size="sm"
+              className="uppercase tracking-widest text-[10px]"
             >
               <Link href="/login">Sign In</Link>
             </Button>
@@ -159,7 +157,6 @@ export function Navbar() {
 
         {/* Mobile Toggle */}
         <div className="lg:hidden flex items-center gap-4">
-          <ThemeToggle />
           <button onClick={() => setIsOpen(!isOpen)} className="text-text-primary">
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -173,15 +170,15 @@ export function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="lg:hidden absolute top-20 left-0 w-full bg-background border-b border-border p-8 flex flex-col gap-6"
+            className="lg:hidden absolute top-20 left-0 w-full bg-bg-base border-b border-border-subtle p-8 flex flex-col gap-6 z-50 shadow-2xl"
           >
             {routes.map((route) => (
               <Link
                 key={route.href}
                 href={route.href}
                 className={cn(
-                  "text-2xl font-bold uppercase tracking-tighter",
-                  pathname?.startsWith(route.href) ? "text-primary" : "text-text-muted"
+                  "text-xl font-display font-black uppercase tracking-tighter",
+                  pathname?.startsWith(route.href) ? "text-accent" : "text-text-secondary"
                 )}
                 onClick={() => setIsOpen(false)}
               >
@@ -192,8 +189,8 @@ export function Navbar() {
             <Link
               href="/playground"
               className={cn(
-                "text-2xl font-bold uppercase tracking-tighter",
-                pathname === "/playground" ? "text-primary" : "text-text-muted"
+                "text-xl font-display font-black uppercase tracking-tighter",
+                pathname === "/playground" ? "text-accent" : "text-text-secondary"
               )}
               onClick={() => setIsOpen(false)}
             >
@@ -203,14 +200,14 @@ export function Navbar() {
             {user ? (
               <>
                 <Link
-                  href="/account"
+                  href="/dashboard"
                   className={cn(
-                    "text-2xl font-bold uppercase tracking-tighter",
-                    pathname?.startsWith("/account") ? "text-primary" : "text-text-muted"
+                    "text-xl font-display font-black uppercase tracking-tighter",
+                    pathname?.startsWith("/dashboard") ? "text-accent" : "text-text-secondary"
                   )}
                   onClick={() => setIsOpen(false)}
                 >
-                  My Account
+                  Dashboard
                 </Link>
                 <Button
                   onClick={async () => {
@@ -220,8 +217,9 @@ export function Navbar() {
                       window.location.assign('/');
                     }
                   }}
-                  variant="ghost"
-                  className="w-full h-12 text-red-500 font-medium rounded-xl uppercase tracking-widest text-xs border border-red-200 hover:bg-red-50"
+                  variant="destructive"
+                  size="sm"
+                  className="w-full text-xs"
                 >
                   Sign Out
                 </Button>
@@ -229,7 +227,9 @@ export function Navbar() {
             ) : (
               <Button
                 asChild
-                className="w-full h-12 bg-primary text-primary-foreground font-medium rounded-xl uppercase tracking-widest text-xs hover:bg-primary/90 transition-all"
+                variant="default"
+                size="sm"
+                className="w-full text-xs"
               >
                 <Link href="/login" onClick={() => setIsOpen(false)}>Sign In</Link>
               </Button>

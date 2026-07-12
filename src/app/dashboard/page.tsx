@@ -148,9 +148,12 @@ export default function UserDashboard() {
               Manage your saved components, submitted case studies, and security parameters.
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <Button asChild variant="outline" className="border-white/10 hover:bg-white/5 text-white font-bold uppercase tracking-widest text-[10px] rounded-xl h-11 px-5">
-              <Link href="/profile">Edit Profile</Link>
+              <Link href="/dashboard/profile">Edit Profile</Link>
+            </Button>
+            <Button asChild variant="outline" className="border-white/10 hover:bg-white/5 text-white font-bold uppercase tracking-widest text-[10px] rounded-xl h-11 px-5">
+              <Link href="/dashboard/analytics">Analytics</Link>
             </Button>
             <Button asChild className="bg-primary text-black font-bold uppercase tracking-widest text-[10px] rounded-xl h-11 px-5 border-0">
               <Link href="/projects/submit">Submit Project</Link>

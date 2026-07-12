@@ -1,0 +1,1 @@
+export { ComponentCard as default } from "@/components/ComponentCard";

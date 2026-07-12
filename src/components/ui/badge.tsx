@@ -1,37 +1,34 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "@/lib/utils/cn"
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
 const badgeVariants = cva(
-    "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-    {
-        variants: {
-            variant: {
-                default:
-                    "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-                secondary:
-                    "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-                destructive:
-                    "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-                outline: "text-foreground",
-            },
-        },
-        defaultVariants: {
-            variant: "default",
-        },
-    }
-)
+  'inline-flex items-center justify-center rounded-full border px-2.5 py-0.5 text-xs font-bold transition-all focus:outline-none focus:ring-2 focus:ring-fuchsia-600 focus:ring-offset-2',
+  {
+    variants: {
+      variant: {
+        default: 'border-transparent bg-fuchsia-600 text-white',
+        secondary: 'border-[#2a2a38] bg-[#1a1a24] text-slate-400',
+        outline: 'border-[#2a2a38] text-white bg-transparent',
+        new: 'border-fuchsia-600/30 bg-fuchsia-600/10 text-[#c026d3] shadow-[0_0_12px_rgba(192,38,211,0.2)]',
+        pro: 'border-transparent bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white',
+        featured: 'border-fuchsia-600/30 bg-fuchsia-600/10 text-fuchsia-600',
+        success: 'border-green-500/30 bg-green-500/10 text-green-500',
+        destructive: 'border-red-500/30 bg-red-500/10 text-red-500',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
 
 export interface BadgeProps
-    extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> { }
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
 
 function Badge({ className, variant, ...props }: BadgeProps) {
-    return (
-        <div className={cn(badgeVariants({ variant }), className)} {...props} />
-    )
+  return <div className={cn(badgeVariants({ variant }), className)} {...props} />;
 }
 
-export { Badge, badgeVariants }
-
+export { Badge, badgeVariants };

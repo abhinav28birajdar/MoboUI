@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { LoadingSpinner } from "./LoadingSpinner";
+import { usePlaygroundStore } from "@/lib/store/playground-store";
+import { useTheme } from "@/hooks/use-theme";
 
 interface FlutterPreviewProps {
     code: string;
@@ -9,56 +11,104 @@ interface FlutterPreviewProps {
 }
 
 export function FlutterPreview({ code, isVisible }: FlutterPreviewProps) {
-    const [loading, setLoading] = useState(true);
+    const { resolvedTheme } = useTheme();
+    const theme = resolvedTheme || "dark";
     const iframeRef = useRef<HTMLIFrameElement>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [iframeReady, setIframeReady] = useState(false);
 
+    // Default Flutter template for Dartpad
+    const baseCode = `import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(${theme === 'dark' ? 'brightness: Brightness.dark,' : ''}
+        colorSchemeSeed: Colors.purple,
+      ),
+      home: const Scaffold(
+        body: Center(
+          child: ExampleComponent(),
+        ),
+      ),
+    );
+  }
+}
+
+// User code below
+${code}
+`;
+
+    // Listen for Dartpad ready event
     useEffect(() => {
-        if (!isVisible || !iframeRef.current || loading) return;
-
-        // Send code to DartPad via postMessage
-        const sendCode = () => {
-            if (iframeRef.current?.contentWindow) {
-                iframeRef.current.contentWindow.postMessage({
-                    command: 'execute',
-                    code: code,
-                }, '*');
+        const handleMessage = (event: MessageEvent) => {
+            if (event.data?.type === 'ready') {
+                setIframeReady(true);
+                setIsLoading(false);
             }
         };
 
-        // Debounce code updates to avoid flooding DartPad
-        const timeoutId = setTimeout(sendCode, 1000);
-        return () => clearTimeout(timeoutId);
-    }, [code, isVisible, loading]);
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+    }, []);
+
+    // Send code to Dartpad when ready or code changes
+    useEffect(() => {
+        if (!iframeReady || !iframeRef.current || !isVisible) return;
+        
+        // Let's add a small delay to ensure it's fully ready to receive
+        const timer = setTimeout(() => {
+            try {
+                iframeRef.current?.contentWindow?.postMessage({
+                    sourceCode: {
+                        "main.dart": baseCode
+                    },
+                    type: 'sourceCode'
+                }, '*');
+            } catch (err) {
+                console.error("Failed to post message to Dartpad:", err);
+            }
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [baseCode, iframeReady, isVisible]);
 
     if (!isVisible) return null;
 
-    return (
-        <div className="relative w-[340px] h-[680px] rounded-[3rem] border-[12px] border-[#1a1a1a] bg-black overflow-hidden shadow-2xl transition-all duration-500 hover:scale-[1.02]">
-            {/* Notch */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-8 bg-[#1a1a1a] rounded-b-3xl z-20 flex items-center justify-center">
-                <div className="w-12 h-1 bg-white/10 rounded-full" />
-            </div>
+    // Use embed-flutter.html with split=false to hide Dartpad's own editor
+    const dartpadUrl = `https://dartpad.dev/embed-flutter.html?theme=${theme}&split=false&run=true`;
 
-            {loading && (
-                <div className="absolute inset-0 z-10 bg-[#0a0a0a] flex flex-col items-center justify-center gap-4">
+    return (
+        <div className="relative w-full h-full flex flex-col bg-[#0f0f14]">
+            {isLoading && (
+                <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#0f0f14]/80 backdrop-blur-sm">
                     <LoadingSpinner />
-                    <span className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] animate-pulse">
-                        Warming up Flutter...
-                    </span>
                 </div>
             )}
-
+            
             <iframe
                 ref={iframeRef}
-                src="https://dartpad.dev/embed-flutter.html?theme=dark&split=0&run=false"
+                src={dartpadUrl}
                 className="w-full h-full border-none"
-                onLoad={() => setLoading(false)}
-                allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-                sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+                title="DartPad Preview"
+                allow="geolocation; camera; microphone"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+                onLoad={() => {
+                    // Fallback in case ready message doesn't come through
+                    setTimeout(() => {
+                        setIsLoading(false);
+                        setIframeReady(true);
+                    }, 2000);
+                }}
             />
-
-            {/* Home Indicator */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/20 rounded-full z-20" />
         </div>
     );
 }

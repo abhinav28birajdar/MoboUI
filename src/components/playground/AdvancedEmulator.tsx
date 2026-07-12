@@ -92,7 +92,7 @@ export function AdvancedEmulator({
                 >
                     <div
                         className="w-12 h-12 border-4 rounded-full animate-spin"
-                        style={{ borderColor: `${borderColor}40`, borderTopColor: "#FFCA03" }}
+                        style={{ borderColor: `${borderColor}40`, borderTopColor: "#C026D3" }}
                     />
                     <p className="text-xs font-bold uppercase tracking-wider" style={{ color: theme === "dark" ? "#888" : "#666" }}>
                         Compiling...
@@ -131,7 +131,7 @@ export function AdvancedEmulator({
                     <motion.button
                         whileHover={{ scale: 1.08 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-8 py-4 bg-gradient-to-br from-amber-300 to-amber-400 text-gray-900 font-bold text-lg rounded-3xl shadow-lg hover:shadow-xl transition-all cursor-pointer border-2 border-amber-500/30"
+                        className="px-8 py-4 bg-gradient-to-br from-fuchsia-500 to-fuchsia-600 text-white font-bold text-lg rounded-3xl shadow-lg hover:shadow-xl transition-all cursor-pointer border border-fuchsia-500/30"
                     >
                         {output.includes("<button>") ? output.match(/>([^<]+)</)?.[1] || "Get Started" : "Get Started"}
                     </motion.button>
