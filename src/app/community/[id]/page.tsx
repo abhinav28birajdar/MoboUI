@@ -7,8 +7,9 @@ import { ArrowLeft, MessageSquare, Heart, Eye } from 'lucide-react';
 import { ReplyList } from '@/components/community/reply-list';
 import { ReplyForm } from '@/components/community/reply-form';
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const post = await getPostById(params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const post = await getPostById(id);
   if (!post) return { title: 'Post Not Found | MoboUI Community' };
   return {
     title: `${post.title} | MoboUI Community`,
@@ -16,8 +17,9 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
-export default async function PostDetailPage({ params }: { params: { id: string } }) {
-  const post = await getPostById(params.id);
+export default async function PostDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const post = await getPostById(id);
 
   if (!post) {
     notFound();

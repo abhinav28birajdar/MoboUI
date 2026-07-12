@@ -11,12 +11,13 @@ export const metadata = {
   description: "Join the discussion with other mobile developers.",
 };
 
-export default function CommunityPage({
+export default async function CommunityPage({
   searchParams,
 }: {
-  searchParams: { category?: string };
+  searchParams: Promise<{ category?: string }>;
 }) {
-  const currentCategory = searchParams.category || 'All';
+  const { category } = await searchParams;
+  const currentCategory = category || 'All';
 
   const categories = [
     { name: 'All', icon: LayoutGrid },

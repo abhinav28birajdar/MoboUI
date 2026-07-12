@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/providers/ThemeProvider";
+import { QueryProvider } from "@/lib/providers/QueryProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
@@ -53,16 +54,18 @@ export default function RootLayout({
                     enableSystem={false}
                     disableTransitionOnChange
                 >
-                    <div className="flex flex-col min-h-screen relative z-10">
-                        <Navbar />
-                        <LoginPromptModal />
-                        <main className="flex-grow flex flex-col pt-20">
-                            <PageAnimate>
-                                {children}
-                            </PageAnimate>
-                        </main>
-                        <Footer />
-                    </div>
+                    <QueryProvider>
+                        <div className="flex flex-col min-h-screen relative z-10">
+                            <Navbar />
+                            <LoginPromptModal />
+                            <main className="flex-grow flex flex-col pt-20">
+                                <PageAnimate>
+                                    {children}
+                                </PageAnimate>
+                            </main>
+                            <Footer />
+                        </div>
+                    </QueryProvider>
                     <Toaster
                         position="bottom-right"
                         toastOptions={{
