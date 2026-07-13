@@ -1,9 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Check, ChevronRight, HelpCircle, Plus, Minus, Sparkles, Star } from 'lucide-react';
+import { Check, ChevronRight, HelpCircle, Plus, Minus, Sparkles, Star, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils/cn';
+import { useAuth } from '@/hooks/use-auth';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
 const FAQ_ITEMS = [
   {
@@ -27,6 +30,52 @@ const FAQ_ITEMS = [
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(null);
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const handleCheckout = async (planName: string) => {
+    if (planName === 'Free Plan') {
+      router.push('/signup');
+      return;
+    }
+    if (planName === 'Enterprise') {
+      router.push('/contact');
+      return;
+    }
+
+    if (!user) {
+      toast.error('Please sign in to upgrade to Pro.');
+      router.push('/login?redirect=/pricing');
+      return;
+    }
+
+    setIsCheckoutLoading(true);
+    try {
+      // Pass a dummy price ID for now, in a real app this would be a Stripe Price ID from env
+      const priceId = billingCycle === 'monthly' ? 'price_pro_monthly' : 'price_pro_yearly';
+      
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ priceId }),
+      });
+
+      if (!res.ok) throw new Error('Failed to create checkout session');
+
+      const data = await res.json();
+      if (data.url) {
+        window.location.assign(data.url);
+      } else {
+        throw new Error('No checkout URL returned');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to initiate checkout. Please try again.');
+    } finally {
+      setIsCheckoutLoading(false);
+    }
+  };
 
   const plans = [
     {
@@ -171,7 +220,8 @@ export default function PricingPage() {
               </div>
 
               <Button
-                onClick={() => window.location.assign(plan.href)}
+                onClick={() => handleCheckout(plan.name)}
+                disabled={isCheckoutLoading && plan.highlighted}
                 className={cn(
                   'w-full h-14 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-0 flex items-center justify-center gap-2',
                   plan.highlighted
@@ -179,7 +229,13 @@ export default function PricingPage() {
                     : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
                 )}
               >
-                {plan.cta} <ChevronRight size={14} />
+                {isCheckoutLoading && plan.highlighted ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : (
+                  <>
+                    {plan.cta} <ChevronRight size={14} />
+                  </>
+                )}
               </Button>
             </div>
           ))}

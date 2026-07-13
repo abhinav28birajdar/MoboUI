@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Copy, Check, Share2, Twitter, Linkedin, Link as LinkIcon } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Copy, Check, Share2, Twitter, Linkedin, Link as LinkIcon, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import {
     Dialog,
     DialogContent,
@@ -17,12 +18,54 @@ import { usePlaygroundStore } from "@/lib/store/playground-store";
 export function ShareDialog() {
     const [isOpen, setIsOpen] = useState(false);
     const [copied, setCopied] = useState(false);
-    const { code, framework } = usePlaygroundStore();
+    const [isSaving, setIsSaving] = useState(false);
+    const [savedId, setSavedId] = useState<string | null>(null);
+    const { code, framework, device } = usePlaygroundStore();
+    const params = useParams();
+    const pathname = usePathname();
+    const router = useRouter();
 
-    // Create a shareable URL (mock for now, ideally would point to a saved ID)
+    const currentId = params?.id as string | undefined;
+
+    // Use current ID if on a saved page, or the newly saved ID, or fallback
     const shareUrl = typeof window !== "undefined"
-        ? `${window.location.origin}/playground?f=${framework}&c=${btoa(code.substring(0, 50))}...`
+        ? `${window.location.origin}/playground/${currentId || savedId || ''}`
         : "";
+
+    useEffect(() => {
+        if (isOpen && !currentId && !savedId) {
+            // Save the session
+            const saveSession = async () => {
+                setIsSaving(true);
+                try {
+                    const res = await fetch('/api/playground/share', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            code,
+                            framework,
+                            deviceType: device,
+                        }),
+                    });
+                    
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.id) {
+                            setSavedId(data.id);
+                            // Optionally redirect to the new URL without refreshing
+                            window.history.pushState(null, '', `/playground/${data.id}`);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Failed to save session:', error);
+                    toast.error('Failed to generate share link');
+                } finally {
+                    setIsSaving(false);
+                }
+            };
+            saveSession();
+        }
+    }, [isOpen, currentId, savedId, code, framework, device]);
 
     const handleCopy = () => {
         navigator.clipboard.writeText(shareUrl);
@@ -64,13 +107,13 @@ export function ShareDialog() {
                                 </div>
                                 <input
                                     readOnly
-                                    value={shareUrl}
+                                    value={isSaving ? "Generating link..." : shareUrl}
                                     className="w-full h-10 pl-9 pr-4 rounded-lg bg-black border border-[#333] text-sm text-gray-300 focus:outline-none focus:border-primary/50 transition-colors"
                                 />
                             </div>
                         </div>
-                        <Button size="icon" onClick={handleCopy} className="h-10 w-10 bg-[#333] hover:bg-[#444] text-white border-0">
-                            {copied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
+                        <Button size="icon" onClick={handleCopy} disabled={isSaving || !shareUrl} className="h-10 w-10 bg-[#333] hover:bg-[#444] text-white border-0">
+                            {isSaving ? <Loader2 className="h-4 w-4 animate-spin text-gray-400" /> : copied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
                         </Button>
                     </div>
 

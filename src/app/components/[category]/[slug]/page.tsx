@@ -31,7 +31,7 @@ export default function ComponentDetailPage({ params }: { params: Promise<PagePa
   const router = useRouter();
   const { category: categoryParam, slug: slugParam } = use(params);
 
-  const { user } = useAuthStore();
+  const { user, profile } = useAuthStore();
   const { toggleFavorite, isFavorited } = useFavoritesStore();
   const { setCode, setFramework } = usePlaygroundStore();
 
@@ -173,6 +173,13 @@ export default function ComponentDetailPage({ params }: { params: Promise<PagePa
       : selectedVersionData.code?.web_code || '// Web fallback view'
   ) : activeCode;
 
+  // Determine if code should be locked
+  const isLocked = component.is_premium && 
+    profile?.plan !== 'pro' && 
+    profile?.plan !== 'enterprise' && 
+    profile?.role !== 'admin' && 
+    user?.id !== component.author_id;
+
   return (
     <div className="min-h-screen bg-[#0A0A0B] text-[#FAFAFA] pt-24 pb-32">
       <div className="container px-6 mx-auto">
@@ -198,10 +205,17 @@ export default function ComponentDetailPage({ params }: { params: Promise<PagePa
               Docs & View
             </button>
             <button
-              onClick={() => setViewMode('playground')}
+              onClick={() => {
+                if (isLocked) {
+                  toast.error('Upgrade to Pro to use the Interactive Studio');
+                  return;
+                }
+                setViewMode('playground');
+              }}
               className={cn(
                 "px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all flex items-center gap-1.5",
-                viewMode === 'playground' ? "bg-[#C026D3] text-black" : "text-[#C026D3]/75 hover:text-[#C026D3]"
+                viewMode === 'playground' ? "bg-[#C026D3] text-black" : "text-[#C026D3]/75 hover:text-[#C026D3]",
+                isLocked && "opacity-50 cursor-not-allowed"
               )}
             >
               <Sparkles size={12} className={viewMode === 'playground' ? "text-black" : "text-[#C026D3]"} />
@@ -338,14 +352,18 @@ export default function ComponentDetailPage({ params }: { params: Promise<PagePa
                     </div>
                     <span className="text-[10px] font-black uppercase text-[#52525B] tracking-wider">{activeTab}</span>
                     <button
-                      onClick={() => handleCopyCode(activeCode)}
-                      className="text-[10px] font-black uppercase text-[#A1A1AA] hover:text-[#C026D3] transition-colors flex items-center gap-1.5"
+                      onClick={() => !isLocked && handleCopyCode(activeCode)}
+                      disabled={isLocked}
+                      className={cn(
+                        "text-[10px] font-black uppercase transition-colors flex items-center gap-1.5",
+                        isLocked ? "text-[#52525B] cursor-not-allowed" : "text-[#A1A1AA] hover:text-[#C026D3]"
+                      )}
                     >
                       {copied ? <Check size={11} className="text-[#22C55E]" /> : <Copy size={11} />}
                       <span>{copied ? 'Copied!' : 'Copy'}</span>
                     </button>
                   </div>
-                  <div className="overflow-x-auto max-h-[450px]">
+                  <div className="relative overflow-x-auto max-h-[450px]">
                     <SyntaxHighlighter
                       language={activeTab === 'flutter' ? 'dart' : 'tsx'}
                       style={tomorrow}
@@ -355,10 +373,27 @@ export default function ComponentDetailPage({ params }: { params: Promise<PagePa
                         background: 'transparent',
                         fontSize: '13px',
                         fontFamily: 'var(--font-code), monospace',
+                        filter: isLocked ? 'blur(4px)' : 'none',
+                        opacity: isLocked ? 0.4 : 1,
                       }}
                     >
-                      {activeCode}
+                      {displayCode}
                     </SyntaxHighlighter>
+                    
+                    {isLocked && (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[2px] z-10">
+                        <div className="bg-[#111113] border border-[#C026D3]/30 p-6 rounded-2xl shadow-2xl flex flex-col items-center text-center max-w-sm">
+                          <Sparkles className="text-[#C026D3] mb-3 w-8 h-8" />
+                          <h4 className="text-white font-display font-black text-xl uppercase tracking-tight mb-2">Pro Component</h4>
+                          <p className="text-[#A1A1AA] text-xs font-medium mb-5 leading-relaxed">
+                            Upgrade to the Pro Developer plan to unlock this component's source code and premium animations.
+                          </p>
+                          <Button asChild className="w-full h-10 bg-[#C026D3] text-black hover:bg-[#C026D3]/90 rounded-xl text-[10px] font-black uppercase tracking-widest border-0">
+                            <Link href="/pricing">Upgrade to Pro</Link>
+                          </Button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

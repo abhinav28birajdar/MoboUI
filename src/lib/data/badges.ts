@@ -5,7 +5,7 @@ export interface BadgeDefinition {
   id: string;
   name: string;
   description: string;
-  icon: React.ElementType;
+  icon: any;
   colorClass: string;
   bgColorClass: string;
 }

@@ -20,6 +20,8 @@ import { FlutterPreview } from "./FlutterPreview";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
+import { useParams } from "next/navigation";
+import { supabase } from "@/lib/supabase/client";
 
 
 
@@ -76,6 +78,87 @@ export function PlaygroundIDE({ initialCode, initialFramework }: PlaygroundIDEPr
       setCode(initialCode);
     }
   }, [initialCode, initialFramework]);
+
+  // Handle Collaborative Playground Loading & Realtime
+  const params = useParams();
+  const sessionId = params?.id as string | undefined;
+
+  useEffect(() => {
+    if (!sessionId) return;
+
+    let channel: any;
+
+    const fetchSessionAndConnect = async () => {
+      try {
+        const res = await fetch(`/api/playground/${sessionId}`);
+        if (res.ok) {
+          const data = await res.json();
+          // Hydrate the store
+          if (data.active_framework) setFramework(data.active_framework);
+          if (data.device_type) setDevice(data.device_type);
+          
+          let fetchedCode = '';
+          if (data.active_framework === 'flutter') fetchedCode = data.code_flutter;
+          if (data.active_framework === 'react-native') fetchedCode = data.code_react_native;
+          if (data.active_framework === 'expo') fetchedCode = data.code_expo;
+          if (data.active_framework === 'web') fetchedCode = data.code_web;
+          
+          if (fetchedCode) setCode(fetchedCode);
+          
+          toast.success("Joined shared playground session");
+
+          // Connect to Supabase Realtime for this session
+          if (supabase) {
+            channel = supabase.channel(`playground:${sessionId}`, {
+              config: { presence: { key: 'viewer' } }
+            });
+
+            channel
+              .on('presence', { event: 'sync' }, () => {
+                const newState = channel.presenceState();
+                // You could parse the newState to show active viewers avatars here
+              })
+              .on('broadcast', { event: 'code-change' }, (payload: any) => {
+                if (payload.code) {
+                  setCode(payload.code);
+                }
+              })
+              .subscribe((status: string) => {
+                if (status === 'SUBSCRIBED') {
+                  channel.track({ online_at: new Date().toISOString() });
+                }
+              });
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch session", err);
+        toast.error("Failed to load shared playground");
+      }
+    };
+
+    fetchSessionAndConnect();
+
+    return () => {
+      if (channel) supabase.removeChannel(channel);
+    };
+  }, [sessionId]);
+
+  // Handle Code Changes and Broadcast
+  const handleEditorChange = (value: string | undefined) => {
+    if (value === undefined) return;
+    setCode(value);
+    
+    // Broadcast if in a shared session
+    if (sessionId && supabase) {
+      const channel = supabase.channel(`playground:${sessionId}`);
+      // Send the broadcast (doesn't wait for response)
+      channel.send({
+        type: 'broadcast',
+        event: 'code-change',
+        payload: { code: value }
+      });
+    }
+  };
 
   // Handle Monaco Mount
   const handleEditorDidMount = (editor: any, monaco: any) => {

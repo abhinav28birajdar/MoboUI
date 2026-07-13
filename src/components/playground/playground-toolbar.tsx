@@ -1,10 +1,12 @@
 "use client";
 
 import React from "react";
-import { Play, RotateCcw, Download } from "lucide-react";
+import { Play, RotateCcw, Download, Copy, Users } from "lucide-react";
 import { usePlaygroundStore } from "@/lib/store/playground-store";
 import { cn } from "@/lib/utils/cn";
 import { toast } from "sonner";
+import { ShareDialog } from "./ShareDialog";
+import { useParams, useRouter } from "next/navigation";
 
 export function PlaygroundToolbar() {
   const {
@@ -16,8 +18,37 @@ export function PlaygroundToolbar() {
     updateEditorSettings,
     resetCode,
     addConsoleLog,
-    files
+    files,
+    code,
+    device
   } = usePlaygroundStore();
+
+  const params = useParams();
+  const router = useRouter();
+  const sessionId = params?.id as string | undefined;
+
+  const handleFork = async () => {
+    try {
+      const res = await fetch('/api/playground/share', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code,
+          framework,
+          deviceType: device,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.id) {
+          router.push(`/playground/${data.id}`);
+          toast.success("Project forked successfully!");
+        }
+      }
+    } catch (e) {
+      toast.error("Failed to fork project.");
+    }
+  };
 
   const handleExportZIP = () => {
     const textFiles = Object.entries(files).map(([path, content]) => `${path}:\n${content}`).join("\n\n---\n\n");
@@ -40,6 +71,11 @@ export function PlaygroundToolbar() {
           <span className="text-xs font-black uppercase tracking-widest text-zinc-300">
             {activeProjectId ? projects.find(p => p.id === activeProjectId)?.name : "Active Playground"}
           </span>
+          {sessionId && (
+            <span className="ml-2 flex items-center gap-1.5 px-2 py-1 rounded bg-green-500/10 border border-green-500/20 text-[9px] font-black uppercase tracking-widest text-green-400">
+              <Users size={10} /> Live
+            </span>
+          )}
         </div>
 
         <div className="h-4 w-px bg-zinc-800" />
@@ -98,6 +134,18 @@ export function PlaygroundToolbar() {
           <Download size={12} />
           <span>Export</span>
         </button>
+
+        {sessionId && (
+          <button
+            onClick={handleFork}
+            className="flex items-center gap-1.5 h-9 px-3 rounded-xl border border-[#C026D3]/30 text-[#C026D3] hover:text-black hover:bg-[#C026D3] text-xs font-black uppercase tracking-wider transition-all"
+          >
+            <Copy size={12} />
+            <span>Fork</span>
+          </button>
+        )}
+
+        <ShareDialog />
 
         <div className="h-4 w-px bg-zinc-800" />
 

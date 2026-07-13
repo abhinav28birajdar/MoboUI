@@ -10,35 +10,14 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase/client";
 import { NotificationsPopover } from "@/components/shared/notifications-popover";
 
+import { useAuthStore } from "@/lib/store/auth-store";
+
 export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
-  const [user, setUser] = useState<any>(null);
-
-  // Read active session on mount & subscribe to changes
-  useEffect(() => {
-    const checkUser = async () => {
-      if (supabase && typeof supabase.auth !== 'undefined') {
-        const { data: { session } } = await supabase.auth.getSession();
-        setUser(session?.user ?? null);
-      }
-    };
-    checkUser();
-
-    let subscription: any = null;
-    if (supabase && typeof supabase.auth !== 'undefined') {
-      const { data } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
-        setUser(session?.user ?? null);
-      });
-      subscription = data.subscription;
-    }
-
-    return () => {
-      if (subscription) subscription.unsubscribe();
-    };
-  }, []);
+  const { user, profile } = useAuthStore();
 
   // Smart Hide logic on scroll
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -122,11 +101,16 @@ export function Navbar() {
                 asChild
                 variant="secondary"
                 size="sm"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 relative"
               >
                 <Link href="/dashboard">
                   <UserIcon size={14} />
                   Dashboard
+                  {profile?.plan === 'pro' && (
+                    <span className="absolute -top-2 -right-2 bg-[#C026D3] text-black text-[8px] font-black px-1.5 py-0.5 rounded-sm uppercase tracking-wider shadow-[0_0_10px_rgba(192,38,211,0.5)]">
+                      PRO
+                    </span>
+                  )}
                 </Link>
               </Button>
               <Button

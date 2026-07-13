@@ -96,7 +96,7 @@ export function getFrameworkColor(framework: ComponentFramework | string) {
   }
 }
 
-export function getFrameworkIcon(framework: ComponentFramework | string): React.ElementType {
+export function getFrameworkIcon(framework: ComponentFramework | string): any {
   switch (framework) {
     case "flutter":
       return Smartphone;
