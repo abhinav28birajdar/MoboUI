@@ -21,7 +21,6 @@ const FOOTER_LINKS = [
         links: [
             { label: "About", href: "/about" },
             { label: "Submit", href: "/submit" },
-            { label: "Pricing", href: "/pricing" },
             { label: "Status", href: "/status" },
         ],
     },
@@ -120,12 +119,19 @@ export function Footer() {
                         <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">
                             © {new Date().getFullYear()} MOBOUI LABS.
                         </p>
-                        <div className="flex gap-6">
-                            {[Twitter, Github, Youtube, Instagram].map((Icon, i) => (
-                                <Link key={i} href="#" className="text-text-muted hover:text-accent transition-colors">
-                                    <Icon size={18} />
-                                </Link>
-                            ))}
+                        <div className="flex items-center gap-6">
+                            <Link href="https://twitter.com/abhi28birajdar" target="_blank" className="text-text-muted hover:text-accent transition-colors">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" className="w-[18px] h-[18px] fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                            </Link>
+                            <Link href="https://github.com/abhinav28birajdar" target="_blank" className="text-text-muted hover:text-accent transition-colors">
+                                <Github size={18} />
+                            </Link>
+                            <Link href="https://youtube.com/@abhinav28birajdar" target="_blank" className="text-text-muted hover:text-accent transition-colors">
+                                <Youtube size={18} />
+                            </Link>
+                            <Link href="https://instagram.com/abhinav28birajdar" target="_blank" className="text-text-muted hover:text-accent transition-colors">
+                                <Instagram size={18} />
+                            </Link>
                         </div>
                     </div>
 

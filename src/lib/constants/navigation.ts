@@ -3,7 +3,6 @@ export const mainNav = [
   { title: "Categories", href: "/categories" },
   { title: "Playground", href: "/playground" },
   { title: "Projects", href: "/projects" },
-  { title: "Marketplace", href: "/marketplace" },
   { title: "Blog", href: "/blog" },
 ];
 
@@ -40,10 +39,8 @@ export const footerNav = {
     { title: "Changelog", href: "/changelog" },
   ],
   resources: [
-    { title: "Documentation", href: "#" },
     { title: "Blog", href: "/blog" },
     { title: "Community", href: "/community" },
-    { title: "Showcase", href: "/projects" },
   ],
   company: [
     { title: "About", href: "/about" },

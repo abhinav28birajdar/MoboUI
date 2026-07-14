@@ -2,22 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X, Sparkles, User as UserIcon } from "lucide-react";
+import { Search, Menu, X, Sparkles, Github } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/lib/supabase/client";
-import { NotificationsPopover } from "@/components/shared/notifications-popover";
 
-import { useAuthStore } from "@/lib/store/auth-store";
 
 export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
-  const { user, profile } = useAuthStore();
 
   // Smart Hide logic on scroll
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -31,10 +27,7 @@ export function Navbar() {
 
   const routes = [
     { href: "/components", label: "Components" },
-    { href: "/showcase", label: "Showcase" },
-    { href: "/marketplace", label: "Marketplace" },
     { href: "/blog", label: "Blog" },
-    { href: "/docs", label: "Docs" },
   ];
 
   return (
@@ -94,49 +87,16 @@ export function Navbar() {
               Playground <Sparkles size={14} className="text-fuchsia-600" />
           </Link>
 
-          {user ? (
-            <div className="flex items-center gap-3">
-              <NotificationsPopover />
-              <Button
-                asChild
-                variant="secondary"
-                size="sm"
-                className="flex items-center gap-2 relative"
-              >
-                <Link href="/dashboard">
-                  <UserIcon size={14} />
-                  Dashboard
-                  {profile?.plan === 'pro' && (
-                    <span className="absolute -top-2 -right-2 bg-[#C026D3] text-black text-[8px] font-black px-1.5 py-0.5 rounded-sm uppercase tracking-wider shadow-[0_0_10px_rgba(192,38,211,0.5)]">
-                      PRO
-                    </span>
-                  )}
-                </Link>
-              </Button>
-              <Button
-                onClick={async () => {
-                  if (supabase && typeof supabase.auth !== 'undefined') {
-                    await supabase.auth.signOut();
-                    window.location.assign('/');
-                  }
-                }}
-                variant="ghost"
-                size="sm"
-                className="text-error hover:text-error"
-              >
-                Sign Out
-              </Button>
-            </div>
-          ) : (
-            <Button
-              asChild
-              variant="default"
-              size="sm"
-              className="uppercase tracking-widest text-[10px]"
-            >
-              <Link href="/login">Sign In</Link>
-            </Button>
-          )}
+          <motion.a
+            href="https://github.com/abhinav28birajdar"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="text-text-primary hover:text-accent transition-colors flex items-center justify-center p-2 rounded-full hover:bg-white/5"
+          >
+            <Github size={20} />
+          </motion.a>
         </div>
 
         {/* Mobile Toggle */}
@@ -181,43 +141,15 @@ export function Navbar() {
               Playground
             </Link>
 
-            {user ? (
-              <>
-                <Link
-                  href="/dashboard"
-                  className={cn(
-                    "text-xl font-display font-black uppercase tracking-tighter",
-                    pathname?.startsWith("/dashboard") ? "text-accent" : "text-text-secondary"
-                  )}
-                  onClick={() => setIsOpen(false)}
-                >
-                  Dashboard
-                </Link>
-                <Button
-                  onClick={async () => {
-                    setIsOpen(false);
-                    if (supabase && typeof supabase.auth !== 'undefined') {
-                      await supabase.auth.signOut();
-                      window.location.assign('/');
-                    }
-                  }}
-                  variant="destructive"
-                  size="sm"
-                  className="w-full text-xs"
-                >
-                  Sign Out
-                </Button>
-              </>
-            ) : (
-              <Button
-                asChild
-                variant="default"
-                size="sm"
-                className="w-full text-xs"
-              >
-                <Link href="/login" onClick={() => setIsOpen(false)}>Sign In</Link>
-              </Button>
-            )}
+            <motion.a
+              href="https://github.com/abhinav28birajdar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full h-10 bg-accent text-white rounded-md uppercase text-xs font-black tracking-widest"
+              whileTap={{ scale: 0.95 }}
+            >
+              <Github size={16} /> GitHub
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>

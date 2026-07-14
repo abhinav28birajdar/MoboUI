@@ -438,52 +438,26 @@ export default function ComponentDetailPage({ params }: { params: Promise<PagePa
                 <div className="flex items-center justify-between w-full border-b border-[#27272A]/50 pb-4">
                   <div className="flex items-center gap-2">
                     <Smartphone size={16} className="text-[#C026D3]" />
-                    <span className="text-xs font-black uppercase tracking-widest text-[#FAFAFA]">Interactive Frame</span>
-                  </div>
-
-                  {/* Device Selector options */}
-                  <div className="flex bg-[#18181B] p-1 rounded-lg border border-[#27272A]">
-                    <button
-                      onClick={() => setDevice('iphone')}
-                      className={cn(
-                        "px-3 py-1 rounded text-[10px] font-black uppercase tracking-wider transition-all",
-                        device === 'iphone' ? "bg-[#C026D3] text-black" : "text-[#52525B] hover:text-white"
-                      )}
-                    >
-                      iPhone 15
-                    </button>
-                    <button
-                      onClick={() => setDevice('android')}
-                      className={cn(
-                        "px-3 py-1 rounded text-[10px] font-black uppercase tracking-wider transition-all",
-                        device === 'android' ? "bg-[#C026D3] text-black" : "text-[#52525B] hover:text-white"
-                      )}
-                    >
-                      Pixel 8
-                    </button>
+                    <span className="text-xs font-black uppercase tracking-widest text-[#FAFAFA]">Preview Image</span>
                   </div>
                 </div>
 
-                {/* Live Interactive Mobile Emulator */}
+                {/* Static Image Preview */}
                 <div className="flex items-center justify-center py-2 w-full">
-                  {activeTab === 'flutter' ? (
-                    <FlutterPreview code={displayCode} isVisible={true} />
-                  ) : activeTab === 'web' ? (
-                    <div className="relative w-[280px] h-[550px] bg-[#0A0A0B] rounded-[3rem] border-[10px] border-[#1C1C1E] shadow-2xl p-3 flex flex-col overflow-hidden">
-                      <div className="flex-1 rounded-[2rem] bg-[#111113] overflow-hidden relative flex flex-col items-center justify-center p-4 border border-[#27272A]/50">
-                        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]" />
-                        <div className="w-full text-center space-y-4 relative z-10">
-                          <Sparkles className="mx-auto text-[#C026D3]/40" size={32} />
-                          <p className="text-[10px] font-black uppercase text-[#52525B] tracking-widest">Web Preview</p>
-                          <p className="text-xs text-[#A1A1AA] max-w-[180px] mx-auto leading-relaxed">
-                            Web fallback code is active. Switch to React Native or Flutter tabs to load the interactive device emulator.
-                          </p>
-                        </div>
+                  <div className="relative w-full aspect-[4/3] rounded-2xl border border-[#27272A]/50 overflow-hidden bg-black/50">
+                    {(component.image_url || component.preview_image_url) ? (
+                      <img 
+                        src={component.image_url || component.preview_image_url} 
+                        alt={`${component.name} preview`} 
+                        className="w-full h-full object-cover" 
+                      />
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center text-zinc-500">
+                        <Sparkles size={32} className="text-zinc-600 mb-2" />
+                        <span className="text-xs font-black uppercase tracking-widest">No Preview Image</span>
                       </div>
-                    </div>
-                  ) : (
-                    <ReactNativePreview code={displayCode} isVisible={true} />
-                  )}
+                    )}
+                  </div>
                 </div>
 
                 {/* Bottom Actions grid */}
