@@ -28,14 +28,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@@/*": ["./*"],
-      "@components/*": ["./src/components/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@types/*": ["./src/types/*"],
-      "@store/*": ["./src/store/*"],
-      "@utils/*": ["./src/lib/utils/*"]
+      "@/*": ["./*"]
     }
   },
   "include": [
@@ -45,5 +38,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src_old", "temp-refactor.js", "replace-theme.js"]
 }

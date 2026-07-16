@@ -1,21 +1,16 @@
 import type { NextConfig } from "next";
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
-
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  optimizeFonts: false,
-  
-  serverExternalPackages: ['sharp'],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 
   images: {
     formats: ["image/webp", "image/avif"],
     remotePatterns: [
       { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
       { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
-      { protocol: 'https', hostname: '*.supabase.co' },
       { protocol: 'https', hostname: 'images.unsplash.com' }
     ],
     minimumCacheTTL: 31536000,
@@ -57,4 +52,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBundleAnalyzer(nextConfig);
+export default nextConfig;

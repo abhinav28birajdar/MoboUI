@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg-dark: #09090b;
+    --color-bg-surface: #111113;
+    --color-bg-elevated: #1c1c1f;
+    --color-border: #27272a;
+    --color-border-subtle: #3f3f46;
+    --color-text-primary: #fafafa;
+    --color-text-secondary: #a1a1aa;
+    --color-text-muted: #71717a;
+    --color-accent: #c026d3;
+    --color-accent-glow: #a21caf;
+    --color-accent-subtle: #4a044e;
+    --color-flutter: #54c5f8;
+    --color-expo: #ffffff;
+    --color-rn: #61dafb;
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+  }
+
+  body {
+    @apply bg-[#09090B] text-[#FAFAFA] antialiased selection:bg-fuchsia-600/30;
+  }
+}
+
+@layer utilities {
+  .perspective-1200 {
+    perspective: 1200px;
+  }
+  .rotate-x-10 {
+    transform: rotateX(10deg);
+  }
+}
