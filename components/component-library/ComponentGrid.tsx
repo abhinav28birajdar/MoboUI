@@ -8,7 +8,7 @@ import { Badge } from '../ui/Badge'
 import { FrameworkBadge } from '../ui/FrameworkBadge'
 import { Skeleton } from '../ui/Skeleton'
 import { useAppStore } from '@/store/useAppStore'
-import { Heart } from 'lucide-react'
+
 import { toast } from 'sonner'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -93,7 +93,7 @@ export function ComponentGrid() {
                       }
                     }}
                   >
-                    <Heart className={`w-4 h-4 ${fav ? 'fill-accent text-accent' : 'text-zinc-400'}`} />
+                    <i className={`${"fi fi-rr-heart "} `w-4 h-4 ${fav ? 'fill-accent text-accent' : 'text-zinc-400'`} `} ></i>
                   </button>
                   <CardContent className="p-0 flex-1 flex flex-col">
                     <div className="h-48 bg-zinc-800/60 p-4 m-2 rounded-xl flex items-center justify-center relative overflow-hidden">

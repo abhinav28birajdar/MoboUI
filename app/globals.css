@@ -4,6 +4,26 @@
 
 @layer base {
   :root {
+    --color-bg-dark: #ffffff;
+    --color-bg-surface: #f4f4f5;
+    --color-bg-elevated: #e4e4e7;
+    --color-border: #e4e4e7;
+    --color-border-subtle: #d4d4d8;
+    --color-text-primary: #09090b;
+    --color-text-secondary: #3f3f46;
+    --color-text-muted: #71717a;
+    --color-accent: #c026d3;
+    --color-accent-glow: #a21caf;
+    --color-accent-subtle: #fdf4ff;
+    --color-flutter: #0284c7;
+    --color-expo: #000000;
+    --color-rn: #0ea5e9;
+    --color-success: #16a34a;
+    --color-warning: #d97706;
+    --color-error: #dc2626;
+  }
+
+  .dark {
     --color-bg-dark: #09090b;
     --color-bg-surface: #111113;
     --color-bg-elevated: #1c1c1f;
@@ -24,7 +44,7 @@
   }
 
   body {
-    @apply bg-[#09090B] text-[#FAFAFA] antialiased selection:bg-fuchsia-600/30;
+    @apply bg-[var(--color-bg-dark)] text-[var(--color-text-primary)] antialiased selection:bg-fuchsia-600/30 transition-colors duration-300;
   }
 }
 

@@ -2,7 +2,7 @@
 import React from 'react'
 import { CodeBlock } from '../ui/CodeBlock'
 import { Button } from '../ui/Button'
-import { ExternalLink } from 'lucide-react'
+
 
 export function FlutterEditor({ code }: { code: string }) {
   const handleOpenDartPad = () => {
@@ -14,7 +14,7 @@ export function FlutterEditor({ code }: { code: string }) {
     <div className="w-full h-full flex flex-col bg-zinc-950 rounded-2xl border border-zinc-800 overflow-hidden">
       <div className="p-4 border-b border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
         <span className="text-sm font-medium text-zinc-300">Flutter requires DartPad or local environment to run.</span>
-        <Button onClick={handleOpenDartPad} size="sm" rightIcon={<ExternalLink className="w-3 h-3" />}>
+        <Button onClick={handleOpenDartPad} size="sm" rightIcon={<i className="fi fi-rr-arrow-up-right w-3 h-3"  ></i>}>
           Open in DartPad
         </Button>
       </div>

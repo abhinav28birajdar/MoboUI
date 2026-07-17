@@ -1,7 +1,7 @@
 import React from 'react'
 import { contributors } from '@/data/contributors'
 import { Card, CardContent } from '../ui/Card'
-import { Github } from 'lucide-react'
+
 
 export function ContributorWall() {
   return (
@@ -24,7 +24,7 @@ export function ContributorWall() {
                   <p className="text-xs text-zinc-500">{c.role}</p>
                 </div>
                 <div className="text-right flex flex-col items-end">
-                  <a href={c.githubUrl} className="text-zinc-500 hover:text-white mb-1"><Github className="w-4 h-4"/></a>
+                  <a href={c.githubUrl} className="text-zinc-500 hover:text-white mb-1"><i className="fi fi-brands-github w-4 h-4" ></i></a>
                   <span className="text-[10px] font-bold bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded-full">{c.contributions}</span>
                 </div>
               </CardContent>

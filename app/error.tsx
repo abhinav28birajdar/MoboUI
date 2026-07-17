@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
-import { RotateCcw } from 'lucide-react'
+
 
 export default function Error({
   error,
@@ -25,7 +25,7 @@ export default function Error({
       <p className="text-zinc-400 mb-8 max-w-md">
         An unexpected error occurred. We've been notified and are looking into it.
       </p>
-      <Button onClick={() => reset()} leftIcon={<RotateCcw className="w-4 h-4" />}>
+      <Button onClick={() => reset()} leftIcon={<i className="fi fi-rr-refresh w-4 h-4"  ></i>}>
         Try again
       </Button>
     </div>

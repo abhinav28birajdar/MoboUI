@@ -4,7 +4,7 @@ import { BlogPost } from '@/types'
 import { Card, CardContent } from '../ui/Card'
 import { Badge } from '../ui/Badge'
 import { formatDate } from '@/lib/utils'
-import { ArrowRight } from 'lucide-react'
+
 
 export function BlogPostCard({ post, featured = false }: { post: BlogPost, featured?: boolean }) {
   if (featured) {
@@ -34,7 +34,7 @@ export function BlogPostCard({ post, featured = false }: { post: BlogPost, featu
                   </div>
                 </div>
                 <div className="hidden md:flex text-accent group-hover:translate-x-2 transition-transform">
-                  <ArrowRight className="w-5 h-5" />
+                  <i className="fi fi-rr-arrow-right w-5 h-5"  ></i>
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import Link from 'next/link'
-import { ArrowRight, Terminal } from 'lucide-react'
+
 import { Button } from '../ui/Button'
 import { Badge } from '../ui/Badge'
 import { FrameworkBadge } from '../ui/FrameworkBadge'
@@ -57,12 +57,12 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <Link href="/components">
-            <Button size="lg" className="w-full sm:w-auto" rightIcon={<ArrowRight className="w-4 h-4" />}>
+            <Button size="lg" className="w-full sm:w-auto" rightIcon={<i className="fi fi-rr-arrow-right w-4 h-4"  ></i>}>
               Browse Components
             </Button>
           </Link>
           <Link href="/playground">
-            <Button variant="secondary" size="lg" className="w-full sm:w-auto" leftIcon={<Terminal className="w-4 h-4" />}>
+            <Button variant="secondary" size="lg" className="w-full sm:w-auto" leftIcon={<i className="fi fi-rr-terminal w-4 h-4"  ></i>}>
               Open Playground
             </Button>
           </Link>

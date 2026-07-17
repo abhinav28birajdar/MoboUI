@@ -30,7 +30,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound()
 
   return (
-    <div className="bg-zinc-950 min-h-screen pb-24">
+    <div className="min-h-screen pb-24">
       {/* Header */}
       <div className="pt-24 pb-12 border-b border-zinc-900 bg-zinc-900/30">
         <div className="mx-auto max-w-3xl px-6 text-center">
@@ -47,7 +47,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               {post.author.name[0]}
             </div>
             <div className="text-left">
-              <p className="font-medium text-white">{post.author.name}</p>
+              <p className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-purple-600 text-lg">{post.author.name}</p>
               <p className="text-sm text-zinc-500">{post.author.role}</p>
             </div>
             <div className="w-px h-8 bg-zinc-800 mx-2" />

@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '../ui/Button'
-import { ArrowRight, Github } from 'lucide-react'
+
 
 export function CTASection() {
   return (
@@ -12,12 +12,12 @@ export function CTASection() {
         <p className="text-xl text-zinc-400 mb-10 max-w-2xl mx-auto">Free, open source, and ready for production. Stop writing boilerplate and start shipping.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/components">
-            <Button size="lg" className="w-full sm:w-auto" rightIcon={<ArrowRight className="w-4 h-4"/>}>
+            <Button size="lg" className="w-full sm:w-auto" rightIcon={<i className="fi fi-rr-arrow-right w-4 h-4" ></i>}>
               Browse Components
             </Button>
           </Link>
           <a href="https://github.com" target="_blank" rel="noreferrer">
-            <Button variant="outline" size="lg" className="w-full sm:w-auto" leftIcon={<Github className="w-4 h-4"/>}>
+            <Button variant="outline" size="lg" className="w-full sm:w-auto" leftIcon={<i className="fi fi-brands-github w-4 h-4" ></i>}>
               View on GitHub
             </Button>
           </a>

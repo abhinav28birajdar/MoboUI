@@ -1,5 +1,5 @@
 import React from 'react'
-import { Check } from 'lucide-react'
+
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card'
 import { SectionLabel } from '../ui/SectionLabel'
 
@@ -53,7 +53,7 @@ export function FrameworkSection() {
                 <ul className="space-y-3">
                   {fw.features.map(feat => (
                     <li key={feat} className="flex items-center gap-3 text-sm text-zinc-400">
-                      <Check className="w-4 h-4 text-success" /> {feat}
+                      <i className="fi fi-rr-check w-4 h-4 text-success"  ></i> {feat}
                     </li>
                   ))}
                 </ul>

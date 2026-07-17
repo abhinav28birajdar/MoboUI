@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Card, CardContent } from '../ui/Card'
 import { SectionLabel } from '../ui/SectionLabel'
 import { Button } from '../ui/Button'
-import { Github } from 'lucide-react'
+
 
 export function CommunityTeaser() {
   return (
@@ -22,7 +22,7 @@ export function CommunityTeaser() {
           
           {/* Cell 4 */}
           <Card className="bg-zinc-900 md:col-span-1 border-zinc-800 p-8 flex flex-col justify-center items-center text-center">
-            <Github className="w-12 h-12 text-white mb-4" />
+            <i className="fi fi-brands-github w-12 h-12 text-white mb-4"  ></i>
             <h3 className="text-2xl font-bold text-white mb-2">Open Source</h3>
             <p className="text-zinc-400 mb-6">Proudly open source and community driven.</p>
             <div className="flex gap-6">

@@ -4,7 +4,7 @@ import { communityProjects } from '@/data/community-projects'
 import { Card, CardContent } from '../ui/Card'
 import { FrameworkBadge } from '../ui/FrameworkBadge'
 import { Badge } from '../ui/Badge'
-import { Heart, ArrowRight } from 'lucide-react'
+
 
 export function ShowcaseGrid() {
   const [filter, setFilter] = useState('all')
@@ -54,7 +54,7 @@ export function ShowcaseGrid() {
                       ))}
                     </div>
                     <div className="flex items-center gap-1 text-zinc-500 text-sm font-medium">
-                      <Heart className="w-4 h-4 hover:fill-accent hover:text-accent transition-colors" /> {project.likes}
+                      <i className="fi fi-rr-heart w-4 h-4 hover:fill-accent hover:text-accent transition-colors"  ></i> {project.likes}
                     </div>
                   </div>
                 </div>
@@ -65,7 +65,7 @@ export function ShowcaseGrid() {
         
         <div className="mt-12 text-center">
            <button className="text-accent hover:text-accent-glow font-medium flex items-center gap-2 mx-auto">
-             Load More Projects <ArrowRight className="w-4 h-4" />
+             Load More Projects <i className="fi fi-rr-arrow-right w-4 h-4"  ></i>
            </button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+
 import { SectionLabel } from '../ui/SectionLabel'
 import { Button } from '../ui/Button'
 import { components } from '@/data/components'
@@ -58,7 +58,7 @@ export function FeaturedComponents() {
 
         <div className="text-center">
           <Link href="/components">
-            <Button variant="outline" size="lg" rightIcon={<ArrowRight className="w-4 h-4"/>}>
+            <Button variant="outline" size="lg" rightIcon={<i className="fi fi-rr-arrow-right w-4 h-4" ></i>}>
               View all {components.length} components
             </Button>
           </Link>

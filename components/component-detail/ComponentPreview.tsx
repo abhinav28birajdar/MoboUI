@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { EmulatorFrame } from '../ui/EmulatorFrame'
 import { Button } from '../ui/Button'
 import { ComponentDefinition } from '@/types'
-import { Monitor, Smartphone, Moon, Sun } from 'lucide-react'
+
 
 export function ComponentPreview({ component }: { component: ComponentDefinition }) {
   const [device, setDevice] = useState<'iphone' | 'android'>('iphone')
@@ -14,18 +14,18 @@ export function ComponentPreview({ component }: { component: ComponentDefinition
       <div className="flex justify-end gap-2 mb-8">
         <div className="flex bg-zinc-900 rounded-lg p-1 border border-zinc-800">
           <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${device === 'iphone' ? 'bg-zinc-800' : ''}`} onClick={() => setDevice('iphone')}>
-            <Smartphone className="w-4 h-4" />
+            <i className="fi fi-rr-smartphone w-4 h-4"  ></i>
           </Button>
           <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${device === 'android' ? 'bg-zinc-800' : ''}`} onClick={() => setDevice('android')}>
-            <Monitor className="w-4 h-4" />
+            <i className="fi fi-rr-computer w-4 h-4"  ></i>
           </Button>
         </div>
         <div className="flex bg-zinc-900 rounded-lg p-1 border border-zinc-800">
           <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${theme === 'dark' ? 'bg-zinc-800' : ''}`} onClick={() => setTheme('dark')}>
-            <Moon className="w-4 h-4" />
+            <i className="fi fi-rr-moon w-4 h-4"  ></i>
           </Button>
           <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${theme === 'light' ? 'bg-zinc-800' : ''}`} onClick={() => setTheme('light')}>
-            <Sun className="w-4 h-4" />
+            <i className="fi fi-rr-sun w-4 h-4"  ></i>
           </Button>
         </div>
       </div>

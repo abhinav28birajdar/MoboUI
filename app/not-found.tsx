@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import { ArrowLeft } from 'lucide-react'
+
 
 export default function NotFound() {
   return (
@@ -11,7 +11,7 @@ export default function NotFound() {
         Sorry, we couldn't find the page you're looking for. It might have been moved or doesn't exist.
       </p>
       <Link href="/">
-        <Button size="lg" leftIcon={<ArrowLeft className="w-4 h-4" />}>
+        <Button size="lg" leftIcon={<i className="fi fi-rr-arrow-left w-4 h-4"  ></i>}>
           Back to Home
         </Button>
       </Link>

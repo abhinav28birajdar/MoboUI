@@ -9,7 +9,7 @@ import { RelatedComponents } from '@/components/component-detail/RelatedComponen
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { FrameworkBadge } from '@/components/ui/FrameworkBadge'
-import { Terminal } from 'lucide-react'
+
 import { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -62,7 +62,7 @@ export default async function ComponentDetailPage({ params }: { params: Promise<
         </div>
         <div className="flex flex-col sm:flex-row gap-3">
           <Link href="/playground">
-            <Button variant="outline" leftIcon={<Terminal className="w-4 h-4" />}>
+            <Button variant="outline" leftIcon={<i className="fi fi-rr-terminal w-4 h-4"  ></i>}>
               Open in Playground
             </Button>
           </Link>
@@ -95,7 +95,7 @@ export default async function ComponentDetailPage({ params }: { params: Promise<
       {/* Floating Action Button for mobile */}
       <div className="fixed bottom-6 right-6 md:hidden z-50">
         <Link href="/playground">
-          <Button shape="pill" className="shadow-lg" leftIcon={<Terminal className="w-4 h-4"/>}>
+          <Button shape="pill" className="shadow-lg" leftIcon={<i className="fi fi-rr-terminal w-4 h-4" ></i>}>
             Playground
           </Button>
         </Link>

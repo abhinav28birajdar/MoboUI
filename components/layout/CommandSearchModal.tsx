@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Fuse from 'fuse.js'
-import { Search, X, ChevronRight } from 'lucide-react'
+
 import { useAppStore } from '@/store/useAppStore'
 import { components } from '@/data/components'
 import { ComponentDefinition } from '@/types'
@@ -93,7 +93,7 @@ export function CommandSearchModal() {
       {/* Modal */}
       <div className="relative w-full max-w-2xl bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] animate-in fade-in slide-in-from-top-4 duration-200">
         <div className="flex items-center px-4 py-4 border-b border-zinc-800 gap-3">
-          <Search className="w-5 h-5 text-zinc-400" />
+          <i className="fi fi-rr-search w-5 h-5 text-zinc-400"  ></i>
           <input
             ref={inputRef}
             type="text"
@@ -103,7 +103,7 @@ export function CommandSearchModal() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button onClick={() => setSearchOpen(false)} className="text-zinc-500 hover:text-white p-1">
-            <X className="w-5 h-5" />
+            <i className="fi fi-rr-cross w-5 h-5"  ></i>
           </button>
         </div>
 
@@ -129,7 +129,7 @@ export function CommandSearchModal() {
                           ))}
                         </div>
                       </div>
-                      <ChevronRight className={`w-4 h-4 ${idx === selectedIndex ? 'text-accent' : 'text-zinc-600'}`} />
+                      <i className={`${"fi fi-rr-angle-right "} `w-4 h-4 ${idx === selectedIndex ? 'text-accent' : 'text-zinc-600'`} `} ></i>
                     </button>
                   </li>
                 ))}
@@ -137,7 +137,7 @@ export function CommandSearchModal() {
             </div>
           ) : searchQuery.trim() !== '' ? (
             <div className="text-center py-12 px-4">
-              <Search className="w-12 h-12 text-zinc-800 mx-auto mb-4" />
+              <i className="fi fi-rr-search w-12 h-12 text-zinc-800 mx-auto mb-4"  ></i>
               <p className="text-zinc-300 font-medium">No results found.</p>
               <p className="text-zinc-500 text-sm mt-1">We couldn't find anything matching "{searchQuery}"</p>
             </div>
@@ -155,7 +155,7 @@ export function CommandSearchModal() {
                         onClick={() => handleSelect(comp)}
                       >
                         <div className="flex items-center gap-3">
-                          <Search className="w-4 h-4" />
+                          <i className="fi fi-rr-search w-4 h-4"  ></i>
                           <span>{comp.name}</span>
                         </div>
                       </button>

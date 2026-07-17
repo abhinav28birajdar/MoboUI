@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Search } from 'lucide-react'
+
 import { useAppStore } from '@/store/useAppStore'
 import { Framework } from '@/types'
 
@@ -10,7 +10,7 @@ export function FilterBar() {
   return (
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-4 border-b border-zinc-800">
       <div className="relative w-full sm:w-64">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+        <i className="fi fi-rr-search absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500"  ></i>
         <input 
           type="text" 
           placeholder="Filter..." 

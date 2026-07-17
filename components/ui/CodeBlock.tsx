@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { Check, Copy } from 'lucide-react'
+
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 
@@ -32,7 +32,7 @@ export function CodeBlock({ code, language = 'tsx', className, showLineNumbers =
             className="p-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg transition-colors border border-zinc-700"
             aria-label="Copy code"
           >
-            {copied ? <Check className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
+            {copied ? <i className="fi fi-rr-check w-4 h-4 text-success"  ></i> : <i className="fi fi-rr-copy w-4 h-4"  ></i>}
           </button>
         </CopyToClipboard>
       </div>

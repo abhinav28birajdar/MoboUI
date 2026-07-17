@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+
 import { Button } from '../ui/Button'
 import { SectionLabel } from '../ui/SectionLabel'
 import { EmulatorFrame } from '../ui/EmulatorFrame'
@@ -19,7 +19,7 @@ export function PlaygroundPreview() {
               Don't want to spin up a simulator? Use our integrated live playground powered by Expo Snack and DartPad to test components instantly.
             </p>
             <Link href="/playground">
-              <Button size="lg" rightIcon={<ArrowRight className="w-4 h-4"/>}>
+              <Button size="lg" rightIcon={<i className="fi fi-rr-arrow-right w-4 h-4" ></i>}>
                 Open Full Playground
               </Button>
             </Link>

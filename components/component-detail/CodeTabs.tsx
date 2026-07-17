@@ -4,7 +4,7 @@ import { ComponentDefinition } from '@/types'
 import { CodeBlock } from '../ui/CodeBlock'
 import { FrameworkBadge } from '../ui/FrameworkBadge'
 import { Button } from '../ui/Button'
-import { ExternalLink } from 'lucide-react'
+
 
 export function CodeTabs({ component }: { component: ComponentDefinition }) {
   const [activeTab, setActiveTab] = useState<string>(component.frameworks[0] || 'flutter')
@@ -30,14 +30,14 @@ export function CodeTabs({ component }: { component: ComponentDefinition }) {
         {activeTab === 'expo' && (
           <Button variant="ghost" size="sm" className="hidden sm:flex text-zinc-400 hover:text-white" asChild>
              <a href={`https://snack.expo.dev/?code=${encodeURIComponent(component.code.expo || '')}`} target="_blank" rel="noreferrer">
-               Open in Expo Snack <ExternalLink className="ml-2 w-3 h-3" />
+               Open in Expo Snack <i className="fi fi-rr-arrow-up-right ml-2 w-3 h-3"  ></i>
              </a>
           </Button>
         )}
         {activeTab === 'flutter' && (
           <Button variant="ghost" size="sm" className="hidden sm:flex text-zinc-400 hover:text-white" asChild>
              <a href={`https://dartpad.dev/?code=${encodeURIComponent(component.code.flutter || '')}`} target="_blank" rel="noreferrer">
-               Open in DartPad <ExternalLink className="ml-2 w-3 h-3" />
+               Open in DartPad <i className="fi fi-rr-arrow-up-right ml-2 w-3 h-3"  ></i>
              </a>
           </Button>
         )}

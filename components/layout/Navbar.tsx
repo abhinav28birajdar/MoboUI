@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Search, Github, Menu, X, Bookmark } from 'lucide-react'
+
 import { cn } from '@/lib/utils'
 import { ThemeToggle } from '../ui/ThemeToggle'
 import { useAppStore } from '@/store/useAppStore'
@@ -66,7 +66,7 @@ export function Navbar() {
             onClick={() => setSearchOpen(true)}
             className="hidden sm:flex h-9 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/50 px-3 text-sm text-zinc-400 transition-colors hover:border-zinc-700 hover:text-zinc-300 w-48 xl:w-64"
           >
-            <Search className="h-4 w-4" />
+            <i className="fi fi-rr-search h-4 w-4"  ></i>
             <span className="flex-1 text-left">Search...</span>
             <kbd className="hidden rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] font-medium text-zinc-400 sm:inline-block">⌘K</kbd>
           </button>
@@ -74,7 +74,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-2">
             <Link href="/components?filter=favorites" aria-label="Favorites">
               <Button variant="ghost" size="icon" className="relative">
-                <Bookmark className="h-5 w-5 text-zinc-400" />
+                <i className="fi fi-rr-bookmark h-5 w-5 text-zinc-400"  ></i>
                 {favorites.length > 0 && (
                   <span className="absolute top-1.5 right-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-accent text-[8px] font-bold text-white">
                     {favorites.length}
@@ -85,7 +85,7 @@ export function Navbar() {
             <ThemeToggle />
             <a href="https://github.com/your-repo" target="_blank" rel="noreferrer" aria-label="GitHub">
               <Button variant="ghost" size="icon">
-                <Github className="h-5 w-5 text-zinc-400" />
+                <i className="fi fi-brands-github h-5 w-5 text-zinc-400"  ></i>
               </Button>
             </a>
           </div>
@@ -95,7 +95,7 @@ export function Navbar() {
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
           >
-            <Menu className="h-6 w-6" />
+            <i className="fi fi-rr-menu-burger h-6 w-6"  ></i>
           </button>
         </div>
       </nav>
@@ -108,7 +108,7 @@ export function Navbar() {
             <div className="flex items-center justify-between mb-8">
               <span className="text-lg font-bold text-white">Menu</span>
               <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-zinc-400 hover:text-white">
-                <X className="h-6 w-6" />
+                <i className="fi fi-rr-cross h-6 w-6"  ></i>
               </button>
             </div>
             
@@ -130,7 +130,7 @@ export function Navbar() {
             <div className="mt-auto flex items-center justify-between pt-6 border-t border-zinc-800">
               <ThemeToggle />
               <Button variant="outline" className="flex-1 ml-4" onClick={() => setSearchOpen(true)}>
-                <Search className="mr-2 h-4 w-4" /> Search
+                <i className="fi fi-rr-search mr-2 h-4 w-4"  ></i> Search
               </Button>
             </div>
           </div>

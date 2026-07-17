@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardContent } from '@/components/ui/Card'
-import { Github, Twitter, Linkedin } from 'lucide-react'
+
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -75,9 +75,9 @@ export default function AboutPage() {
                 <h3 className="font-bold text-white mb-1">{member.name}</h3>
                 <p className="text-sm text-zinc-400 mb-4">{member.role}</p>
                 <div className="flex gap-3">
-                  <a href="#" className="text-zinc-500 hover:text-white"><Twitter className="w-4 h-4"/></a>
-                  <a href="#" className="text-zinc-500 hover:text-white"><Github className="w-4 h-4"/></a>
-                  <a href="#" className="text-zinc-500 hover:text-white"><Linkedin className="w-4 h-4"/></a>
+                  <a href="#" className="text-zinc-500 hover:text-white"><i className="fi fi-brands-twitter-alt w-4 h-4" ></i></a>
+                  <a href="#" className="text-zinc-500 hover:text-white"><i className="fi fi-brands-github w-4 h-4" ></i></a>
+                  <a href="#" className="text-zinc-500 hover:text-white"><i className="fi fi-brands-linkedin w-4 h-4" ></i></a>
                 </div>
               </Card>
             ))}
