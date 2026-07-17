@@ -93,7 +93,7 @@ export function ComponentGrid() {
                       }
                     }}
                   >
-                    <i className={`${"fi fi-rr-heart "} `w-4 h-4 ${fav ? 'fill-accent text-accent' : 'text-zinc-400'`} `} ></i>
+                    <i className={`fi fi-rr-heart w-4 h-4 ${fav ? 'fill-accent text-accent' : 'text-zinc-400'}`} ></i>
                   </button>
                   <CardContent className="p-0 flex-1 flex flex-col">
                     <div className="h-48 bg-zinc-800/60 p-4 m-2 rounded-xl flex items-center justify-center relative overflow-hidden">

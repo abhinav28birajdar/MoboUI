@@ -129,7 +129,7 @@ export function CommandSearchModal() {
                           ))}
                         </div>
                       </div>
-                      <i className={`${"fi fi-rr-angle-right "} `w-4 h-4 ${idx === selectedIndex ? 'text-accent' : 'text-zinc-600'`} `} ></i>
+                      <i className={`fi fi-rr-angle-right w-4 h-4 ${idx === selectedIndex ? 'text-accent' : 'text-zinc-600'}`} ></i>
                     </button>
                   </li>
                 ))}
