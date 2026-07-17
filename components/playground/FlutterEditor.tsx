@@ -11,9 +11,9 @@ export function FlutterEditor({ code }: { code: string }) {
   }
 
   return (
-    <div className="w-full h-full flex flex-col bg-zinc-950 rounded-2xl border border-zinc-800 overflow-hidden">
-      <div className="p-4 border-b border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
-        <span className="text-sm font-medium text-zinc-300">Flutter requires DartPad or local environment to run.</span>
+    <div className="w-full h-full flex flex-col bg-white dark:bg-zinc-950 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+      <div className="p-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 flex justify-between items-center">
+        <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Flutter requires DartPad or local environment to run.</span>
         <Button onClick={handleOpenDartPad} size="sm" rightIcon={<i className="fi fi-rr-arrow-up-right w-3 h-3"  ></i>}>
           Open in DartPad
         </Button>

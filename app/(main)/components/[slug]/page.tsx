@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { components } from '@/data/components'
+import { components } from '../../../../data/components'
 import { ComponentPreview } from '@/components/component-detail/ComponentPreview'
 import { CodeTabs } from '@/components/component-detail/CodeTabs'
 import { PropsTable } from '@/components/component-detail/PropsTable'
@@ -36,25 +36,25 @@ export default async function ComponentDetailPage({ params }: { params: Promise<
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-12">
-      <div className="mb-8 flex items-center text-sm text-zinc-500 gap-2">
-        <Link href="/" className="hover:text-white transition-colors">Home</Link>
+      <div className="mb-8 flex items-center text-sm text-zinc-500 dark:text-zinc-400 gap-2">
+        <Link href="/" className="hover:text-zinc-900 dark:text-white transition-colors">Home</Link>
         <span>/</span>
-        <Link href="/components" className="hover:text-white transition-colors">Components</Link>
+        <Link href="/components" className="hover:text-zinc-900 dark:text-white transition-colors">Components</Link>
         <span>/</span>
-        <Link href={`/components?category=${component.category}`} className="capitalize hover:text-white transition-colors">{component.category}</Link>
+        <Link href={`/components?category=${component.category}`} className="capitalize hover:text-zinc-900 dark:text-white transition-colors">{component.category}</Link>
         <span>/</span>
-        <span className="text-zinc-300">{component.name}</span>
+        <span className="text-zinc-700 dark:text-zinc-300">{component.name}</span>
       </div>
 
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 mb-12">
         <div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{component.name}</h1>
-          <p className="text-lg text-zinc-400 mb-6 max-w-2xl">{component.description}</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-zinc-900 dark:text-white mb-4">{component.name}</h1>
+          <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-6 max-w-2xl">{component.description}</p>
           <div className="flex items-center gap-3">
             <Badge className="uppercase tracking-wider">{component.category}</Badge>
             {component.isNew && <Badge variant="new">New</Badge>}
             {component.isPopular && <Badge variant="popular">Popular</Badge>}
-            <div className="h-4 w-px bg-zinc-800 mx-2" />
+            <div className="h-4 w-px bg-zinc-200 dark:bg-zinc-800 mx-2" />
             <div className="flex gap-2">
               {component.frameworks.map(fw => <FrameworkBadge key={fw} framework={fw} />)}
             </div>
@@ -75,19 +75,19 @@ export default async function ComponentDetailPage({ params }: { params: Promise<
         </section>
 
         <section>
-          <h3 className="text-2xl font-bold text-white mb-6">Implementation</h3>
+          <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-6">Implementation</h3>
           <CodeTabs component={component} />
         </section>
 
         {component.props && component.props.length > 0 && (
           <section>
-            <h3 className="text-2xl font-bold text-white mb-6">Props</h3>
+            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-6">Props</h3>
             <PropsTable props={component.props} />
           </section>
         )}
 
         <section>
-          <h3 className="text-2xl font-bold text-white mb-6">Related Components</h3>
+          <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-6">Related Components</h3>
           <RelatedComponents slugs={component.relatedSlugs} />
         </section>
       </div>

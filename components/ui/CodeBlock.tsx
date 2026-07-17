@@ -25,11 +25,11 @@ export function CodeBlock({ code, language = 'tsx', className, showLineNumbers =
   }
 
   return (
-    <div className={cn("relative group rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950", className)}>
+    <div className={cn("relative group rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950", className)}>
       <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
         <CopyToClipboard text={code} onCopy={handleCopy}>
           <button
-            className="p-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg transition-colors border border-zinc-700"
+            className="p-2 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg transition-colors border border-zinc-700"
             aria-label="Copy code"
           >
             {copied ? <i className="fi fi-rr-check w-4 h-4 text-success"  ></i> : <i className="fi fi-rr-copy w-4 h-4"  ></i>}

@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { SectionLabel } from '../ui/SectionLabel'
 import { Button } from '../ui/Button'
-import { components } from '@/data/components'
+import { components } from '../../data/components'
 import { FrameworkBadge } from '../ui/FrameworkBadge'
 import { Badge } from '../ui/Badge'
 import { Card, CardContent } from '../ui/Card'
@@ -14,12 +14,12 @@ export function FeaturedComponents() {
   const featured = components.filter(c => c.isPopular).slice(0, 6)
 
   return (
-    <section className="py-24 bg-zinc-950">
+    <section className="py-24 bg-white dark:bg-zinc-950">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center mb-16">
           <SectionLabel className="mb-4 inline-block">COMPONENTS</SectionLabel>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Everything you need to ship</h2>
-          <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-zinc-900 dark:text-white mb-6">Everything you need to ship</h2>
+          <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
             Professionally crafted, accessible, and endlessly customisable. Drop any component into your app and it works.
           </p>
         </div>
@@ -36,7 +36,7 @@ export function FeaturedComponents() {
               <Link href={`/components/${comp.slug}`}>
                 <Card className="h-full flex flex-col group cursor-pointer relative overflow-hidden">
                   <CardContent className="p-0 flex-1 flex flex-col">
-                    <div className="h-48 bg-zinc-800/60 p-4 m-2 rounded-xl flex items-center justify-center relative overflow-hidden">
+                    <div className="h-48 bg-zinc-200 dark:bg-zinc-800/60 p-4 m-2 rounded-xl flex items-center justify-center relative overflow-hidden">
                        <span className="text-zinc-600 font-mono text-sm">{comp.name} Preview</span>
                     </div>
                     <div className="p-6 pt-4 flex-1 flex flex-col">
@@ -44,7 +44,7 @@ export function FeaturedComponents() {
                         <Badge variant="outline" className="text-[10px]">{comp.category}</Badge>
                         {comp.isNew && <Badge variant="new" className="text-[10px]">New</Badge>}
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-2 group-hover:text-accent transition-colors">{comp.name}</h3>
+                      <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors">{comp.name}</h3>
                       <div className="mt-auto flex items-center gap-2">
                         {comp.frameworks.map(fw => <FrameworkBadge key={fw} framework={fw} showLabel={false} />)}
                       </div>

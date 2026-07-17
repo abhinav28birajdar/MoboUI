@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Fuse from 'fuse.js'
 
 import { useAppStore } from '@/store/useAppStore'
-import { components } from '@/data/components'
+import { components } from '../../data/components'
 import { ComponentDefinition } from '@/types'
 import { FrameworkBadge } from '../ui/FrameworkBadge'
 
@@ -91,18 +91,18 @@ export function CommandSearchModal() {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] animate-in fade-in slide-in-from-top-4 duration-200">
-        <div className="flex items-center px-4 py-4 border-b border-zinc-800 gap-3">
-          <i className="fi fi-rr-search w-5 h-5 text-zinc-400"  ></i>
+      <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="flex items-center px-4 py-4 border-b border-zinc-200 dark:border-zinc-800 gap-3">
+          <i className="fi fi-rr-search w-5 h-5 text-zinc-600 dark:text-zinc-400"  ></i>
           <input
             ref={inputRef}
             type="text"
-            className="flex-1 bg-transparent text-white placeholder-zinc-500 outline-none"
+            className="flex-1 bg-transparent text-zinc-900 dark:text-white placeholder-zinc-500 outline-none"
             placeholder="Search components..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button onClick={() => setSearchOpen(false)} className="text-zinc-500 hover:text-white p-1">
+          <button onClick={() => setSearchOpen(false)} className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:text-white p-1">
             <i className="fi fi-rr-cross w-5 h-5"  ></i>
           </button>
         </div>
@@ -110,13 +110,13 @@ export function CommandSearchModal() {
         <div className="overflow-y-auto p-4 flex-1 space-y-4">
           {results.length > 0 ? (
             <div>
-              <div className="text-xs font-semibold text-zinc-500 mb-2 px-2">Components</div>
+              <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2 px-2">Components</div>
               <ul className="space-y-1">
                 {results.map((comp, idx) => (
                   <li key={comp.slug}>
                     <button
                       className={`w-full flex items-center justify-between px-3 py-3 rounded-xl transition-colors ${
-                        idx === selectedIndex ? 'bg-zinc-800/80 text-white' : 'text-zinc-300 hover:bg-zinc-900'
+                        idx === selectedIndex ? 'bg-zinc-200 dark:bg-zinc-800/80 text-zinc-900 dark:text-white' : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:bg-zinc-900'
                       }`}
                       onClick={() => handleSelect(comp)}
                       onMouseEnter={() => setSelectedIndex(idx)}
@@ -138,12 +138,12 @@ export function CommandSearchModal() {
           ) : searchQuery.trim() !== '' ? (
             <div className="text-center py-12 px-4">
               <i className="fi fi-rr-search w-12 h-12 text-zinc-800 mx-auto mb-4"  ></i>
-              <p className="text-zinc-300 font-medium">No results found.</p>
-              <p className="text-zinc-500 text-sm mt-1">We couldn't find anything matching "{searchQuery}"</p>
+              <p className="text-zinc-700 dark:text-zinc-300 font-medium">No results found.</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-1">We couldn't find anything matching "{searchQuery}"</p>
             </div>
           ) : recentSearches.length > 0 ? (
             <div>
-              <div className="text-xs font-semibold text-zinc-500 mb-2 px-2">Recent Searches</div>
+              <div className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2 px-2">Recent Searches</div>
               <ul className="space-y-1">
                 {recentSearches.map((search, idx) => {
                   const comp = components.find(c => c.name === search)
@@ -151,7 +151,7 @@ export function CommandSearchModal() {
                   return (
                     <li key={idx}>
                       <button
-                        className="w-full flex items-center justify-between px-3 py-3 rounded-xl text-zinc-400 hover:bg-zinc-900 hover:text-white transition-colors"
+                        className="w-full flex items-center justify-between px-3 py-3 rounded-xl text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:bg-zinc-900 hover:text-zinc-900 dark:text-white transition-colors"
                         onClick={() => handleSelect(comp)}
                       >
                         <div className="flex items-center gap-3">
@@ -166,7 +166,7 @@ export function CommandSearchModal() {
             </div>
           ) : (
             <div className="text-center py-8">
-              <p className="text-zinc-500 text-sm">Type to search across 50+ components.</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm">Type to search across 50+ components.</p>
             </div>
           )}
         </div>

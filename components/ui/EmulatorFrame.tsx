@@ -12,7 +12,7 @@ export function EmulatorFrame({ children, device = 'iphone', theme = 'dark', cla
   return (
     <div
       className={cn(
-        "relative mx-auto border-zinc-800 bg-zinc-950 shadow-2xl overflow-hidden",
+        "relative mx-auto border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl overflow-hidden",
         isIphone ? "w-[320px] h-[650px] rounded-[48px] border-[8px]" : "w-[320px] h-[650px] rounded-[24px] border-[6px]",
         className
       )}

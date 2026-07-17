@@ -8,18 +8,15 @@ export function CommunityHero() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-zinc-800/40 via-bg-dark to-bg-dark -z-10" />
       <div className="mx-auto max-w-4xl px-6">
         <SectionLabel className="mb-4 inline-block">COMMUNITY</SectionLabel>
-        <h1 className="text-5xl md:text-7xl font-black text-white mb-6">Built by developers,<br/>for developers.</h1>
-        <p className="text-lg text-zinc-400 mb-10 max-w-2xl mx-auto">
+        <h1 className="text-5xl md:text-7xl font-black text-zinc-900 dark:text-white mb-6">Built by developers,<br/>for developers.</h1>
+        <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-10 max-w-2xl mx-auto">
           Share your projects, discover inspiration, and connect with mobile UI enthusiasts worldwide.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" className="w-full sm:w-auto bg-[#5865F2] hover:bg-[#4752C4]">
-            Join Discord
-          </Button>
-          <Button variant="outline" size="lg" className="w-full sm:w-auto">
+        <a href="https://github.com/abhinav28birajdar/MoboUI" target="_blank" rel="noopener noreferrer">
+          <Button size="lg" className="w-full sm:w-auto bg-zinc-900 dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 border-none">
             Submit Your Project
           </Button>
-        </div>
+        </a>
       </div>
     </section>
   )

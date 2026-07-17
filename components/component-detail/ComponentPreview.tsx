@@ -10,21 +10,21 @@ export function ComponentPreview({ component }: { component: ComponentDefinition
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
 
   return (
-    <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 md:p-12 flex flex-col">
+    <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 p-6 md:p-12 flex flex-col">
       <div className="flex justify-end gap-2 mb-8">
-        <div className="flex bg-zinc-900 rounded-lg p-1 border border-zinc-800">
-          <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${device === 'iphone' ? 'bg-zinc-800' : ''}`} onClick={() => setDevice('iphone')}>
+        <div className="flex bg-zinc-50 dark:bg-zinc-900 rounded-lg p-1 border border-zinc-200 dark:border-zinc-800">
+          <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${device === 'iphone' ? 'bg-zinc-200 dark:bg-zinc-800' : ''}`} onClick={() => setDevice('iphone')}>
             <i className="fi fi-rr-smartphone w-4 h-4"  ></i>
           </Button>
-          <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${device === 'android' ? 'bg-zinc-800' : ''}`} onClick={() => setDevice('android')}>
+          <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${device === 'android' ? 'bg-zinc-200 dark:bg-zinc-800' : ''}`} onClick={() => setDevice('android')}>
             <i className="fi fi-rr-computer w-4 h-4"  ></i>
           </Button>
         </div>
-        <div className="flex bg-zinc-900 rounded-lg p-1 border border-zinc-800">
-          <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${theme === 'dark' ? 'bg-zinc-800' : ''}`} onClick={() => setTheme('dark')}>
+        <div className="flex bg-zinc-50 dark:bg-zinc-900 rounded-lg p-1 border border-zinc-200 dark:border-zinc-800">
+          <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${theme === 'dark' ? 'bg-zinc-200 dark:bg-zinc-800' : ''}`} onClick={() => setTheme('dark')}>
             <i className="fi fi-rr-moon w-4 h-4"  ></i>
           </Button>
-          <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${theme === 'light' ? 'bg-zinc-800' : ''}`} onClick={() => setTheme('light')}>
+          <Button variant="ghost" size="sm" className={`h-8 w-8 p-0 rounded-md ${theme === 'light' ? 'bg-zinc-200 dark:bg-zinc-800' : ''}`} onClick={() => setTheme('light')}>
             <i className="fi fi-rr-sun w-4 h-4"  ></i>
           </Button>
         </div>
@@ -36,7 +36,7 @@ export function ComponentPreview({ component }: { component: ComponentDefinition
          
          <EmulatorFrame device={device} theme={theme} className="shadow-2xl">
            <div className="h-full w-full flex items-center justify-center flex-col">
-              <span className="text-sm font-medium text-zinc-500 mb-2">Live {component.name}</span>
+              <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-2">Live {component.name}</span>
               <div className="p-4 bg-accent/20 rounded-xl border border-accent/30 text-accent font-bold text-center">
                  Rendered Component
               </div>

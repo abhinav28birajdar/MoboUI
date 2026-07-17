@@ -33,7 +33,7 @@ export function HeroSection() {
         </motion.div>
 
         <motion.h1 
-          className="text-5xl md:text-7xl font-black tracking-tighter text-white mb-6 max-w-4xl"
+          className="text-5xl md:text-7xl font-black tracking-tighter text-zinc-900 dark:text-white mb-6 max-w-4xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
@@ -42,7 +42,7 @@ export function HeroSection() {
         </motion.h1>
 
         <motion.p 
-          className="text-lg md:text-xl text-zinc-400 max-w-2xl mb-10"
+          className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mb-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -87,7 +87,7 @@ export function HeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
       >
-        <div className="w-full h-48 bg-zinc-900 border border-zinc-800 rounded-2xl rotate-x-10 shadow-2xl flex items-center justify-center relative overflow-hidden">
+        <div className="w-full h-48 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl rotate-x-10 shadow-2xl flex items-center justify-center relative overflow-hidden">
            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent z-10" />
            <p className="text-zinc-600 font-mono z-0">Interactive components strip goes here</p>
         </div>

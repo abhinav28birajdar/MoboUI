@@ -26,12 +26,12 @@ export function FrameworkSection() {
   ]
 
   return (
-    <section className="py-24 bg-zinc-950 border-t border-zinc-900">
+    <section className="py-24 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center mb-16">
           <SectionLabel className="mb-4 inline-block">UNIVERSAL</SectionLabel>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Write once, use anywhere.</h2>
-          <p className="text-zinc-400 max-w-2xl mx-auto">Copy and paste code directly into your favorite mobile framework.</p>
+          <h2 className="text-3xl md:text-5xl font-bold text-zinc-900 dark:text-white mb-6">Write once, use anywhere.</h2>
+          <p className="text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">Copy and paste code directly into your favorite mobile framework.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -45,14 +45,14 @@ export function FrameworkSection() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="bg-zinc-950 rounded-lg p-4 mb-6 border border-zinc-800">
-                  <pre className="text-xs text-zinc-300 font-mono overflow-x-auto">
+                <div className="bg-white dark:bg-zinc-950 rounded-lg p-4 mb-6 border border-zinc-200 dark:border-zinc-800">
+                  <pre className="text-xs text-zinc-700 dark:text-zinc-300 font-mono overflow-x-auto">
                     <code>{fw.snippet}</code>
                   </pre>
                 </div>
                 <ul className="space-y-3">
                   {fw.features.map(feat => (
-                    <li key={feat} className="flex items-center gap-3 text-sm text-zinc-400">
+                    <li key={feat} className="flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400">
                       <i className="fi fi-rr-check w-4 h-4 text-success"  ></i> {feat}
                     </li>
                   ))}

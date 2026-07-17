@@ -6,7 +6,7 @@ import { DiscordBanner } from '@/components/community/DiscordBanner'
 
 export default function CommunityPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-950">
+    <div className="flex flex-col min-h-screen bg-white dark:bg-zinc-950">
       <CommunityHero />
       <ShowcaseGrid />
       <ContributorWall />

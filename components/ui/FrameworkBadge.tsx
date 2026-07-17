@@ -15,7 +15,7 @@ export function FrameworkBadge({ framework, className, showLabel = true }: { fra
   return (
     <div className={cn("flex items-center gap-1.5", className)}>
       <div className={cn("h-2.5 w-2.5 rounded-full", color)} />
-      {showLabel && <span className="text-xs font-medium text-zinc-400">{label}</span>}
+      {showLabel && <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">{label}</span>}
     </div>
   )
 }

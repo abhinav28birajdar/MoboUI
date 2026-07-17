@@ -23,9 +23,9 @@ export function ExpoSnackEmbed({ code, platform = 'web' }: { code: string, platf
   }, [code, platform])
 
   return (
-    <div className="w-full h-full relative rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800">
+    <div className="w-full h-full relative rounded-2xl overflow-hidden bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
       {loading && (
-        <div className="absolute inset-0 flex flex-col p-4 z-10 bg-zinc-950">
+        <div className="absolute inset-0 flex flex-col p-4 z-10 bg-white dark:bg-zinc-950">
           <Skeleton className="w-full h-12 mb-4" />
           <Skeleton className="w-full h-full flex-1" />
         </div>
