@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Fuse from 'fuse.js'
 
 import { useAppStore } from '@/store/useAppStore'
-import { components } from '../../data/components'
+import { components } from '@/data/components'
 import { ComponentDefinition } from '@/types'
 import { FrameworkBadge } from '../ui/FrameworkBadge'
 

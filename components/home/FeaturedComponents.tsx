@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { SectionLabel } from '../ui/SectionLabel'
 import { Button } from '../ui/Button'
-import { components } from '../../data/components'
+import { components } from '@/data/components'
 import { FrameworkBadge } from '../ui/FrameworkBadge'
 import { Badge } from '../ui/Badge'
 import { Card, CardContent } from '../ui/Card'

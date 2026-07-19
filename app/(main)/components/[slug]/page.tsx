@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { components } from '../../../../data/components'
+import { components } from '@/data/components'
 import { ComponentPreview } from '@/components/component-detail/ComponentPreview'
 import { CodeTabs } from '@/components/component-detail/CodeTabs'
 import { PropsTable } from '@/components/component-detail/PropsTable'

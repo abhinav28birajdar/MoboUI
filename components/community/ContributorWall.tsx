@@ -1,5 +1,5 @@
 import React from 'react'
-import { contributors } from '../../data/contributors'
+import { contributors } from '@/data/contributors'
 import { Card, CardContent } from '../ui/Card'
 
 

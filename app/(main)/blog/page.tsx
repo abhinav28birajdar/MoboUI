@@ -1,5 +1,5 @@
 import React from 'react'
-import { blogPosts } from '../../../data/blog-posts'
+import { blogPosts } from '@/data/blog-posts'
 import { BlogPostCard } from '@/components/blog/BlogPostCard'
 import { BlogGrid } from '@/components/blog/BlogGrid'
 import { Metadata } from 'next'

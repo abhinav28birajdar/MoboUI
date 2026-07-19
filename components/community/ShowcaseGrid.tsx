@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { communityProjects } from '../../data/community-projects'
+import { communityProjects } from '@/data/community-projects'
 import { Card, CardContent } from '../ui/Card'
 import { FrameworkBadge } from '../ui/FrameworkBadge'
 import { Badge } from '../ui/Badge'

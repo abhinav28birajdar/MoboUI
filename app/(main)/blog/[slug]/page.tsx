@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { blogPosts } from '../../../../data/blog-posts'
+import { blogPosts } from '@/data/blog-posts'
 import { formatDate } from '@/lib/utils'
 import { Badge } from '@/components/ui/Badge'
 import ReactMarkdown from 'react-markdown'

@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { components } from '../../data/components'
+import { components } from '@/data/components'
 import { Card, CardContent } from '../ui/Card'
 import { FrameworkBadge } from '../ui/FrameworkBadge'
 

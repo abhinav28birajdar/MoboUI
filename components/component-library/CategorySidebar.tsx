@@ -1,8 +1,8 @@
 'use client'
 import React from 'react'
 import Link from 'next/link'
-import { categories } from '../../data/categories'
-import { components } from '../../data/components'
+import { categories } from '@/data/categories'
+import { components } from '@/data/components'
 import { cn } from '@/lib/utils'
 import { useSearchParams } from 'next/navigation'
 

@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { blogPosts } from '../../data/blog-posts'
+import { blogPosts } from '@/data/blog-posts'
 import { BlogPostCard } from './BlogPostCard'
 
 export function BlogGrid() {

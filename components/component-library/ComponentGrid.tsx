@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { components } from '../../data/components'
+import { components } from '@/data/components'
 import { Card, CardContent } from '../ui/Card'
 import { Badge } from '../ui/Badge'
 import { FrameworkBadge } from '../ui/FrameworkBadge'

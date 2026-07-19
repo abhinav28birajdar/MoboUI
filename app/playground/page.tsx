@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useAppStore } from '@/store/useAppStore'
-import { components } from '../../data/components'
+import { components } from '@/data/components'
 import { Framework } from '@/types'
 import { FrameworkBadge } from '@/components/ui/FrameworkBadge'
 import { ExpoSnackEmbed } from '@/components/playground/ExpoSnackEmbed'
