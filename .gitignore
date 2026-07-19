@@ -177,7 +177,7 @@ docker-compose.override.yml
 .dockerignore
 
 # Docker local data (development)
-/data/
+
 /data/postgres/
 /data/redis/
 /data/supabase/
